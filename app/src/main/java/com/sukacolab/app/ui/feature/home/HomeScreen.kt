@@ -70,7 +70,6 @@ fun HomeScreen(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeContent() {
-    var text by remember { mutableStateOf("") }
     var openDialog = remember { mutableStateOf(false) }
     var url by remember { mutableStateOf("") }
     val ctx = LocalContext.current
@@ -124,9 +123,10 @@ fun HomeContent() {
         ) {
             item {
                 Text(
-                    text = "Tips for You",
+                    text = "Hey, Cahya Diantoni",
+                    fontSize = 24.sp,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(start = 16.dp, top = 16.dp, bottom = 8.dp)
+                    modifier = Modifier.padding(16.dp)
                 )
                 CarouselCard()
                 Text(

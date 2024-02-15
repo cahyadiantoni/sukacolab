@@ -120,7 +120,7 @@ fun ItemListOne(
                 }
 
                 val textContent = if (type == 1) {
-                    "Bisnis"
+                    "Loker"
                 } else if (type == 2){
                     "Kompetisi"
                 } else if (type == 3){

@@ -32,6 +32,7 @@ import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
+import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -64,7 +65,7 @@ fun ProfileScreen(){
         modifier = Modifier
             .background(primaryColor),
         topBar = {
-            SmallTopAppBar(
+            CenterAlignedTopAppBar(
                 title = {
                     Text(text = "Profilmu", color = Color.White)
                 },
@@ -101,7 +102,7 @@ fun ProfileScreen(){
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
-                        .height(190.dp)
+                        .height(160.dp)
                 ) {
 
                     Image(
@@ -109,10 +110,9 @@ fun ProfileScreen(){
                         contentDescription = null,
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(120.dp),
+                            .height(95.dp),
                         contentScale = ContentScale.Crop
                     )
-
 
                     Box(
                         modifier = Modifier
@@ -171,7 +171,7 @@ fun ProfileScreen(){
                         text = "Software Engineer | Android Application Development | Kotlin | Jetpack Compose",
                         color = Color.DarkGray,
                         textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+                        modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
                     )
                 }
 
