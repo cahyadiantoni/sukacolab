@@ -2,14 +2,21 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
-      <entry key="HomePrev">
-        <State />
-      </entry>
-      <entry key="HomeScreen">
-        <State />
-      </entry>
-      <entry key="MenuCompose">
-        <State />
+      <entry key="ItemListProfilePreview">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\cahya\.android\avd\Pixel_7_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T10:20:39.932281700Z" />
+        </State>
       </entry>
       <entry key="ProfileCompose">
         <State />
@@ -29,6 +36,28 @@
           </targetSelectedWithDropDown>
           <timeTargetWasSelectedWithDropDown value="2024-02-14T08:29:13.713113200Z" />
         </State>
+      </entry>
+      <entry key="prevJobDetail">
+        <State>
+          <targetSelectedWithDropDown>
+            <Target>
+              <type value="QUICK_BOOT_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\cahya\.android\avd\Pixel_7_API_34.avd" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-15T10:19:21.251803900Z" />
+        </State>
+      </entry>
+      <entry key="prevProjectDetail">
+        <State />
+      </entry>
+      <entry key="prevUrProjectDetail">
+        <State />
       </entry>
     </value>
   </component>

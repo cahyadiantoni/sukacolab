@@ -4,10 +4,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.AdsClick
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.TrackChanges
+import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -44,6 +46,8 @@ fun JetSukacolabApp(
                 Screen.Register.route,
                 Screen.Splash.route,
                 Screen.Onboarding.route,
+                Screen.UrProjectDetail.route,
+                Screen.ProjectDetail.route,
             )
             if (currentRoute !in excludedRoutes) {
                 BottomBar(navController)
@@ -86,19 +90,19 @@ private fun BottomBar(
         val currentRoute = navBackStackEntry?.destination?.route
         val navigationItems = listOf(
             NavigationItem(
-                title = "Beranda",
+                title = "Home",
                 icon = Icons.Default.Home,
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = "Lamaran",
-                icon = Icons.Default.TrackChanges,
-                screen = Screen.Lamaran
+                title = "Project",
+                icon = Icons.Default.Work,
+                screen = Screen.Project
             ),
             NavigationItem(
-                title ="Project",
-                icon = Icons.Default.AdsClick,
-                screen = Screen.Project
+                title ="Bookmark",
+                icon = Icons.Default.Bookmark,
+                screen = Screen.UrProject
             ),
             NavigationItem(
                 title ="Profile",

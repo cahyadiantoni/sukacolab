@@ -5,6 +5,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import com.sukacolab.app.ui.feature.home.HomeScreen
 import com.sukacolab.app.ui.feature.profile.ProfileScreen
+import com.sukacolab.app.ui.feature.projectDetail.ProjectDetailContent
+import com.sukacolab.app.ui.feature.urProjectDetail.UrProjectDetailContent
 import com.sukacolab.app.ui.navigation.Screen
 
 fun NavGraphBuilder.homeNavGraph(
@@ -17,9 +19,9 @@ fun NavGraphBuilder.homeNavGraph(
         ProfileScreen()
     }
     composable(Screen.Project.route) {
-
+        UrProjectDetailContent()
     }
-    composable(Screen.Lamaran.route) {
-
+    composable(Screen.Bookmark.route) {
+        ProjectDetailContent()
     }
 }
