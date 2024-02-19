@@ -7,26 +7,42 @@ import com.sukacolab.app.data.source.network.ApiService
 import com.sukacolab.app.data.source.network.request.LoginRequest
 import com.sukacolab.app.domain.repository.AuthRepository
 import com.sukacolab.app.util.Resource
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 import retrofit2.HttpException
 import java.io.IOException
 
-class ProfileRepository(
-    private val apiService: ApiService,
-    private val authPreferences: AuthPreferences
-) {
-    fun profileDetails() = flow{
-        val token = authPreferences.getAuthToken()
-        val userId = authPreferences.getAuthId()
-        Log.d("neo-tag", "profileDetails: ${userId.toString()}")
+class DefaultAuthRepository : AuthRepository {
+    override suspend fun login(loginRequest: LoginRequest): Resource<Unit> {
+        // Implement the login functionality here
+        // You can perform network requests, handle responses, and return the appropriate Resource result
+        // For example:
+        return try {
+            // Simulate a successful login
+            Resource.Success(Unit)
+        } catch (exception: Exception) {
+            // Handle any error that occurred during the login process
+            Resource.Error(exception.message ?: "Login failed")
+        }
+    }
+}
 
-        emit(
-            apiService.getProfile(
-                token = "Bearer $token",
-                userId = userId.toString()
-            ).data
-        )
-    }.flowOn(Dispatchers.IO)
+class AuthRepositoryImpl(
+    private val apiService: ApiService,
+    private val preferences: AuthPreferences
+)  {
+
+
+//    override suspend fun login(loginRequest: LoginRequest): Resource<Unit> {
+//        return try {
+//            val response = apiService.login(loginRequest)
+//            preferences.saveAuthToken(response.data.token)
+//            Log.e("TAG", "login: ${response.data.token}")
+//            Resource.Success(Unit)
+//        } catch (e: IOException) {
+//            Resource.Error(e.message.toString())
+//        } catch (e: HttpException) {
+//            Resource.Error(e.message.toString())
+//        }
+//    }
+
+
 }

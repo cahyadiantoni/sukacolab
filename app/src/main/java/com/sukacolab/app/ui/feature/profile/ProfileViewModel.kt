@@ -16,22 +16,26 @@ class ProfileViewModel(
     val response: MutableState<ProfileUiState> = mutableStateOf(ProfileUiState.Empty)
     val id: Int?
         get() = (response.value as? ProfileUiState.Success)?.data?.id
+    val name: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.name
     val email: String?
         get() = (response.value as? ProfileUiState.Success)?.data?.email
-    val fullName: String?
-        get() = (response.value as? ProfileUiState.Success)?.data?.fullName
-    val faceShape: String?
-        get() = (response.value as? ProfileUiState.Success)?.data?.faceShape
-    val isSubscribed: Boolean?
-        get() = (response.value as? ProfileUiState.Success)?.data?.isSubscription
-    val isPersonalityTest: Boolean?
-        get() = (response.value as? ProfileUiState.Success)?.data?.isPersonalityTest
-    val isFaceTest: Boolean?
-        get() = (response.value as? ProfileUiState.Success)?.data?.isFaceTest
-    val avatar: String?
-        get() = (response.value as? ProfileUiState.Success)?.data?.avatar
-    val personalityType: String?
-        get() = (response.value as? ProfileUiState.Success)?.data?.personalityType
+    val photo: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.photo
+    val summary: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.summary
+    val linkedin: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.linkedin
+    val github: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.github
+    val whatsapp: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.whatsapp
+    val instagram: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.instagram
+    val resume: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.resume
+    val about: String?
+        get() = (response.value as? ProfileUiState.Success)?.data?.about
 
     init {
         profileDetails()

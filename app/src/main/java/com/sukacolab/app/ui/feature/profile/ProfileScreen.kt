@@ -1,5 +1,8 @@
 package com.sukacolab.app.ui.feature.profile
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -37,6 +40,7 @@ import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
@@ -46,30 +50,36 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sukacolab.app.R
-import com.sukacolab.app.ui.navigation.Screen
-import com.sukacolab.app.ui.theme.primaryColor
+import org.koin.androidx.compose.getViewModel
 
 @Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProfileScreen(){
+    val viewModel: ProfileViewModel = getViewModel()
+
     Scaffold(
         modifier = Modifier
-            .background(primaryColor),
+            .background(MaterialTheme.colorScheme.primary),
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
                     Text(text = "Profilmu", color = Color.White)
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = primaryColor),
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 actions = {
                     IconButton(onClick = {
                     }) {
@@ -105,13 +115,11 @@ fun ProfileScreen(){
                         .height(160.dp)
                 ) {
 
-                    Image(
-                        painter = painterResource(id = R.drawable.background),
-                        contentDescription = null,
+                    Box(
                         modifier = Modifier
                             .fillMaxWidth()
-                            .height(95.dp),
-                        contentScale = ContentScale.Crop
+                            .height(95.dp)
+                            .background(MaterialTheme.colorScheme.primary),
                     )
 
                     Box(
@@ -139,10 +147,14 @@ fun ProfileScreen(){
                                     .background(Color.White)
                             ) {
 
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_logo),
+                                AsyncImage(
+                                    model = ImageRequest.Builder(LocalContext.current)
+                                        .data(viewModel.photo)
+                                        .crossfade(true)
+                                        .build(),
                                     contentDescription = null,
                                     contentScale = ContentScale.Crop,
+                                    placeholder = painterResource(id = R.drawable.img_logo),
                                     modifier = Modifier
                                         .border(2.dp, Color.LightGray, shape = CircleShape)
                                         .padding(5.dp)
@@ -159,8 +171,7 @@ fun ProfileScreen(){
                     modifier = Modifier.fillMaxSize()
                 ) {
                     Text(
-                        text = "Cahya Diantoni",
-                        color = Color.Black,
+                        text = viewModel.name.toString(),
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
                         textAlign = TextAlign.Center,
@@ -168,8 +179,8 @@ fun ProfileScreen(){
                     )
 
                     Text(
-                        text = "Software Engineer | Android Application Development | Kotlin | Jetpack Compose",
-                        color = Color.DarkGray,
+                        text = viewModel.summary.toString(),
+                        fontWeight = FontWeight.Normal,
                         textAlign = TextAlign.Center,
                         modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
                     )
@@ -182,28 +193,33 @@ fun ProfileScreen(){
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
-                    Image(
+                    ClickableImage(
                         painter = painterResource(id = R.drawable.linkedin),
-                        contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        contentDescription = "Linkedin",
+                        imageSize = 40.dp,
+                        uri = viewModel.linkedin.toString()
                     )
 
-                    Image(
+                    ClickableImage(
                         painter = painterResource(id = R.drawable.github),
-                        contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        contentDescription = "GitHub",
+                        imageSize = 40.dp,
+                        uri = viewModel.github.toString()
                     )
 
-                    Image(
+
+                    ClickableImage(
                         painter = painterResource(id = R.drawable.whatsapp),
-                        contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        contentDescription = "WhatsApp",
+                        imageSize = 40.dp,
+                        uri = viewModel.whatsapp.toString()
                     )
 
-                    Image(
+                    ClickableImage(
                         painter = painterResource(id = R.drawable.instagram),
-                        contentDescription = null,
-                        modifier = Modifier.size(40.dp),
+                        contentDescription = "Instagram",
+                        imageSize = 40.dp,
+                        uri = viewModel.instagram.toString()
                     )
                 }
 
@@ -216,14 +232,13 @@ fun ProfileScreen(){
                     Button(
                         onClick = {},
                         modifier = Modifier
-                            .weight(0.2f)
-                            .border(3.dp, primaryColor, shape = RoundedCornerShape(20.dp)),
+                            .weight(0.2f),
                         colors = ButtonDefaults.buttonColors(
-                            containerColor = Color.White
+                            containerColor = MaterialTheme.colorScheme.primary
                         )
                     ) {
 
-                        Text(text = "Show Resume", color = primaryColor)
+                        Text(text = "Show Resume", color = Color.White)
 
                     }
                 }
@@ -262,7 +277,6 @@ fun SkillsCompose() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
 
         Column(modifier = Modifier.padding(20.dp)) {
@@ -275,7 +289,7 @@ fun SkillsCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Skills", color = Color.Black,
+                        text = "Skills",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -286,18 +300,17 @@ fun SkillsCompose() {
 
                     Icon(
                         imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = primaryColor,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = primaryColor,
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
             }
 
             Text(
                 text = "Kotlin",
-                color = Color.DarkGray,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -317,7 +330,7 @@ fun SkillsCompose() {
 
                 Text(
                     text = "Associate Software Engineer at IBM",
-                    color = Color.Black,
+                    fontWeight = FontWeight.Medium,
                     fontSize = 15.sp,
                     modifier = Modifier.padding(7.dp)
                 )
@@ -332,7 +345,6 @@ fun SkillsCompose() {
 
             Text(
                 text = "Android",
-                color = Color.DarkGray,
                 fontWeight = FontWeight.Bold,
                 modifier = Modifier
                     .fillMaxWidth()
@@ -352,7 +364,7 @@ fun SkillsCompose() {
 
                 Text(
                     text = "Associate Software Engineer at IBM",
-                    color = Color.Black,
+                    fontWeight = FontWeight.Medium,
                     fontSize = 15.sp,
                     modifier = Modifier.padding(7.dp)
                 )
@@ -379,14 +391,14 @@ fun SkillsCompose() {
 
                     Text(
                         text = "Show All 29 skills",
-                        color = primaryColor,
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
 
                     Icon(
                         imageVector = Icons.Default.ArrowForward,
                         contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -404,7 +416,6 @@ fun LicenseCompose() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
 
         Column(modifier = Modifier.padding(20.dp)) {
@@ -417,7 +428,7 @@ fun LicenseCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Licenses & certifications", color = Color.Black,
+                        text = "Licenses & certifications",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -430,11 +441,11 @@ fun LicenseCompose() {
 
                     Icon(
                         imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
 
                 }
@@ -459,18 +470,17 @@ fun LicenseCompose() {
 
                     Text(
                         text = "Azure Developer Associate",
-                        color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
 
                     Text(
                         text = "Microsoft",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Medium,
                     )
 
                     Text(
                         text = "Issued Jan 2023 - Expired Jan 2024",
-                        color = Color.Gray,
+                        fontWeight = FontWeight.Normal,
                     )
 
                     Box(
@@ -483,51 +493,7 @@ fun LicenseCompose() {
                         Text(
                             text = "Show credential", modifier = Modifier
                                 .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
-                            color = Color.DarkGray
-                        )
-                    }
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                Column(modifier = Modifier.fillMaxWidth()) {
-
-                    Text(
-                        text = "Android Application Development",
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = "Coding Blocks",
-                        color = Color.DarkGray,
-                    )
-
-                    Box(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(top = 10.dp)
-                            .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(20.dp))
-                    ) {
-
-                        Text(
-                            text = "Show credential", modifier = Modifier
-                                .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
-                            color = Color.DarkGray
+                            fontWeight = FontWeight.Light,
                         )
                     }
                 }
@@ -544,7 +510,6 @@ fun EducationCompose() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
 
         Column(modifier = Modifier.padding(20.dp)) {
@@ -557,7 +522,7 @@ fun EducationCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Education", color = Color.Black,
+                        text = "Education",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -570,11 +535,11 @@ fun EducationCompose() {
 
                     Icon(
                         imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
 
                 }
@@ -599,18 +564,17 @@ fun EducationCompose() {
 
                     Text(
                         text = "Amity University",
-                        color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
 
                     Text(
                         text = "Master of Computer Applications - MCA",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Medium,
                     )
 
                     Text(
                         text = "2019 - 2022",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Normal,
                     )
                 }
             }
@@ -634,18 +598,17 @@ fun EducationCompose() {
 
                     Text(
                         text = "Delhi University",
-                        color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )
 
                     Text(
                         text = "Bachelor of Science, BSc. (CS)",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Medium,
                     )
 
                     Text(
                         text = "2015 - 2018",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Normal,
                     )
                 }
             }
@@ -660,7 +623,6 @@ fun ExperienceCompose() {
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
 
         Column(modifier = Modifier.padding(20.dp)) {
@@ -673,7 +635,7 @@ fun ExperienceCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Experience", color = Color.Black,
+                        text = "Experience",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -686,11 +648,11 @@ fun ExperienceCompose() {
 
                     Icon(
                         imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = primaryColor
+                        tint = MaterialTheme.colorScheme.primary
                     )
 
                 }
@@ -715,88 +677,17 @@ fun ExperienceCompose() {
 
                     Text(
                         text = "Associate System Engineer",
-                        color = Color.DarkGray,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
 
                     Text(
                         text = "IBM - Full time",
-                        color = Color.DarkGray,
+                        fontWeight = FontWeight.Medium,
                     )
 
                     Text(
                         text = "February, 2024 - February, 2024",
-                        color = Color.Gray,
-                    )
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                Column(modifier = Modifier.fillMaxWidth()) {
-
-                    Text(
-                        text = "Software Development Executive",
-                        color = Color.DarkGray,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = "Skrolled - Internship",
-                        color = Color.DarkGray,
-                    )
-
-                    Text(
-                        text = "February, 2024 - February, 2024",
-                        color = Color.Gray,
-                    )
-                }
-            }
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
-
-                Image(
-                    painter = painterResource(id = R.drawable.background),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                Column(modifier = Modifier.fillMaxWidth()) {
-
-                    Text(
-                        text = "Software Development Consultant",
-                        color = Color.DarkGray,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Text(
-                        text = "Prodevans Technologies - Internship",
-                        color = Color.DarkGray,
-                    )
-
-                    Text(
-                        text = "February, 2024 - February, 2024",
-                        color = Color.Gray,
+                        fontWeight = FontWeight.Normal,
                     )
                 }
             }
@@ -820,11 +711,11 @@ fun borderCompose() {
 @Preview
 @Composable
 fun AboutCompose() {
+    val viewModel: ProfileViewModel = getViewModel()
 
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
 
         Column(modifier = Modifier.padding(20.dp)) {
@@ -835,20 +726,20 @@ fun AboutCompose() {
             ) {
 
                 Text(
-                    text = "About", color = Color.Black,
+                    text = "About",
                     fontWeight = FontWeight.Bold,
                 )
 
                 Icon(
                     imageVector = Icons.Default.Edit,
                     contentDescription = null,
-                    tint = primaryColor
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
 
             Text(
-                text = "I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
-                color = Color.DarkGray,
+                text = viewModel.about.toString(),
+                fontWeight = FontWeight.Normal,
                 modifier = Modifier.padding(top = 20.dp)
             )
         }
@@ -861,7 +752,6 @@ fun MenuCompose(){
     Box(
         modifier = Modifier
             .fillMaxWidth()
-            .background(Color.White)
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
 
@@ -871,7 +761,7 @@ fun MenuCompose(){
             ) {
                 Text(
                     text = "Privacy Policy",
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.weight(1f)
                 )
@@ -879,7 +769,7 @@ fun MenuCompose(){
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
-                    tint = primaryColor,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(24.dp)
                 )
 
@@ -898,7 +788,7 @@ fun MenuCompose(){
             ) {
                 Text(
                     text = "About App",
-                    color = primaryColor,
+                    color = MaterialTheme.colorScheme.primary,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.weight(1f)
                 )
@@ -906,7 +796,7 @@ fun MenuCompose(){
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
-                    tint = primaryColor,
+                    tint = MaterialTheme.colorScheme.primary,
                     modifier = Modifier.size(24.dp)
                 )
 
@@ -938,4 +828,35 @@ fun MenuCompose(){
             }
         }
     }
+}
+
+@Composable
+fun ClickableImage(
+    painter: Painter,
+    contentDescription: String?,
+    modifier: Modifier = Modifier,
+    imageSize: Dp,
+    uri: String
+) {
+    val context = LocalContext.current
+
+    Box(
+        modifier = modifier
+            .size(imageSize)
+            .clickable {
+                context.openUri(uri)
+            }
+    ) {
+        Image(
+            painter = painter,
+            contentDescription = contentDescription,
+            modifier = Modifier.fillMaxSize()
+        )
+    }
+}
+
+fun Context.openUri(uriString: String) {
+    val uri = Uri.parse(uriString)
+    val intent = Intent(Intent.ACTION_VIEW, uri)
+    startActivity(intent)
 }

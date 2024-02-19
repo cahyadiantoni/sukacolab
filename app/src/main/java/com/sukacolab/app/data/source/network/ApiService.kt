@@ -20,7 +20,7 @@ interface ApiService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
-    @GET("/v1/users/{userId}")
+    @GET("/api/auth/me")
     suspend fun getProfile(
         @Header("Authorization") token: String
     ): ProfileResponse
