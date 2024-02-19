@@ -13,13 +13,11 @@ class ProfileRepository(
 ) {
     fun profileDetails() = flow{
         val token = authPreferences.getAuthToken()
-        val userId = authPreferences.getAuthId()
-        Log.d("neo-tag", "profileDetails: ${userId.toString()}")
+        Log.d("neo-tag", "profileDetails: ${token.toString()}")
 
         emit(
             apiService.getProfile(
-                token = "Bearer $token",
-                userId = userId.toString()
+                token = "bearer $token"
             ).data
         )
     }.flowOn(Dispatchers.IO)

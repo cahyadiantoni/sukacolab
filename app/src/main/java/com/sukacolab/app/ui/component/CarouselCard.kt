@@ -107,9 +107,9 @@ fun CarouselCard() {
         val scope = CoroutineScope(SupervisorJob())
         repeat(sliderList.size) { it ->
             val color = if (pageState.currentPage == it) {
-                primaryColor
+                MaterialTheme.colorScheme.primary
             } else {
-                Color.LightGray
+                Color.Gray
             }
             Box(
                 modifier = Modifier

@@ -22,7 +22,6 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.sukacolab.app.ui.feature.home.HomeScreen
-import com.sukacolab.app.ui.feature.home.primaryColor
 import com.sukacolab.app.ui.feature.onboarding.OnboardingScreen
 import com.sukacolab.app.ui.navigation.*
 import com.sukacolab.app.ui.navigation.nav_graph.authNavGraph
@@ -102,7 +101,7 @@ private fun BottomBar(
             NavigationItem(
                 title ="Bookmark",
                 icon = Icons.Default.Bookmark,
-                screen = Screen.UrProject
+                screen = Screen.Bookmark
             ),
             NavigationItem(
                 title ="Profile",
@@ -122,7 +121,7 @@ private fun BottomBar(
                     label = { Text(item.title) },
                     selected = currentRoute == item.screen.route,
                     colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = primaryColor,
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
                         unselectedIconColor = Color.Gray,
                         indicatorColor = Color.White
                     ),

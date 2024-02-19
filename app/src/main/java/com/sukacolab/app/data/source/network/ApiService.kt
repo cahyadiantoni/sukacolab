@@ -22,8 +22,7 @@ interface ApiService {
 
     @GET("/v1/users/{userId}")
     suspend fun getProfile(
-        @Header("Authorization") token: String,
-        @Path("userId") userId: String
+        @Header("Authorization") token: String
     ): ProfileResponse
 
     @POST("/v1/auth/update-user/{userId}")

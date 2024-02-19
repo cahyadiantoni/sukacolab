@@ -2,6 +2,7 @@ package com.sukacolab.app.ui.component
 
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
@@ -17,7 +18,7 @@ fun StatelessTopBar(
     CenterAlignedTopAppBar(
         navigationIcon = { navigationIcon?.invoke() },
         title = { Text(text = title, color = Color.White) },
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = com.sukacolab.app.ui.feature.home.primaryColor),
+        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
         actions = actionIcon,
     )
 }

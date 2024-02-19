@@ -27,9 +27,11 @@ import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -98,13 +100,11 @@ fun ProjectDetailContent(
                             .height(160.dp)
                     ) {
 
-                        Image(
-                            painter = painterResource(id = R.drawable.background),
-                            contentDescription = null,
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .height(95.dp),
-                            contentScale = ContentScale.Crop
+                                .height(95.dp)
+                                .background(MaterialTheme.colorScheme.primary),
                         )
 
                         Box(

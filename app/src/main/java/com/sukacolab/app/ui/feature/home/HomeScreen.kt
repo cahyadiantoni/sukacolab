@@ -57,19 +57,21 @@ import com.google.accompanist.flowlayout.SizeMode
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.CarouselCard
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
-import com.sukacolab.app.ui.component.cards.ItemListOne
+import com.sukacolab.app.ui.component.cards.ItemListProject
+import com.sukacolab.app.ui.theme.primaryColor
 
-val primaryColor = Color(0xFF17AAC0)
 @Composable
 fun HomeScreen(
     navController: NavController,
 ) {
-    HomeContent()
+    HomeContent(navController = navController,)
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeContent() {
+fun HomeContent(
+    navController: NavController,
+) {
     var openDialog = remember { mutableStateOf(false) }
     var url by remember { mutableStateOf("") }
     val ctx = LocalContext.current
@@ -101,7 +103,7 @@ fun HomeContent() {
                         }
                     }
                 },
-                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = primaryColor),
+                colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 actions = {
                     IconButton(onClick = {
 
@@ -201,13 +203,14 @@ fun HomeContent() {
                             .width(itemSize),
                         contentAlignment = Alignment.Center
                     ) {
-                        ItemListOne(
+                        ItemListProject(
+                            navController = navController,
                             id = 123,
                             image = "Test",
                             position = "UI/UX Designer",
                             company = "Universitas Singaperbangsa Karawang",
                             date = "16 Februari 2024",
-                            type = 3
+                            type = 0
                         )
                     }
 
@@ -216,7 +219,8 @@ fun HomeContent() {
                             .width(itemSize),
                         contentAlignment = Alignment.Center
                     ) {
-                        ItemListOne(
+                        ItemListProject(
+                            navController = navController,
                             id = 123,
                             image = "Test",
                             position = "Android Developer",
@@ -231,7 +235,8 @@ fun HomeContent() {
                             .width(itemSize),
                         contentAlignment = Alignment.Center
                     ) {
-                        ItemListOne(
+                        ItemListProject(
+                            navController = navController,
                             id = 123,
                             image = "Test",
                             position = "Web Developer",
@@ -246,7 +251,8 @@ fun HomeContent() {
                             .width(itemSize),
                         contentAlignment = Alignment.Center
                     ) {
-                        ItemListOne(
+                        ItemListProject(
+                            navController = navController,
                             id = 123,
                             image = "Test",
                             position = "Project Manager",
@@ -270,7 +276,7 @@ fun HomeContent() {
 
                             Text(
                                 text = "Show All Projects",
-                                color = primaryColor,
+                                color = MaterialTheme.colorScheme.primary,
                                 fontSize = 14.sp,
                                 fontWeight = FontWeight.ExtraBold
                             )
@@ -278,7 +284,7 @@ fun HomeContent() {
                             Icon(
                                 imageVector = Icons.Default.ArrowForward,
                                 contentDescription = null,
-                                tint = primaryColor
+                                tint = MaterialTheme.colorScheme.primary
                             )
                         }
                     }
@@ -314,7 +320,7 @@ fun MainMenu(title: String, icon: Int, onClick: () -> Unit) {
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .background(primaryColor, shape = RoundedCornerShape(15.dp)),
+                        .background(MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(15.dp)),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(painter = painterResource(id = icon), contentDescription = null,
@@ -326,7 +332,6 @@ fun MainMenu(title: String, icon: Int, onClick: () -> Unit) {
                 }
                 Text(
                     text = title,
-                    color = Color.Black,
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
                     textAlign = TextAlign.Center,

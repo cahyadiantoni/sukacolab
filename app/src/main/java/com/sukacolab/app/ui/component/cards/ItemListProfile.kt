@@ -45,7 +45,6 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
-import com.sukacolab.app.ui.feature.home.primaryColor
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.SukacolabBaseCoreTheme
 import com.sukacolab.app.ui.theme.darkGold

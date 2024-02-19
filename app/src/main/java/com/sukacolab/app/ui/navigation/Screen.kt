@@ -1,7 +1,7 @@
 package com.sukacolab.app.ui.navigation
 
 const val AUTH_GRAPH_ROUTE = "auth"
-const val PRODUCT_ID = "productId"
+const val PROJECT_ID = "projectId"
 
 sealed class Screen(val route: String) {
     object Onboarding : Screen("onboarding")
@@ -14,7 +14,9 @@ sealed class Screen(val route: String) {
     object UrProject : Screen("ur_project")
     object AppStatus : Screen("app_status")
     object Bookmark : Screen("bookmark")
-    object ProjectDetail : Screen("project_detail")
-    object UrProjectDetail : Screen("project_detail")
+    object ProjectDetail : Screen("product_detail/{$PROJECT_ID}") {
+        fun createRoute(projectId: Int) = "product_detail/$projectId"
+    }
+    object UrProjectDetail : Screen("ur_project_detail")
     object AddProject : Screen("add_project")
 }

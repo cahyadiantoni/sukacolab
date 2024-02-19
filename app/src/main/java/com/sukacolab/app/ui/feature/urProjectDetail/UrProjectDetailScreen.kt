@@ -53,7 +53,6 @@ import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.SizeMode
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
-import com.sukacolab.app.ui.component.cards.ItemListOne
 import com.sukacolab.app.ui.component.cards.ItemListProfile
 import com.sukacolab.app.ui.theme.primaryColor
 import com.sukacolab.app.ui.theme.tertiaryColor

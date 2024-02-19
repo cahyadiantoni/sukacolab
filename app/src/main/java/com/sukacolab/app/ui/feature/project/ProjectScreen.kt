@@ -24,7 +24,10 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
-import com.sukacolab.app.ui.navigation.PRODUCT_ID
+import com.sukacolab.app.ui.feature.project.subScreen.AppStatusScreen
+import com.sukacolab.app.ui.feature.project.subScreen.UrProjectScreen
+import com.sukacolab.app.ui.feature.projectDetail.ProjectDetailScreen
+import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.navigation.TabItems
 import com.sukacolab.app.ui.theme.SukacolabBaseCoreTheme
@@ -91,32 +94,34 @@ fun ProjectScreen(
             startDestination = Screen.AppStatus.route,
         ) {
             composable(Screen.UrProject.route){
-
+                UrProjectScreen()
             }
             composable(Screen.AppStatus.route){
-
+                AppStatusScreen()
             }
             composable(
                 route = Screen.ProjectDetail.route,
                 arguments = listOf(
-                    navArgument(PRODUCT_ID) {
+                    navArgument(PROJECT_ID) {
                         type = NavType.IntType
                     }
                 )
             ) {
-                Log.d("Args", it.arguments?.getInt(PRODUCT_ID).toString())
-                val productId = it.arguments?.getInt(PRODUCT_ID).toString()
+                Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
+                val projectId = it.arguments?.getInt(PROJECT_ID).toString()
+                ProjectDetailScreen()
             }
+
             composable(
                 route = Screen.UrProjectDetail.route,
                 arguments = listOf(
-                    navArgument(PRODUCT_ID) {
+                    navArgument(PROJECT_ID) {
                         type = NavType.IntType
                     }
                 )
             ) {
-                Log.d("Args", it.arguments?.getInt(PRODUCT_ID).toString())
-                val productId = it.arguments?.getInt(PRODUCT_ID).toString()
+                Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
+                val projectId = it.arguments?.getInt(PROJECT_ID).toString()
             }
         }
     }
