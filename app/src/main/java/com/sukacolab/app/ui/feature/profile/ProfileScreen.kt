@@ -46,6 +46,8 @@ import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,15 +62,19 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
+import com.sukacolab.app.ui.component.alert.AlertLogout
+import com.sukacolab.app.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
 
-@Preview
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProfileScreen(){
+fun ProfileScreen(
+    navController: NavController,
+){
     val viewModel: ProfileViewModel = getViewModel()
 
     Scaffold(
@@ -246,26 +252,42 @@ fun ProfileScreen(){
 
                 borderCompose()
 
-                AboutCompose()
-                borderCompose()
-
-                ExperienceCompose()
-                borderCompose()
-
-                LicenseCompose()
-                borderCompose()
-
-                SkillsCompose()
-                borderCompose()
-
-                EducationCompose()
-                borderCompose()
-
-                MenuCompose()
-                borderCompose()
-
             }
 
+            item {
+                AboutCompose(
+                    viewModel = viewModel
+                )
+                borderCompose()
+            }
+
+            item {
+                ExperienceCompose()
+                borderCompose()
+            }
+
+            item {
+                LicenseCompose()
+                borderCompose()
+            }
+
+            item {
+                SkillsCompose()
+                borderCompose()
+            }
+
+            item {
+                EducationCompose()
+                borderCompose()
+            }
+
+            item {
+                MenuCompose(
+                    navController = navController,
+                    viewModel = viewModel
+                )
+                borderCompose()
+            }
         }
     }
 }
@@ -619,6 +641,7 @@ fun EducationCompose() {
 @Preview
 @Composable
 fun ExperienceCompose() {
+    val viewModel: ProfileViewModel = getViewModel()
 
     Box(
         modifier = Modifier
@@ -708,10 +731,10 @@ fun borderCompose() {
 }
 
 
-@Preview
 @Composable
-fun AboutCompose() {
-    val viewModel: ProfileViewModel = getViewModel()
+fun AboutCompose(
+    viewModel: ProfileViewModel,
+) {
 
     Box(
         modifier = Modifier
@@ -746,9 +769,12 @@ fun AboutCompose() {
     }
 }
 
-@Preview
 @Composable
-fun MenuCompose(){
+fun MenuCompose(
+    navController: NavController,
+    viewModel: ProfileViewModel
+){
+    val openDialog = remember { mutableStateOf(false) }
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -815,15 +841,29 @@ fun MenuCompose(){
             ) {
 
                 Button(
-                    onClick = {},
+                    onClick = { openDialog.value = true },
                     modifier = Modifier.weight(0.4f),
                     colors = ButtonDefaults.buttonColors(
                         containerColor = Color.Red
-                    )
+                    ),
                 ) {
 
                     Text(text = "Logout")
 
+                }
+                if (openDialog.value) {
+                    AlertLogout(openDialog = openDialog) {
+                        openDialog.value = false
+                        viewModel.logout()
+                        navController.navigate(Screen.Login.route) {
+                            popUpTo(Screen.Profile.route) {
+                                inclusive = true
+                            }
+                            popUpTo(Screen.Home.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
                 }
             }
         }

@@ -58,7 +58,9 @@ import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.CarouselCard
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.component.cards.ItemListProject
+import com.sukacolab.app.ui.feature.profile.ProfileViewModel
 import com.sukacolab.app.ui.theme.primaryColor
+import org.koin.androidx.compose.getViewModel
 
 @Composable
 fun HomeScreen(
@@ -75,6 +77,7 @@ fun HomeContent(
     var openDialog = remember { mutableStateOf(false) }
     var url by remember { mutableStateOf("") }
     val ctx = LocalContext.current
+    val viewModelProfile: ProfileViewModel = getViewModel()
 
     Scaffold(
         modifier = Modifier,
@@ -124,8 +127,9 @@ fun HomeContent(
                 .fillMaxSize()
         ) {
             item {
+                val name = viewModelProfile.name
                 Text(
-                    text = "Hey, Cahya Diantoni",
+                    text = "Hey, $name",
                     fontSize = 24.sp,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
                     modifier = Modifier.padding(16.dp)

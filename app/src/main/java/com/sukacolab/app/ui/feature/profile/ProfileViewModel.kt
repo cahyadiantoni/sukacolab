@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 
 class ProfileViewModel(
     private val authPreferences: AuthPreferences,
-    private val profileRepo: ProfileRepository
+    private val profileRepo: ProfileRepository,
 ) : ViewModel() {
     val response: MutableState<ProfileUiState> = mutableStateOf(ProfileUiState.Empty)
     val id: Int?

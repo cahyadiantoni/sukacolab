@@ -23,18 +23,18 @@
       </entry>
       <entry key="app">
         <State>
-          <runningDeviceTargetSelectedWithDropDown>
+          <targetSelectedWithDropDown>
             <Target>
-              <type value="RUNNING_DEVICE_TARGET" />
+              <type value="QUICK_BOOT_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="SERIAL_NUMBER" />
-                  <value value="4TJRMRJVL7TSNZ4H" />
+                  <type value="VIRTUAL_DEVICE_PATH" />
+                  <value value="C:\Users\cahya\.android\avd\Pixel_6_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
-          </runningDeviceTargetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-19T03:58:43.649958300Z" />
+          </targetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-02-19T06:59:15.952358900Z" />
         </State>
       </entry>
       <entry key="prevJobDetail">
