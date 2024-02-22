@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sukacolab.app.data.source.local.AuthPreferences
 import com.sukacolab.app.data.source.network.ApiService
-import com.sukacolab.app.ui.feature.profile.ProfileUiState
+import com.sukacolab.app.ui.feature.profile.uiState.ProfileUiState
 import com.sukacolab.app.ui.feature.register.model.RegisterRequest
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

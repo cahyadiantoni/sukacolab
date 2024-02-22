@@ -36,6 +36,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -67,7 +68,9 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.alert.AlertLogout
+import com.sukacolab.app.ui.feature.profile.uiState.ExperienceUiState
 import com.sukacolab.app.ui.navigation.Screen
+import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -650,6 +653,7 @@ fun EducationCompose() {
 @Composable
 fun ExperienceCompose() {
     val viewModel: ProfileViewModel = getViewModel()
+    val responseExperience = viewModel.responseExperience.value
 
     Box(
         modifier = Modifier
@@ -688,38 +692,60 @@ fun ExperienceCompose() {
 
                 }
             }
+            when (responseExperience) {
+                is ExperienceUiState.Success -> {
+                    responseExperience.data.forEachIndexed { index, experience ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 30.dp)
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.xp),
+                                contentDescription = null,
+                                modifier = Modifier.size(60.dp),
+                                contentScale = ContentScale.Crop
+                            )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
+                            Spacer(modifier = Modifier.size(10.dp))
 
-                Image(
-                    painter = painterResource(id = R.drawable.xp),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
+                            Column(modifier = Modifier.fillMaxWidth()) {
 
-                Spacer(modifier = Modifier.size(10.dp))
+                                Text(
+                                    text = experience.title,
+                                    fontWeight = FontWeight.Bold,
+                                )
 
-                Column(modifier = Modifier.fillMaxWidth()) {
-
-                    Text(
-                        text = "Associate System Engineer",
-                        fontWeight = FontWeight.Bold,
+                                Text(
+                                    text = "${experience.company} - ${experience.role}",
+                                    fontWeight = FontWeight.Medium,
+                                )
+                                val start = experience.startDate.convertToMonthYearFormat()
+                                val end = if (experience.isNow == 1) {
+                                    "Now"
+                                } else{
+                                    experience.endDate.convertToMonthYearFormat()
+                                }
+                                Text(
+                                    text = "$start - $end",
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            }
+                        }
+                    }
+                }
+                is ExperienceUiState.Failure -> {
+                    Text(text = responseExperience.error.message ?: "Unknown Error")
+                }
+                ExperienceUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
                     )
-
-                    Text(
-                        text = "IBM - Full time",
-                        fontWeight = FontWeight.Medium,
-                    )
-
-                    Text(
-                        text = "February, 2024 - February, 2024",
-                        fontWeight = FontWeight.Normal,
-                    )
+                }
+                ExperienceUiState.Empty -> {
+                    Text(text = "Empty Data")
                 }
             }
         }

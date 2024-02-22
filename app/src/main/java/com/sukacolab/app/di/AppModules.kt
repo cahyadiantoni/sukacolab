@@ -11,7 +11,7 @@ import com.sukacolab.app.domain.repository.AuthRepository
 import com.sukacolab.app.domain.usecase.LoginUseCase
 import com.sukacolab.app.ui.feature.home.HomeViewModel
 import com.sukacolab.app.ui.feature.login.LoginViewModel
-import com.sukacolab.app.ui.feature.profile.ProfileRepository
+import com.sukacolab.app.data.repository.ProfileRepository
 import com.sukacolab.app.ui.feature.profile.ProfileViewModel
 import com.sukacolab.app.ui.feature.profile.screen.ProfileEditViewModel
 import com.sukacolab.app.ui.feature.register.RegisterViewModel

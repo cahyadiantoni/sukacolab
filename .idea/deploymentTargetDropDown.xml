@@ -29,12 +29,12 @@
               <deviceKey>
                 <Key>
                   <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\cahya\.android\avd\Pixel_6_API_34.avd" />
+                  <value value="C:\Users\cahya\.android\avd\Pixel_6a_API_34.avd" />
                 </Key>
               </deviceKey>
             </Target>
           </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-02-19T06:59:15.952358900Z" />
+          <timeTargetWasSelectedWithDropDown value="2024-02-22T04:42:28.746730800Z" />
         </State>
       </entry>
       <entry key="prevJobDetail">
