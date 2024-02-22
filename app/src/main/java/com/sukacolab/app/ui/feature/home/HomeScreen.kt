@@ -23,6 +23,8 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.outlined.Notifications
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -59,8 +61,11 @@ import com.sukacolab.app.ui.component.CarouselCard
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.component.cards.ItemListProject
 import com.sukacolab.app.ui.feature.profile.ProfileViewModel
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.primaryColor
 import org.koin.androidx.compose.getViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @Composable
 fun HomeScreen(

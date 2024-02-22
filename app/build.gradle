@@ -112,4 +112,6 @@ dependencies {
     //lottie
     implementation "com.airbnb.android:lottie-compose:$lottieVersion"
 
+    implementation "io.github.grizzi91:bouquet:1.1.2"
+
 }

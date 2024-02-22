@@ -69,6 +69,8 @@ import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.alert.AlertLogout
 import com.sukacolab.app.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
+import java.net.URLEncoder
+import java.nio.charset.StandardCharsets
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -229,25 +231,31 @@ fun ProfileScreen(
                     )
                 }
 
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 50.dp, end = 50.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ){
-                    Button(
-                        onClick = {},
+                viewModel.resume?.let { resumeUrl ->
+                    val encodedUrl = URLEncoder.encode(resumeUrl, StandardCharsets.UTF_8.toString())
+                    Row(
                         modifier = Modifier
-                            .weight(0.2f),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        )
-                    ) {
-
-                        Text(text = "Show Resume", color = Color.White)
-
+                            .fillMaxWidth()
+                            .padding(start = 50.dp, end = 50.dp),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ){
+                        Button(
+                            onClick = { navController.navigate(
+                                Screen.Resume.createRoute(
+                                    encodedUrl
+                                )
+                            ) },
+                            modifier = Modifier
+                                .weight(0.2f),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = MaterialTheme.colorScheme.primary
+                            )
+                        ) {
+                            Text(text = "Show Resume", color = Color.White)
+                        }
                     }
                 }
+
                 Spacer(modifier = Modifier.size(10.dp))
 
                 borderCompose()

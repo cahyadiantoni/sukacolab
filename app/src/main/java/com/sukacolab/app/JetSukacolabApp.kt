@@ -47,6 +47,7 @@ fun JetSukacolabApp(
                 Screen.Onboarding.route,
                 Screen.UrProjectDetail.route,
                 Screen.ProjectDetail.route,
+                Screen.Resume.route,
             )
             if (currentRoute !in excludedRoutes) {
                 BottomBar(navController)
