@@ -178,7 +178,7 @@ fun ProjectDetailContent(
                         Column(
                             modifier = Modifier
                                 .width(60.dp)
-                                .height(70.dp),
+                                .height(80.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
@@ -193,13 +193,14 @@ fun ProjectDetailContent(
                                 color = Color.DarkGray,
                                 fontSize = 12.sp,
                                 textAlign = TextAlign.Center,
+                                lineHeight = 12.sp
                             )
                         }
 
                         Column(
                             modifier = Modifier
                                 .width(60.dp)
-                                .height(70.dp),
+                                .height(80.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
@@ -214,13 +215,14 @@ fun ProjectDetailContent(
                                 color = Color.DarkGray,
                                 fontSize = 12.sp,
                                 textAlign = TextAlign.Center,
+                                lineHeight = 12.sp
                             )
                         }
 
                         Column(
                             modifier = Modifier
                                 .width(60.dp)
-                                .height(70.dp),
+                                .height(80.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
@@ -231,17 +233,18 @@ fun ProjectDetailContent(
                             )
 
                             Text(
-                                text = "Rp. 6jt/bln",
+                                text = "Rp. 6jt/blnasdasd",
                                 color = Color.DarkGray,
                                 fontSize = 12.sp,
                                 textAlign = TextAlign.Center,
+                                lineHeight = 12.sp
                             )
                         }
 
                         Column(
                             modifier = Modifier
                                 .width(60.dp)
-                                .height(70.dp),
+                                .height(80.dp),
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
@@ -256,6 +259,7 @@ fun ProjectDetailContent(
                                 color = Color.DarkGray,
                                 fontSize = 12.sp,
                                 textAlign = TextAlign.Center,
+                                lineHeight = 12.sp
                             )
                         }
                     }
@@ -338,6 +342,12 @@ fun ProjectDetailContent(
                         modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
                         textAlign = TextAlign.Justify,
                         fontWeight = FontWeight.Normal,
+                    )
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(100.dp)
                     )
                 }
             }

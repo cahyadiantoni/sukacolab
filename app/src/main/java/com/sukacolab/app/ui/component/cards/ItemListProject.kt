@@ -33,7 +33,7 @@ fun ItemListProject(
     position: String,
     company: String,
     date: String,
-    type: Int,
+    type: String,
 ) {
     Card(
         modifier = Modifier
@@ -67,8 +67,17 @@ fun ItemListProject(
 //                modifier = Modifier
 //                    .size(60.dp)
 //            )
+            val img = if (type == "Loker") {
+                    R.drawable.paid
+                } else if (type == "Portofolio"){
+                    R.drawable.portofolio
+                } else if (type == "Lomba"){
+                    R.drawable.competition
+                } else{
+                    R.drawable.unknown
+                }
             Image(
-                painter = painterResource(id = R.drawable.img_logo),
+                painter = painterResource(id = img),
                 contentDescription = null,
                 modifier = Modifier.size(60.dp),
                 contentScale = ContentScale.Crop

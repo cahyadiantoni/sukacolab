@@ -50,7 +50,7 @@ fun BookmarkScreen(navController: NavController){
                         position = "UI/UX Designer",
                         company = "Universitas Singaperbangsa Karawang",
                         date = "16 Februari 2024",
-                        type = 0
+                        type = "Loker"
                     )
                 }
 
@@ -66,7 +66,7 @@ fun BookmarkScreen(navController: NavController){
                         position = "Android Developer",
                         company = "PT. Sukacode Solusi Teknologi",
                         date = "14 Februari 2024",
-                        type = 1
+                        type = "Portofolio"
                     )
                 }
 
@@ -82,7 +82,7 @@ fun BookmarkScreen(navController: NavController){
                         position = "Web Developer",
                         company = "CV. Karib Solutions",
                         date = "2 Februari 2024",
-                        type = 2
+                        type = "Lomba"
                     )
                 }
 
@@ -98,7 +98,7 @@ fun BookmarkScreen(navController: NavController){
                         position = "Project Manager",
                         company = "PT. Maju Mundur",
                         date = "2 Januari 2024",
-                        type = 0
+                        type = "Lain Lain"
                     )
                 }
             }

@@ -353,7 +353,7 @@ fun SkillsCompose() {
                     .padding(top = 10.dp)
             ) {
 
-                Image(painter = painterResource(id = R.drawable.img_logo),
+                Image(painter = painterResource(id = R.drawable.skills),
                     modifier = Modifier.size(40.dp),
                     contentDescription = null,
                     contentScale = ContentScale.Crop)
@@ -387,7 +387,7 @@ fun SkillsCompose() {
                     .padding(top = 10.dp)
             ) {
 
-                Image(painter = painterResource(id = R.drawable.img_logo),
+                Image(painter = painterResource(id = R.drawable.skills),
                     modifier = Modifier.size(40.dp),
                     contentDescription = null,
                     contentScale = ContentScale.Crop)
@@ -488,7 +488,7 @@ fun LicenseCompose() {
             ) {
 
                 Image(
-                    painter = painterResource(id = R.drawable.background),
+                    painter = painterResource(id = R.drawable.certi),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp),
                     contentScale = ContentScale.Crop
@@ -582,7 +582,7 @@ fun EducationCompose() {
             ) {
 
                 Image(
-                    painter = painterResource(id = R.drawable.img_logo),
+                    painter = painterResource(id = R.drawable.education),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp),
                     contentScale = ContentScale.Crop
@@ -616,7 +616,7 @@ fun EducationCompose() {
             ) {
 
                 Image(
-                    painter = painterResource(id = R.drawable.img_logo),
+                    painter = painterResource(id = R.drawable.education),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp),
                     contentScale = ContentScale.Crop
@@ -696,7 +696,7 @@ fun ExperienceCompose() {
             ) {
 
                 Image(
-                    painter = painterResource(id = R.drawable.background),
+                    painter = painterResource(id = R.drawable.xp),
                     contentDescription = null,
                     modifier = Modifier.size(60.dp),
                     contentScale = ContentScale.Crop

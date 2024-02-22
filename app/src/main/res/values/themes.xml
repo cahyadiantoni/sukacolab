@@ -2,4 +2,8 @@
 <resources>
 
     <style name="Theme.SukacolabBaseCore" parent="android:Theme.Material.Light.NoActionBar" />
+    <!-- My custom theme for splash screen activity -->
+    <style name="Theme.RemoveSplashScreenTheme" parent="Theme.SukacolabBaseCore">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
 </resources>
