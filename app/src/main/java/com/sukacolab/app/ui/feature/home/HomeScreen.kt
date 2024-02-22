@@ -1,5 +1,8 @@
 package com.sukacolab.app.ui.feature.home
 
+import android.app.Activity
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -36,6 +39,7 @@ import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,6 +67,7 @@ import com.sukacolab.app.ui.component.cards.ItemListProject
 import com.sukacolab.app.ui.feature.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.primaryColor
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
@@ -72,6 +77,42 @@ fun HomeScreen(
     navController: NavController,
 ) {
     HomeContent(navController = navController,)
+    BackPressSample()
+}
+
+sealed class BackPress {
+    object Idle : BackPress()
+    object InitialTouch : BackPress()
+}
+
+@Composable
+private fun BackPressSample() {
+    var showToast by remember { mutableStateOf(false) }
+
+    var backPressState by remember { mutableStateOf<BackPress>(BackPress.Idle) }
+    val context = LocalContext.current
+
+    if(showToast){
+        Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show()
+        showToast= false
+    }
+
+
+    LaunchedEffect(key1 = backPressState) {
+        if (backPressState == BackPress.InitialTouch) {
+            delay(2000)
+            backPressState = BackPress.Idle
+        }
+    }
+
+    BackHandler(backPressState == BackPress.Idle) {
+        backPressState = BackPress.InitialTouch
+        showToast = true
+    }
+
+    BackHandler(backPressState == BackPress.InitialTouch) {
+        (context as? Activity)?.finishAffinity()
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
