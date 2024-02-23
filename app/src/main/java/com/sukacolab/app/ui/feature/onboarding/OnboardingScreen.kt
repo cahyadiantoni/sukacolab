@@ -19,7 +19,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavHostController
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.HorizontalPagerIndicator
@@ -27,7 +26,6 @@ import com.google.accompanist.pager.rememberPagerState
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.AppText
 import com.sukacolab.app.ui.component.LottieAnim
-import com.sukacolab.app.ui.feature.home.HomeViewModel
 import com.sukacolab.app.ui.feature.splash.SplashViewModel
 import com.sukacolab.app.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel

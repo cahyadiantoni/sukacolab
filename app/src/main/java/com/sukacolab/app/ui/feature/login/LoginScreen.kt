@@ -24,6 +24,7 @@ import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.textfield.EmailTextField
 import com.sukacolab.app.ui.component.textfield.PasswordTextField
 import com.sukacolab.app.ui.navigation.Screen
+import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
 
 @NavDestinationDsl
@@ -63,7 +64,12 @@ fun LoginScreenContent(
                val token = (loginResult as LoginApiResults.Success).token
                // Handle successful login
                Log.d("LOGIN TAG SUCCESS", "LoginScreenContent: $userId, $token")
-               navController.navigate(Screen.Home.route) {
+               val screen = if (userId == 1) {
+                   Screen.HomeAdmin.route
+               } else{
+                   Screen.Home.route
+               }
+               navController.navigate(screen) {
                    popUpTo(Screen.Login.route) {
                        inclusive = true
                    }

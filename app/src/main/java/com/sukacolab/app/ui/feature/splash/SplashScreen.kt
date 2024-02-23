@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sukacolab.app.R
+import com.sukacolab.app.data.source.local.AuthPreferences
 import com.sukacolab.app.ui.feature.splash.uistate.InitialAuthState
 import com.sukacolab.app.ui.navigation.Screen
 import kotlinx.coroutines.delay
@@ -26,6 +27,7 @@ fun SplashScreen(
     navController: NavController,
 ) {
     val viewModel: SplashViewModel = getViewModel()
+    val authPreferences: AuthPreferences
 
     val isUserLoggedIn by viewModel.isUserLoggedIn.collectAsState()
     val isOnboardingVisited by viewModel.isOnboardingVisited.collectAsState()
@@ -37,7 +39,14 @@ fun SplashScreen(
         if (isOnboardingVisited){
             if (isUserLoggedIn) {
                 // User is logged in, navigate to the home screen
-                navController.navigate(Screen.Home.route) {
+                val userId = viewModel.getUserId().toString()
+                val screen = if (userId == "1") {
+                    Screen.HomeAdmin.route
+                } else{
+                    Screen.Home.route
+                }
+
+                navController.navigate(screen) {
                     popUpTo(Screen.Splash.route) {
                         inclusive = true
                     }

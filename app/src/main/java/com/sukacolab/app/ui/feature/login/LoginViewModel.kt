@@ -83,10 +83,17 @@ class LoginViewModel(
                                    authPreferences.saveAuthId(userId.toString())
                                }
                                // Update the login result with success
+
+                               val screen = if (userId == 1) {
+                                   Screen.HomeAdmin.route
+                               } else{
+                                   Screen.Home.route
+                               }
+
                                _loginResult.value = LoginApiResults.Success(userId, token)
                                viewModelScope.launch {
                                    _eventFlow.emit(
-                                       UiEvents.NavigateEvent(Screen.Home.route)
+                                       UiEvents.NavigateEvent(screen)
                                    )
                                }
                                _navigateToHome.value = true

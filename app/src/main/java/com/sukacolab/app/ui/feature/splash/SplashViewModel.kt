@@ -27,6 +27,7 @@ class SplashViewModel(
     init {
         checkAuthToken()
         observeOnboardingStatus()
+        getUserId()
     }
 
     fun checkAuthToken() {
@@ -57,6 +58,12 @@ class SplashViewModel(
     fun saveOnboardingStatus(status: Boolean) {
         viewModelScope.launch {
             authPreferences.saveOnboardingState(status)
+        }
+    }
+
+    fun getUserId() {
+        viewModelScope.launch {
+            authPreferences.getAuthId()
         }
     }
 

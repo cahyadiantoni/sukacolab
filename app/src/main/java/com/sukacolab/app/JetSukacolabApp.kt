@@ -3,9 +3,12 @@ package com.sukacolab.app
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.AccountCircle
+import androidx.compose.material.icons.filled.AddToPhotos
 import androidx.compose.material.icons.filled.AdsClick
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.LibraryAdd
+import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material.icons.filled.TrackChanges
@@ -21,7 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.sukacolab.app.ui.feature.home.HomeScreen
+import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.onboarding.OnboardingScreen
 import com.sukacolab.app.ui.navigation.*
 import com.sukacolab.app.ui.navigation.nav_graph.authNavGraph
@@ -48,9 +51,19 @@ fun JetSukacolabApp(
                 Screen.UrProjectDetail.route,
                 Screen.ProjectDetail.route,
                 Screen.Resume.route,
+                Screen.HomeAdmin.route
             )
+
+            val adminRoutes = listOf(
+                Screen.HomeAdmin.route
+            )
+
             if (currentRoute !in excludedRoutes) {
                 BottomBar(navController)
+            }
+
+            if (currentRoute in adminRoutes) {
+                BottomBarAdmin(navController)
             }
         },
         modifier = modifier
@@ -102,6 +115,69 @@ private fun BottomBar(
             NavigationItem(
                 title ="Bookmark",
                 icon = Icons.Default.Bookmark,
+                screen = Screen.Bookmark
+            ),
+            NavigationItem(
+                title ="Profile",
+                icon = Icons.Default.AccountCircle,
+                screen = Screen.Profile
+            ),
+        )
+        NavigationBar() {
+            navigationItems.map { item ->
+                NavigationBarItem(
+                    icon = {
+                        Icon(
+                            imageVector = item.icon,
+                            contentDescription = item.title
+                        )
+                    },
+                    label = { Text(item.title) },
+                    selected = currentRoute == item.screen.route,
+                    colors = NavigationBarItemDefaults.colors(
+                        selectedIconColor = MaterialTheme.colorScheme.primary,
+                        unselectedIconColor = Color.Gray,
+                        indicatorColor = Color.White
+                    ),
+                    onClick = {
+                        navController.navigate(item.screen.route) {
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            restoreState = true
+                            launchSingleTop = true
+                        }
+                    }
+                )
+            }
+        }
+    }
+}
+
+@Composable
+private fun BottomBarAdmin(
+    navController: NavHostController,
+    modifier: Modifier = Modifier
+) {
+    NavigationBar(
+        modifier = modifier
+    ) {
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        val navigationItems = listOf(
+            NavigationItem(
+                title = "Home",
+                icon = Icons.Default.Home,
+                screen = Screen.HomeAdmin
+            ),
+            NavigationItem(
+                title = "Create",
+                icon = Icons.Default.LibraryAdd,
+                screen = Screen.Project
+            ),
+            NavigationItem(
+                title ="Review",
+                icon = Icons.Default.Reviews,
                 screen = Screen.Bookmark
             ),
             NavigationItem(
