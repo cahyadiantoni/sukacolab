@@ -68,7 +68,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.alert.AlertLogout
+import com.sukacolab.app.ui.feature.profile.uiState.CertificationUiState
+import com.sukacolab.app.ui.feature.profile.uiState.EducationUiState
 import com.sukacolab.app.ui.feature.profile.uiState.ExperienceUiState
+import com.sukacolab.app.ui.feature.profile.uiState.SkillUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
@@ -149,7 +152,7 @@ fun ProfileScreen(
                             modifier = Modifier
                                 .fillMaxWidth(),
                             contentAlignment = Alignment.Center
-                        ){
+                        ) {
                             Box(
                                 modifier = Modifier
                                     .size(150.dp)
@@ -241,13 +244,15 @@ fun ProfileScreen(
                             .fillMaxWidth()
                             .padding(start = 50.dp, end = 50.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
-                    ){
+                    ) {
                         Button(
-                            onClick = { navController.navigate(
-                                Screen.Resume.createRoute(
-                                    encodedUrl
+                            onClick = {
+                                navController.navigate(
+                                    Screen.Resume.createRoute(
+                                        encodedUrl
+                                    )
                                 )
-                            ) },
+                            },
                             modifier = Modifier
                                 .weight(0.2f),
                             colors = ButtonDefaults.buttonColors(
@@ -263,36 +268,31 @@ fun ProfileScreen(
 
                 borderCompose()
 
-            }
-
-            item {
                 AboutCompose(
                     viewModel = viewModel
                 )
                 borderCompose()
-            }
 
-            item {
-                ExperienceCompose()
+                ExperienceCompose(
+                    viewModel = viewModel
+                )
                 borderCompose()
-            }
 
-            item {
-                LicenseCompose()
+                LicenseCompose(
+                    viewModel = viewModel
+                )
                 borderCompose()
-            }
 
-            item {
-                SkillsCompose()
+                SkillsCompose(
+                    viewModel = viewModel
+                )
                 borderCompose()
-            }
 
-            item {
-                EducationCompose()
+                EducationCompose(
+                    viewModel = viewModel
+                )
                 borderCompose()
-            }
 
-            item {
                 MenuCompose(
                     navController = navController,
                     viewModel = viewModel
@@ -303,9 +303,11 @@ fun ProfileScreen(
     }
 }
 
-@Preview
 @Composable
-fun SkillsCompose() {
+fun SkillsCompose(
+    viewModel: ProfileViewModel,
+) {
+    val responseSkill = viewModel.responseSkill.value
 
     Box(
         modifier = Modifier
@@ -342,73 +344,58 @@ fun SkillsCompose() {
                 }
             }
 
-            Text(
-                text = "Kotlin",
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
-            )
+            when (responseSkill) {
+                is SkillUiState.Success -> {
+                    responseSkill.data.forEachIndexed { index, skill ->
+                        Text(
+                            text = skill.name,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 20.dp)
+                        )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
-            ) {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp)
+                        ) {
 
-                Image(painter = painterResource(id = R.drawable.skills),
-                    modifier = Modifier.size(40.dp),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop)
+                            Image(painter = painterResource(id = R.drawable.skills),
+                                modifier = Modifier.size(40.dp),
+                                contentDescription = null,
+                                contentScale = ContentScale.Crop)
 
-                Text(
-                    text = "Associate Software Engineer at IBM",
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(7.dp)
-                )
+                            Text(
+                                text = skill.description,
+                                fontWeight = FontWeight.Medium,
+                                fontSize = 15.sp,
+                                modifier = Modifier.padding(7.dp)
+                            )
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
+                            color = Color.LightGray
+                        )
+                    }
+                }
+                is SkillUiState.Failure -> {
+                    Text(text = responseSkill.error.message ?: "Unknown Error")
+                }
+                SkillUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
+                    )
+                }
+                SkillUiState.Empty -> {
+                    Text(text = "Empty Data")
+                }
             }
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                color = Color.LightGray
-            )
-
-            Text(
-                text = "Android",
-                fontWeight = FontWeight.Bold,
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 20.dp)
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp)
-            ) {
-
-                Image(painter = painterResource(id = R.drawable.skills),
-                    modifier = Modifier.size(40.dp),
-                    contentDescription = null,
-                    contentScale = ContentScale.Crop)
-
-                Text(
-                    text = "Associate Software Engineer at IBM",
-                    fontWeight = FontWeight.Medium,
-                    fontSize = 15.sp,
-                    modifier = Modifier.padding(7.dp)
-                )
-            }
-
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 10.dp),
-                color = Color.LightGray
-            )
 
             Box(
                 modifier = Modifier
@@ -423,7 +410,7 @@ fun SkillsCompose() {
                 ) {
 
                     Text(
-                        text = "Show All 29 skills",
+                        text = "Show All Skills",
                         color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
@@ -442,9 +429,11 @@ fun SkillsCompose() {
 }
 
 
-@Preview
 @Composable
-fun LicenseCompose() {
+fun LicenseCompose(
+    viewModel: ProfileViewModel,
+) {
+    val responseCertification = viewModel.responseCertification.value
 
     Box(
         modifier = Modifier
@@ -461,7 +450,7 @@ fun LicenseCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Licenses & certifications",
+                        text = "Licenses & Certifications",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -484,61 +473,118 @@ fun LicenseCompose() {
                 }
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
+            when (responseCertification) {
+                is CertificationUiState.Success -> {
+                    responseCertification.data.forEachIndexed { index, certification ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 30.dp)
+                        ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.certi),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
+                            Image(
+                                painter = painterResource(id = R.drawable.certi),
+                                contentDescription = null,
+                                modifier = Modifier.size(60.dp),
+                                contentScale = ContentScale.Crop
+                            )
 
-                Spacer(modifier = Modifier.size(10.dp))
+                            Spacer(modifier = Modifier.size(10.dp))
 
-                Column(modifier = Modifier.fillMaxWidth()) {
+                            Column(modifier = Modifier.fillMaxWidth()) {
 
-                    Text(
-                        text = "Azure Developer Associate",
-                        fontWeight = FontWeight.Bold
-                    )
+                                Text(
+                                    text = certification.name,
+                                    fontWeight = FontWeight.Bold
+                                )
 
-                    Text(
-                        text = "Microsoft",
-                        fontWeight = FontWeight.Medium,
-                    )
+                                Text(
+                                    text = certification.publisher,
+                                    fontWeight = FontWeight.Medium,
+                                )
 
-                    Text(
-                        text = "Issued Jan 2023 - Expired Jan 2024",
-                        fontWeight = FontWeight.Normal,
-                    )
+                                val start = certification.publishDate.convertToMonthYearFormat()
+                                val end = certification.expireDate.convertToMonthYearFormat()
 
-                    Box(
-                        modifier = Modifier
-                            .wrapContentSize()
-                            .padding(top = 10.dp)
-                            .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(20.dp))
-                    ) {
+                                Text(
+                                    text = "Issued $start - Expired $end",
+                                    fontWeight = FontWeight.Normal,
+                                )
 
-                        Text(
-                            text = "Show credential", modifier = Modifier
-                                .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
-                            fontWeight = FontWeight.Light,
+                                Box(
+                                    modifier = Modifier
+                                        .wrapContentSize()
+                                        .padding(top = 10.dp)
+                                        .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(20.dp))
+                                ) {
+
+                                    Text(
+                                        text = certification.credential, modifier = Modifier
+                                            .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
+                                        fontWeight = FontWeight.Light,
+                                    )
+                                }
+                            }
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
+                            color = Color.LightGray
                         )
                     }
                 }
+                is CertificationUiState.Failure -> {
+                    Text(text = responseCertification.error.message ?: "Unknown Error")
+                }
+                CertificationUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
+                    )
+                }
+                CertificationUiState.Empty -> {
+                    Text(text = "Empty Data")
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier.wrapContentSize()
+                ) {
+
+                    Text(
+                        text = "Show All Certifications",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                }
             }
         }
     }
 }
 
 
-@Preview
 @Composable
-fun EducationCompose() {
+fun EducationCompose(
+    viewModel: ProfileViewModel,
+) {
+    val responseEducation = viewModel.responseEducation.value
 
     Box(
         modifier = Modifier
@@ -555,7 +601,7 @@ fun EducationCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Education",
+                        text = "Educations",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -578,70 +624,95 @@ fun EducationCompose() {
                 }
             }
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 30.dp)
-            ) {
+            when (responseEducation) {
+                is EducationUiState.Success -> {
+                    responseEducation.data.forEachIndexed { index, education ->
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 30.dp)
+                        ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.education),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
+                            Image(
+                                painter = painterResource(id = R.drawable.education),
+                                contentDescription = null,
+                                modifier = Modifier.size(60.dp),
+                                contentScale = ContentScale.Crop
+                            )
 
-                Spacer(modifier = Modifier.size(10.dp))
+                            Spacer(modifier = Modifier.size(10.dp))
 
-                Column(modifier = Modifier.fillMaxWidth()) {
+                            Column(modifier = Modifier.fillMaxWidth()) {
 
-                    Text(
-                        text = "Amity University",
-                        fontWeight = FontWeight.Bold
+                                Text(
+                                    text = education.instansi,
+                                    fontWeight = FontWeight.Bold
+                                )
+
+                                Text(
+                                    text = education.major,
+                                    fontWeight = FontWeight.Medium,
+                                )
+
+                                val start = education.startDate.convertToMonthYearFormat()
+                                val end = if (education.isNow == 1) {
+                                    "Now"
+                                } else{
+                                    education.endDate.convertToMonthYearFormat()
+                                }
+
+                                Text(
+                                    text = "$start - $end",
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            }
+                        }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
+                            color = Color.LightGray
+                        )
+                    }
+                }
+                is EducationUiState.Failure -> {
+                    Text(text = responseEducation.error.message ?: "Unknown Error")
+                }
+                EducationUiState.Loading -> {
+                    CircularProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
                     )
-
-                    Text(
-                        text = "Master of Computer Applications - MCA",
-                        fontWeight = FontWeight.Medium,
-                    )
-
-                    Text(
-                        text = "2019 - 2022",
-                        fontWeight = FontWeight.Normal,
-                    )
+                }
+                EducationUiState.Empty -> {
+                    Text(text = "Empty Data")
                 }
             }
 
-            Row(
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 30.dp)
+                    .padding(top = 15.dp),
+                contentAlignment = Alignment.Center
             ) {
 
-                Image(
-                    painter = painterResource(id = R.drawable.education),
-                    contentDescription = null,
-                    modifier = Modifier.size(60.dp),
-                    contentScale = ContentScale.Crop
-                )
-
-                Spacer(modifier = Modifier.size(10.dp))
-
-                Column(modifier = Modifier.fillMaxWidth()) {
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier.wrapContentSize()
+                ) {
 
                     Text(
-                        text = "Delhi University",
+                        text = "Show All Educations",
+                        color = MaterialTheme.colorScheme.primary,
                         fontWeight = FontWeight.Bold
                     )
 
-                    Text(
-                        text = "Bachelor of Science, BSc. (CS)",
-                        fontWeight = FontWeight.Medium,
-                    )
-
-                    Text(
-                        text = "2015 - 2018",
-                        fontWeight = FontWeight.Normal,
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
                     )
                 }
             }
@@ -649,10 +720,10 @@ fun EducationCompose() {
     }
 }
 
-@Preview
 @Composable
-fun ExperienceCompose() {
-    val viewModel: ProfileViewModel = getViewModel()
+fun ExperienceCompose(
+    viewModel: ProfileViewModel,
+) {
     val responseExperience = viewModel.responseExperience.value
 
     Box(
@@ -670,7 +741,7 @@ fun ExperienceCompose() {
                 Column(modifier = Modifier.wrapContentSize()) {
 
                     Text(
-                        text = "Experience",
+                        text = "Experiences",
                         fontWeight = FontWeight.Bold,
                     )
 
@@ -732,6 +803,13 @@ fun ExperienceCompose() {
                                 )
                             }
                         }
+
+                        Divider(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp),
+                            color = Color.LightGray
+                        )
                     }
                 }
                 is ExperienceUiState.Failure -> {
@@ -746,6 +824,32 @@ fun ExperienceCompose() {
                 }
                 ExperienceUiState.Empty -> {
                     Text(text = "Empty Data")
+                }
+            }
+
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp),
+                contentAlignment = Alignment.Center
+            ) {
+
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(5.dp),
+                    modifier = Modifier.wrapContentSize()
+                ) {
+
+                    Text(
+                        text = "Show All Experiences",
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    Icon(
+                        imageVector = Icons.Default.ArrowForward,
+                        contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
                 }
             }
         }

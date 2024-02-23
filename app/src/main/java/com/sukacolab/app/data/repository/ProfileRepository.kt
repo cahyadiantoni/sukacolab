@@ -29,4 +29,28 @@ class ProfileRepository(
             token = "Bearer $token"
         ).data)
     }.flowOn(Dispatchers.IO)
+
+    fun getCertification() = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Certification", "get Certification")
+        emit(apiService.getCertification(
+            token = "Bearer $token"
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getSkill() = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Skill", "get Skill")
+        emit(apiService.getSkill(
+            token = "Bearer $token"
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getEducation() = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Education", "get Education")
+        emit(apiService.getEducation(
+            token = "Bearer $token"
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }
