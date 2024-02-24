@@ -94,7 +94,7 @@ private fun BackPressSample() {
 
     if(showToast){
         Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show()
-        showToast= false
+        showToast = false
     }
 
 

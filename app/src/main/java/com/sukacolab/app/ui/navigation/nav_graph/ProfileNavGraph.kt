@@ -13,15 +13,15 @@ fun NavGraphBuilder.profileNavGraph(
     navController: NavHostController,
 ) {
     composable(Screen.Experience.route) {
-        ExperienceScreen()
+        ExperienceScreen(navController = navController)
     }
     composable(Screen.Certification.route) {
-        CertificationScreen()
+        CertificationScreen(navController = navController)
     }
     composable(Screen.Skill.route) {
-        SkillScreen()
+        SkillScreen(navController = navController)
     }
     composable(Screen.Education.route) {
-        EducationScreen()
+        EducationScreen(navController = navController)
     }
 }

@@ -1,6 +1,9 @@
 package com.sukacolab.app.ui.feature.login
 
+import android.app.Activity
 import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -25,6 +28,7 @@ import com.sukacolab.app.ui.component.textfield.EmailTextField
 import com.sukacolab.app.ui.component.textfield.PasswordTextField
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
+import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
 @NavDestinationDsl
@@ -35,6 +39,42 @@ fun LoginScreen(
     LoginScreenContent(
        navController = navController,
     )
+    BackPressSample()
+}
+
+sealed class BackPress {
+    object Idle : BackPress()
+    object InitialTouch : BackPress()
+}
+
+@Composable
+private fun BackPressSample() {
+    var showToast by remember { mutableStateOf(false) }
+
+    var backPressState by remember { mutableStateOf<BackPress>(BackPress.Idle) }
+    val context = LocalContext.current
+
+    if(showToast){
+        Toast.makeText(context, "Press again to exit", Toast.LENGTH_SHORT).show()
+        showToast = false
+    }
+
+
+    LaunchedEffect(key1 = backPressState) {
+        if (backPressState == BackPress.InitialTouch) {
+            delay(2000)
+            backPressState = BackPress.Idle
+        }
+    }
+
+    BackHandler(backPressState == BackPress.Idle) {
+        backPressState = BackPress.InitialTouch
+        showToast = true
+    }
+
+    BackHandler(backPressState == BackPress.InitialTouch) {
+        (context as? Activity)?.finishAffinity()
+    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)

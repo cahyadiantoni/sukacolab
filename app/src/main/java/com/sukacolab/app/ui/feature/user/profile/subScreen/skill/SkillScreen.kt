@@ -13,6 +13,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Edit
@@ -33,6 +34,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
@@ -41,7 +43,7 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SkillScreen(
-
+    navController: NavController,
 ) {
     val viewModel: SkillViewModel = getViewModel()
     val responseSkill = viewModel.responseAllSkill.value
@@ -52,7 +54,7 @@ fun SkillScreen(
             StatelessTopBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -62,7 +64,17 @@ fun SkillScreen(
                     }
                 },
                 title = "All Skill",
-                actionIcon = {}
+                actionIcon = {
+                    IconButton(onClick = {
+
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "add",
+                            tint = Color.White
+                        )
+                    }
+                }
             )
         }
     ){

@@ -19,6 +19,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.BookmarkBorder
@@ -52,6 +53,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
@@ -63,7 +65,7 @@ import org.koin.androidx.compose.getViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ExperienceScreen(
-
+    navController: NavController,
 ) {
     val viewModel: ExperienceViewModel = getViewModel()
     val responseExperience = viewModel.responseAllExperience.value
@@ -74,7 +76,7 @@ fun ExperienceScreen(
             StatelessTopBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -84,7 +86,17 @@ fun ExperienceScreen(
                     }
                 },
                 title = "All Experience",
-                actionIcon = {}
+                actionIcon = {
+                    IconButton(onClick = {
+
+                    }) {
+                        Icon(
+                            imageVector = Icons.Default.Add,
+                            contentDescription = "add",
+                            tint = Color.White
+                        )
+                    }
+                }
             )
         }
     ){
