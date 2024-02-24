@@ -24,47 +24,47 @@ interface ApiService {
         @Body request: LoginRequest
     ): Call<LoginResponse>
 
-    @GET("/api/auth/me")
+    @GET("/api/profile/me")
     suspend fun getProfile(
         @Header("Authorization") token: String
     ): ProfileResponse
 
-    @GET("/api/auth/experience")
+    @GET("/api/profile/experience")
     suspend fun getExperience(
         @Header("Authorization") token: String,
     ): ExperienceResponse
 
-    @GET("/api/auth/certification")
+    @GET("/api/profile/certification")
     suspend fun getCertification(
         @Header("Authorization") token: String,
     ): CertificationResponse
 
-    @GET("/api/auth/skill")
+    @GET("/api/profile/skill")
     suspend fun getSkill(
         @Header("Authorization") token: String,
     ): SkillResponse
 
-    @GET("/api/auth/education")
+    @GET("/api/profile/education")
     suspend fun getEducation(
         @Header("Authorization") token: String,
     ): EducationResponse
 
-    @GET("/api/auth/all_experience")
+    @GET("/api/profile/experience/all")
     suspend fun getAllExperience(
         @Header("Authorization") token: String,
     ): ExperienceResponse
 
-    @GET("/api/auth/all_certification")
+    @GET("/api/profile/certification/all")
     suspend fun getAllCertification(
         @Header("Authorization") token: String,
     ): CertificationResponse
 
-    @GET("/api/auth/all_skill")
+    @GET("/api/profile/skill/all")
     suspend fun getAllSkill(
         @Header("Authorization") token: String,
     ): SkillResponse
 
-    @GET("/api/auth/all_education")
+    @GET("/api/profile/education/all")
     suspend fun getAllEducation(
         @Header("Authorization") token: String,
     ): EducationResponse
