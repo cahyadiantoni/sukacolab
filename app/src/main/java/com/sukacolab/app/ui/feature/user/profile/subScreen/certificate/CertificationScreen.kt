@@ -87,7 +87,7 @@ fun CertificationScreen() {
                                         Row(
                                             modifier = Modifier
                                                 .fillMaxWidth()
-                                                .padding(top = 30.dp)
+                                                .padding(top = 10.dp)
                                         ) {
 
                                             Image(

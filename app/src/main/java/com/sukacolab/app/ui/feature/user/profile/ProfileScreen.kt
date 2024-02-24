@@ -325,7 +325,11 @@ fun SkillsCompose(
 
                 }
 
-                Row(modifier = Modifier.wrapContentSize(),
+                Row(modifier = Modifier
+                    .wrapContentSize()
+                    .clickable {
+                        navController.navigate(Screen.Skill.route)
+                    },
                     horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 
                     Icon(
@@ -394,7 +398,10 @@ fun SkillsCompose(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 15.dp)
+                    .clickable {
+                        navController.navigate(Screen.Skill.route)
+                    },
                 contentAlignment = Alignment.Center
             ) {
 
