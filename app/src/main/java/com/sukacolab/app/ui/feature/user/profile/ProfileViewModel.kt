@@ -59,7 +59,6 @@ class ProfileViewModel(
         getCertification()
         getSkill()
         getEducation()
-        getAllCertification()
         getAllSkill()
         getAllEducation()
     }
@@ -116,17 +115,6 @@ class ProfileViewModel(
                 responseEducation.value = EducationUiState.Failure(it)
             }.collect {
                 responseEducation.value = EducationUiState.Success(it)
-            }
-    }
-
-    private fun getAllCertification() = viewModelScope.launch {
-        profileRepo.getAllCertification()
-            .onStart {
-                responseAllCertification.value = CertificationUiState.Loading
-            }.catch {
-                responseAllCertification.value = CertificationUiState.Failure(it)
-            }.collect {
-                responseAllCertification.value = CertificationUiState.Success(it)
             }
     }
 

@@ -26,6 +26,9 @@ sealed class Screen(val route: String) {
     }
 
     object Experience : Screen("experience")
+    object Certification : Screen("certification")
+    object Skill : Screen("skill")
+    object Education : Screen("education")
 
     //admin
     object HomeAdmin : Screen("home_admin")

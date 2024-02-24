@@ -16,6 +16,7 @@ import com.sukacolab.app.ui.feature.user.profile.subScreen.profile_edit.ProfileE
 import com.sukacolab.app.ui.feature.register.RegisterViewModel
 import com.sukacolab.app.ui.feature.splash.SplashViewModel
 import com.sukacolab.app.ui.feature.user.home.HomeViewModel
+import com.sukacolab.app.ui.feature.user.profile.subScreen.certificate.CertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.subScreen.experience.ExperienceViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
@@ -59,6 +60,7 @@ val viewModelModules = module {
     viewModel { HomeViewModel() }
     viewModel { ProfileViewModel(get(),get()) }
     viewModel { ExperienceViewModel(get()) }
+    viewModel { CertificationViewModel(get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 

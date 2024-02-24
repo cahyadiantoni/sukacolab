@@ -270,16 +270,19 @@ fun ProfileScreen(
                 borderCompose()
 
                 LicenseCompose(
+                    navController = navController,
                     viewModel = viewModel
                 )
                 borderCompose()
 
                 SkillsCompose(
+                    navController = navController,
                     viewModel = viewModel
                 )
                 borderCompose()
 
                 EducationCompose(
+                    navController = navController,
                     viewModel = viewModel
                 )
                 borderCompose()
@@ -296,6 +299,7 @@ fun ProfileScreen(
 
 @Composable
 fun SkillsCompose(
+    navController: NavController,
     viewModel: ProfileViewModel,
 ) {
     val responseSkill = viewModel.responseSkill.value
@@ -421,6 +425,7 @@ fun SkillsCompose(
 
 @Composable
 fun LicenseCompose(
+    navController: NavController,
     viewModel: ProfileViewModel,
 ) {
     val responseCertification = viewModel.responseCertification.value
@@ -447,7 +452,11 @@ fun LicenseCompose(
                 }
 
                 Row(
-                    modifier = Modifier.wrapContentSize(),
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .clickable {
+                            navController.navigate(Screen.Certification.route)
+                        },
                     horizontalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
 
@@ -506,7 +515,6 @@ fun LicenseCompose(
                                         .padding(top = 10.dp)
                                         .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(20.dp))
                                 ) {
-
                                     Text(
                                         text = certification.credential, modifier = Modifier
                                             .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
@@ -549,7 +557,11 @@ fun LicenseCompose(
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.wrapContentSize()
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .clickable {
+                            navController.navigate(Screen.Certification.route)
+                        }
                 ) {
 
                     Text(
@@ -572,6 +584,7 @@ fun LicenseCompose(
 
 @Composable
 fun EducationCompose(
+    navController: NavController,
     viewModel: ProfileViewModel,
 ) {
     val responseEducation = viewModel.responseEducation.value

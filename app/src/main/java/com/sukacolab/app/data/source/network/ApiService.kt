@@ -54,17 +54,17 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ExperienceResponse
 
-    @GET("/api/auth/certification")
+    @GET("/api/auth/all_certification")
     suspend fun getAllCertification(
         @Header("Authorization") token: String,
     ): CertificationResponse
 
-    @GET("/api/auth/skill")
+    @GET("/api/auth/all_skill")
     suspend fun getAllSkill(
         @Header("Authorization") token: String,
     ): SkillResponse
 
-    @GET("/api/auth/education")
+    @GET("/api/auth/all_education")
     suspend fun getAllEducation(
         @Header("Authorization") token: String,
     ): EducationResponse
