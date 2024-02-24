@@ -8,6 +8,8 @@ import androidx.compose.material.icons.filled.AdsClick
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.LibraryAdd
+import androidx.compose.material.icons.filled.ManageAccounts
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material.icons.filled.ShoppingCart
@@ -117,7 +119,7 @@ private fun BottomBar(
             ),
             NavigationItem(
                 title ="Profile",
-                icon = Icons.Default.AccountCircle,
+                icon = Icons.Default.ManageAccounts,
                 screen = Screen.Profile
             ),
         )
@@ -180,7 +182,7 @@ private fun BottomBarAdmin(
             ),
             NavigationItem(
                 title ="Profile",
-                icon = Icons.Default.AccountCircle,
+                icon = Icons.Default.ManageAccounts,
                 screen = Screen.Profile
             ),
         )

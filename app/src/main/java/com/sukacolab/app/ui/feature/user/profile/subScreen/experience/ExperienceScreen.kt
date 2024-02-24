@@ -103,79 +103,93 @@ fun ExperienceScreen(
                         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
                             when (responseExperience) {
                                 is ExperienceUiState.Success -> {
-                                    responseExperience.data.forEachIndexed { index, experience ->
-                                        Row(
+                                    if (responseExperience.data.isEmpty()) {
+                                        Box(
                                             modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(top = 10.dp),
-                                            verticalAlignment = Alignment.CenterVertically
+                                                .fillMaxSize()
+                                                .padding(top = 30.dp),
+                                            contentAlignment = Alignment.Center
                                         ) {
-                                            Image(
-                                                painter = painterResource(id = R.drawable.xp),
-                                                contentDescription = null,
-                                                modifier = Modifier.size(60.dp),
-                                                contentScale = ContentScale.Crop
+                                            Text(
+                                                text = "Experience belum ditambahkan",
+                                                fontWeight = FontWeight.Light
                                             )
-
-                                            Spacer(modifier = Modifier.size(10.dp))
-
-                                            Column(modifier = Modifier.fillMaxWidth()) {
-
-                                                Row(
-                                                    modifier = Modifier.fillMaxWidth(),
-                                                    horizontalArrangement = Arrangement.SpaceBetween
-                                                ) {
-                                                    Column(Modifier.weight(1f)) {
-                                                        Text(
-                                                            text = experience.title,
-                                                            fontWeight = FontWeight.Bold,
-                                                            lineHeight = 18.sp
-                                                        )
-
-                                                        Text(
-                                                            text = "${experience.company} - ${experience.role}",
-                                                            fontWeight = FontWeight.Medium,
-                                                            lineHeight = 18.sp
-                                                        )
-                                                    }
-
-                                                    Row(modifier = Modifier.wrapContentSize(),
-                                                        horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                        Icon(
-                                                            imageVector = Icons.Default.Delete,
-                                                            contentDescription = null,
-                                                            tint = MaterialTheme.colorScheme.primary
-                                                        )
-
-                                                        Icon(
-                                                            imageVector = Icons.Default.Edit,
-                                                            contentDescription = null,
-                                                            tint = MaterialTheme.colorScheme.primary
-                                                        )
-                                                    }
-                                                }
-
-                                                val start = experience.startDate.convertToMonthYearFormat()
-                                                val end = if (experience.isNow == 1) {
-                                                    "Now"
-                                                } else{
-                                                    experience.endDate.convertToMonthYearFormat()
-                                                }
-
-                                                Text(
-                                                    text = "$start - $end",
-                                                    fontWeight = FontWeight.Normal,
-                                                    lineHeight = 18.sp
-                                                )
-                                            }
                                         }
+                                    }else{
+                                        responseExperience.data.forEachIndexed { index, experience ->
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(top = 10.dp),
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+                                                Image(
+                                                    painter = painterResource(id = R.drawable.xp),
+                                                    contentDescription = null,
+                                                    modifier = Modifier.size(60.dp),
+                                                    contentScale = ContentScale.Crop
+                                                )
 
-                                        Divider(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(top = 10.dp),
-                                            color = Color.LightGray
-                                        )
+                                                Spacer(modifier = Modifier.size(10.dp))
+
+                                                Column(modifier = Modifier.fillMaxWidth()) {
+
+                                                    Row(
+                                                        modifier = Modifier.fillMaxWidth(),
+                                                        horizontalArrangement = Arrangement.SpaceBetween
+                                                    ) {
+                                                        Column(Modifier.weight(1f)) {
+                                                            Text(
+                                                                text = experience.title,
+                                                                fontWeight = FontWeight.Bold,
+                                                                lineHeight = 18.sp
+                                                            )
+
+                                                            Text(
+                                                                text = "${experience.company} - ${experience.role}",
+                                                                fontWeight = FontWeight.Medium,
+                                                                lineHeight = 18.sp
+                                                            )
+                                                        }
+
+                                                        Row(modifier = Modifier.wrapContentSize(),
+                                                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                                            Icon(
+                                                                imageVector = Icons.Default.Delete,
+                                                                contentDescription = null,
+                                                                tint = MaterialTheme.colorScheme.primary
+                                                            )
+
+                                                            Icon(
+                                                                imageVector = Icons.Default.Edit,
+                                                                contentDescription = null,
+                                                                tint = MaterialTheme.colorScheme.primary
+                                                            )
+                                                        }
+                                                    }
+
+                                                    val start = experience.startDate.convertToMonthYearFormat()
+                                                    val end = if (experience.isNow == 1) {
+                                                        "Now"
+                                                    } else{
+                                                        experience.endDate.convertToMonthYearFormat()
+                                                    }
+
+                                                    Text(
+                                                        text = "$start - $end",
+                                                        fontWeight = FontWeight.Normal,
+                                                        lineHeight = 18.sp
+                                                    )
+                                                }
+                                            }
+
+                                            Divider(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(top = 10.dp),
+                                                color = Color.LightGray
+                                            )
+                                        }
                                     }
                                 }
                                 is ExperienceUiState.Failure -> {

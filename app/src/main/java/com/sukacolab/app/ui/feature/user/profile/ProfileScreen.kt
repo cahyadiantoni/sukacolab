@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -150,20 +151,31 @@ fun ProfileScreen(
                                     .clip(CircleShape)
                                     .background(Color.White)
                             ) {
-
-                                AsyncImage(
-                                    model = ImageRequest.Builder(LocalContext.current)
-                                        .data(viewModel.photo)
-                                        .crossfade(true)
-                                        .build(),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    placeholder = painterResource(id = R.drawable.img_logo),
-                                    modifier = Modifier
-                                        .border(2.dp, Color.LightGray, shape = CircleShape)
-                                        .padding(5.dp)
-                                        .clip(CircleShape)
-                                )
+                                if(viewModel.photo == null){
+                                    Image(
+                                        painter = painterResource(id = R.drawable.img_profile),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        modifier = Modifier
+                                            .border(2.dp, Color.LightGray, shape = CircleShape)
+                                            .padding(5.dp)
+                                            .clip(CircleShape)
+                                    )
+                                }else{
+                                    AsyncImage(
+                                        model = ImageRequest.Builder(LocalContext.current)
+                                            .data(viewModel.photo)
+                                            .crossfade(true)
+                                            .build(),
+                                        contentDescription = null,
+                                        contentScale = ContentScale.Crop,
+                                        placeholder = painterResource(id = R.drawable.img_profile),
+                                        modifier = Modifier
+                                            .border(2.dp, Color.LightGray, shape = CircleShape)
+                                            .padding(5.dp)
+                                            .clip(CircleShape)
+                                    )
+                                }
                             }
                         }
                     }
@@ -182,12 +194,21 @@ fun ProfileScreen(
                         modifier = Modifier.padding(start = 20.dp, end = 20.dp)
                     )
 
-                    Text(
-                        text = viewModel.summary.toString(),
-                        fontWeight = FontWeight.Normal,
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
-                    )
+                    if(viewModel.summary == null){
+                        Text(
+                            text = "Ringkasan belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                        )
+                    }else{
+                        Text(
+                            text = viewModel.summary.toString(),
+                            fontWeight = FontWeight.Normal,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                        )
+                    }
                 }
 
                 Row(
@@ -197,34 +218,59 @@ fun ProfileScreen(
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
 
-                    ClickableImage(
-                        painter = painterResource(id = R.drawable.linkedin),
-                        contentDescription = "Linkedin",
-                        imageSize = 40.dp,
-                        uri = viewModel.linkedin.toString()
-                    )
+                    var nullNum = 4
+                    if(viewModel.linkedin != null){
+                        ClickableImage(
+                            painter = painterResource(id = R.drawable.linkedin),
+                            contentDescription = "Linkedin",
+                            imageSize = 40.dp,
+                            uri = viewModel.linkedin.toString()
+                        )
 
-                    ClickableImage(
-                        painter = painterResource(id = R.drawable.github),
-                        contentDescription = "GitHub",
-                        imageSize = 40.dp,
-                        uri = viewModel.github.toString()
-                    )
+                        nullNum--
+                    }
 
+                    if(viewModel.github != null){
+                        ClickableImage(
+                            painter = painterResource(id = R.drawable.github),
+                            contentDescription = "GitHub",
+                            imageSize = 40.dp,
+                            uri = viewModel.github.toString()
+                        )
 
-                    ClickableImage(
-                        painter = painterResource(id = R.drawable.whatsapp),
-                        contentDescription = "WhatsApp",
-                        imageSize = 40.dp,
-                        uri = viewModel.whatsapp.toString()
-                    )
+                        nullNum--
+                    }
 
-                    ClickableImage(
-                        painter = painterResource(id = R.drawable.instagram),
-                        contentDescription = "Instagram",
-                        imageSize = 40.dp,
-                        uri = viewModel.instagram.toString()
-                    )
+                    if(viewModel.whatsapp != null){
+                        ClickableImage(
+                            painter = painterResource(id = R.drawable.whatsapp),
+                            contentDescription = "WhatsApp",
+                            imageSize = 40.dp,
+                            uri = viewModel.whatsapp.toString()
+                        )
+
+                        nullNum--
+                    }
+
+                    if(viewModel.instagram != null){
+                        ClickableImage(
+                            painter = painterResource(id = R.drawable.instagram),
+                            contentDescription = "Instagram",
+                            imageSize = 40.dp,
+                            uri = viewModel.instagram.toString()
+                        )
+
+                        nullNum--
+                    }
+
+                    if(nullNum == 4){
+                        Text(
+                            text = "Kontak belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            textAlign = TextAlign.Center,
+                            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                        )
+                    }
                 }
 
                 viewModel.resume?.let { resumeUrl ->
@@ -341,43 +387,76 @@ fun SkillsCompose(
 
             when (responseSkill) {
                 is SkillUiState.Success -> {
-                    responseSkill.data.forEachIndexed { index, skill ->
+                    if (responseSkill.data.isEmpty()) {
                         Text(
-                            text = skill.name,
-                            fontWeight = FontWeight.Bold,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 20.dp),
-                            lineHeight = 18.sp
+                            text = "Skill belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            modifier = Modifier.padding(top = 10.dp)
                         )
-
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-
-                            Image(painter = painterResource(id = R.drawable.skills),
-                                modifier = Modifier.size(40.dp),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop)
-
+                    }else{
+                        responseSkill.data.forEachIndexed { index, skill ->
                             Text(
-                                text = skill.description,
-                                fontWeight = FontWeight.Medium,
-                                fontSize = 15.sp,
-                                modifier = Modifier.padding(horizontal = 7.dp),
-                                lineHeight = 16.sp
+                                text = skill.name,
+                                fontWeight = FontWeight.Bold,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 20.dp),
+                                lineHeight = 18.sp
+                            )
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+
+                                Image(painter = painterResource(id = R.drawable.skills),
+                                    modifier = Modifier.size(40.dp),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop)
+
+                                Text(
+                                    text = skill.description,
+                                    fontWeight = FontWeight.Medium,
+                                    fontSize = 15.sp,
+                                    modifier = Modifier.padding(horizontal = 7.dp),
+                                    lineHeight = 16.sp
+                                )
+                            }
+
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                color = Color.LightGray
                             )
                         }
-
-                        Divider(
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            color = Color.LightGray
-                        )
+                                .padding(top = 15.dp)
+                                .clickable {
+                                    navController.navigate(Screen.Skill.route)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier.wrapContentSize()
+                            ) {
+                                Text(
+                                    text = "Show All Skills",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
                     }
                 }
                 is SkillUiState.Failure -> {
@@ -394,38 +473,7 @@ fun SkillsCompose(
                     Text(text = "Empty Data")
                 }
             }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp)
-                    .clickable {
-                        navController.navigate(Screen.Skill.route)
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.wrapContentSize()
-                ) {
-
-                    Text(
-                        text = "Show All Skills",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                }
-            }
-
         }
-
     }
 }
 
@@ -477,67 +525,106 @@ fun LicenseCompose(
 
             when (responseCertification) {
                 is CertificationUiState.Success -> {
-                    responseCertification.data.forEachIndexed { index, certification ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 30.dp)
-                        ) {
+                    if (responseCertification.data.isEmpty()) {
+                        Text(
+                            text = "Certification belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                    }else{
+                        responseCertification.data.forEachIndexed { index, certification ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 30.dp)
+                            ) {
 
-                            Image(
-                                painter = painterResource(id = R.drawable.certi),
-                                contentDescription = null,
-                                modifier = Modifier.size(60.dp),
-                                contentScale = ContentScale.Crop
-                            )
-
-                            Spacer(modifier = Modifier.size(10.dp))
-
-                            Column(modifier = Modifier.fillMaxWidth()) {
-
-                                Text(
-                                    text = certification.name,
-                                    fontWeight = FontWeight.Bold,
-                                    lineHeight = 18.sp
+                                Image(
+                                    painter = painterResource(id = R.drawable.certi),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp),
+                                    contentScale = ContentScale.Crop
                                 )
 
-                                Text(
-                                    text = certification.publisher,
-                                    fontWeight = FontWeight.Medium,
-                                    lineHeight = 18.sp
-                                )
+                                Spacer(modifier = Modifier.size(10.dp))
 
-                                val start = certification.publishDate.convertToMonthYearFormat()
-                                val end = certification.expireDate.convertToMonthYearFormat()
+                                Column(modifier = Modifier.fillMaxWidth()) {
 
-                                Text(
-                                    text = "Issued $start - Expired $end",
-                                    fontWeight = FontWeight.Normal,
-                                    lineHeight = 18.sp
-                                )
-
-                                Box(
-                                    modifier = Modifier
-                                        .wrapContentSize()
-                                        .padding(top = 10.dp)
-                                        .border(1.dp, Color.DarkGray, shape = RoundedCornerShape(20.dp))
-                                ) {
                                     Text(
-                                        text = certification.credential, modifier = Modifier
-                                            .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
-                                        fontWeight = FontWeight.Light,
+                                        text = certification.name,
+                                        fontWeight = FontWeight.Bold,
                                         lineHeight = 18.sp
                                     )
+
+                                    Text(
+                                        text = certification.publisher,
+                                        fontWeight = FontWeight.Medium,
+                                        lineHeight = 18.sp
+                                    )
+
+                                    val start = certification.publishDate.convertToMonthYearFormat()
+                                    val end = certification.expireDate.convertToMonthYearFormat()
+
+                                    Text(
+                                        text = "Issued $start - Expired $end",
+                                        fontWeight = FontWeight.Normal,
+                                        lineHeight = 18.sp
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .wrapContentSize()
+                                            .padding(top = 10.dp)
+                                            .border(
+                                                1.dp,
+                                                Color.DarkGray,
+                                                shape = RoundedCornerShape(20.dp)
+                                            )
+                                    ) {
+                                        Text(
+                                            text = certification.credential, modifier = Modifier
+                                                .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
+                                            fontWeight = FontWeight.Light,
+                                            lineHeight = 18.sp
+                                        )
+                                    }
                                 }
                             }
+
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                color = Color.LightGray
+                            )
                         }
 
-                        Divider(
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            color = Color.LightGray
-                        )
+                                .padding(top = 15.dp)
+                                .clickable {
+                                    navController.navigate(Screen.Certification.route)
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .wrapContentSize()
+                            ) {
+                                Text(
+                                    text = "Show All Certifications",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Bold
+                                )
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
+                        }
                     }
                 }
                 is CertificationUiState.Failure -> {
@@ -552,36 +639,6 @@ fun LicenseCompose(
                 }
                 CertificationUiState.Empty -> {
                     Text(text = "Empty Data")
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .clickable {
-                            navController.navigate(Screen.Certification.route)
-                        }
-                ) {
-
-                    Text(
-                        text = "Show All Certifications",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
                 }
             }
         }
@@ -636,57 +693,91 @@ fun EducationCompose(
 
             when (responseEducation) {
                 is EducationUiState.Success -> {
-                    responseEducation.data.forEachIndexed { index, education ->
-                        Row(
+                    if (responseEducation.data.isEmpty()) {
+                        Text(
+                            text = "Education belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            modifier = Modifier.padding(top = 10.dp)
+                        )
+                    }else{
+                        responseEducation.data.forEachIndexed { index, education ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 30.dp)
+                            ) {
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.education),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+
+                                Spacer(modifier = Modifier.size(10.dp))
+
+                                Column(modifier = Modifier.fillMaxWidth()) {
+
+                                    Text(
+                                        text = education.instansi,
+                                        fontWeight = FontWeight.Bold,
+                                        lineHeight = 18.sp
+                                    )
+
+                                    Text(
+                                        text = education.major,
+                                        fontWeight = FontWeight.Medium,
+                                        lineHeight = 18.sp
+                                    )
+
+                                    val start = education.startDate.convertToMonthYearFormat()
+                                    val end = if (education.isNow == 1) {
+                                        "Now"
+                                    } else{
+                                        education.endDate.convertToMonthYearFormat()
+                                    }
+
+                                    Text(
+                                        text = "$start - $end",
+                                        fontWeight = FontWeight.Normal,
+                                        lineHeight = 18.sp
+                                    )
+                                }
+                            }
+
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                color = Color.LightGray
+                            )
+                        }
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 30.dp)
+                                .padding(top = 15.dp)
+                                .clickable {
+                                    navController.navigate(Screen.Education.route)
+                                },
+                            contentAlignment = Alignment.Center
                         ) {
-
-                            Image(
-                                painter = painterResource(id = R.drawable.education),
-                                contentDescription = null,
-                                modifier = Modifier.size(60.dp),
-                                contentScale = ContentScale.Crop
-                            )
-
-                            Spacer(modifier = Modifier.size(10.dp))
-
-                            Column(modifier = Modifier.fillMaxWidth()) {
-
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .wrapContentSize(),
+                            ) {
                                 Text(
-                                    text = education.instansi,
-                                    fontWeight = FontWeight.Bold,
-                                    lineHeight = 18.sp
+                                    text = "Show All Educations",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Bold
                                 )
-
-                                Text(
-                                    text = education.major,
-                                    fontWeight = FontWeight.Medium,
-                                    lineHeight = 18.sp
-                                )
-
-                                val start = education.startDate.convertToMonthYearFormat()
-                                val end = if (education.isNow == 1) {
-                                    "Now"
-                                } else{
-                                    education.endDate.convertToMonthYearFormat()
-                                }
-
-                                Text(
-                                    text = "$start - $end",
-                                    fontWeight = FontWeight.Normal,
-                                    lineHeight = 18.sp
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
-
-                        Divider(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            color = Color.LightGray
-                        )
                     }
                 }
                 is EducationUiState.Failure -> {
@@ -701,36 +792,6 @@ fun EducationCompose(
                 }
                 EducationUiState.Empty -> {
                     Text(text = "Empty Data")
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp),
-                contentAlignment = Alignment.Center
-            ) {
-
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier
-                        .wrapContentSize()
-                        .clickable {
-                            navController.navigate(Screen.Education.route)
-                        },
-                ) {
-
-                    Text(
-                        text = "Show All Educations",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
                 }
             }
         }
@@ -782,54 +843,87 @@ fun ExperienceCompose(
             }
             when (responseExperience) {
                 is ExperienceUiState.Success -> {
-                    responseExperience.data.forEachIndexed { index, experience ->
-                        Row(
+                    if (responseExperience.data.isEmpty()) {
+                        Text(
+                            text = "Experience belum ditambahkan",
+                            fontWeight = FontWeight.Light,
+                            modifier = Modifier.padding(top = 10.dp)
+                            )
+                    } else {
+                        responseExperience.data.forEachIndexed { index, experience ->
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 30.dp)
+                            ) {
+                                Image(
+                                    painter = painterResource(id = R.drawable.xp),
+                                    contentDescription = null,
+                                    modifier = Modifier.size(60.dp),
+                                    contentScale = ContentScale.Crop
+                                )
+
+                                Spacer(modifier = Modifier.size(10.dp))
+
+                                Column(modifier = Modifier.fillMaxWidth()) {
+
+                                    Text(
+                                        text = experience.title,
+                                        fontWeight = FontWeight.Bold,
+                                        lineHeight = 18.sp
+                                    )
+
+                                    Text(
+                                        text = "${experience.company} - ${experience.role}",
+                                        fontWeight = FontWeight.Medium,
+                                        lineHeight = 18.sp
+                                    )
+                                    val start = experience.startDate.convertToMonthYearFormat()
+                                    val end = if (experience.isNow == 1) {
+                                        "Now"
+                                    } else {
+                                        experience.endDate.convertToMonthYearFormat()
+                                    }
+                                    Text(
+                                        text = "$start - $end",
+                                        fontWeight = FontWeight.Normal,
+                                        lineHeight = 18.sp
+                                    )
+                                }
+                            }
+
+                            Divider(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 10.dp),
+                                color = Color.LightGray
+                            )
+                        }
+                        Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 30.dp)
+                                .padding(top = 15.dp)
+                                .clickable {
+                                    navController.navigate(Screen.Experience.route)
+                                },
+                            contentAlignment = Alignment.Center
                         ) {
-                            Image(
-                                painter = painterResource(id = R.drawable.xp),
-                                contentDescription = null,
-                                modifier = Modifier.size(60.dp),
-                                contentScale = ContentScale.Crop
-                            )
-
-                            Spacer(modifier = Modifier.size(10.dp))
-
-                            Column(modifier = Modifier.fillMaxWidth()) {
-
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier.wrapContentSize()
+                            ) {
                                 Text(
-                                    text = experience.title,
-                                    fontWeight = FontWeight.Bold,
-                                    lineHeight = 18.sp
+                                    text = "Show All Experiences",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontWeight = FontWeight.Bold
                                 )
-
-                                Text(
-                                    text = "${experience.company} - ${experience.role}",
-                                    fontWeight = FontWeight.Medium,
-                                    lineHeight = 18.sp
-                                )
-                                val start = experience.startDate.convertToMonthYearFormat()
-                                val end = if (experience.isNow == 1) {
-                                    "Now"
-                                } else{
-                                    experience.endDate.convertToMonthYearFormat()
-                                }
-                                Text(
-                                    text = "$start - $end",
-                                    fontWeight = FontWeight.Normal,
-                                    lineHeight = 18.sp
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
                                 )
                             }
                         }
-
-                        Divider(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(top = 10.dp),
-                            color = Color.LightGray
-                        )
                     }
                 }
                 is ExperienceUiState.Failure -> {
@@ -844,34 +938,6 @@ fun ExperienceCompose(
                 }
                 ExperienceUiState.Empty -> {
                     Text(text = "Empty Data")
-                }
-            }
-
-            Box(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(top = 15.dp)
-                    .clickable {
-                        navController.navigate(Screen.Experience.route)
-                    },
-                contentAlignment = Alignment.Center
-            ) {
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.wrapContentSize()
-                ) {
-
-                    Text(
-                        text = "Show All Experiences",
-                        color = MaterialTheme.colorScheme.primary,
-                        fontWeight = FontWeight.Bold
-                    )
-
-                    Icon(
-                        imageVector = Icons.Default.ArrowForward,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
                 }
             }
         }
@@ -920,11 +986,19 @@ fun AboutCompose(
                 )
             }
 
-            Text(
-                text = viewModel.about.toString(),
-                fontWeight = FontWeight.Normal,
-                modifier = Modifier.padding(top = 20.dp)
-            )
+            if(viewModel.about == null){
+                Text(
+                    text = "Informasi belum ditambahkan",
+                    fontWeight = FontWeight.Light,
+                    modifier = Modifier.padding(top = 10.dp)
+                )
+            }else{
+                Text(
+                    text = viewModel.about.toString(),
+                    fontWeight = FontWeight.Normal,
+                    modifier = Modifier.padding(top = 20.dp)
+                )
+            }
         }
     }
 }
