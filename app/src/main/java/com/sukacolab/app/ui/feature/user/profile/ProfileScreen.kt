@@ -618,7 +618,11 @@ fun EducationCompose(
                 }
 
                 Row(
-                    modifier = Modifier.wrapContentSize(),
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .clickable {
+                            navController.navigate(Screen.Education.route)
+                        },
                     horizontalArrangement = Arrangement.spacedBy(20.dp)
                 ) {
 
@@ -709,7 +713,11 @@ fun EducationCompose(
 
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
-                    modifier = Modifier.wrapContentSize()
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .clickable {
+                            navController.navigate(Screen.Education.route)
+                        },
                 ) {
 
                     Text(

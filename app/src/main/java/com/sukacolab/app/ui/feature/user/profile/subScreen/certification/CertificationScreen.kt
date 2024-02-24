@@ -1,8 +1,6 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.certificate
+package com.sukacolab.app.ui.feature.user.profile.subScreen.certification
 
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,7 +12,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
@@ -122,13 +119,12 @@ fun CertificationScreen() {
                                                     Row(modifier = Modifier.wrapContentSize(),
                                                         horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                                         Icon(
-                                                            imageVector = Icons.Default.Edit,
+                                                            imageVector = Icons.Default.Delete,
                                                             contentDescription = null,
                                                             tint = MaterialTheme.colorScheme.primary
                                                         )
-
                                                         Icon(
-                                                            imageVector = Icons.Default.Delete,
+                                                            imageVector = Icons.Default.Edit,
                                                             contentDescription = null,
                                                             tint = MaterialTheme.colorScheme.primary
                                                         )

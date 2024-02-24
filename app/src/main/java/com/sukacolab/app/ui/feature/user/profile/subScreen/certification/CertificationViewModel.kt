@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.certificate
+package com.sukacolab.app.ui.feature.user.profile.subScreen.certification
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

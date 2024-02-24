@@ -99,13 +99,13 @@ fun SkillScreen(
                                             Row(modifier = Modifier.wrapContentSize(),
                                                 horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                                                 Icon(
-                                                    imageVector = Icons.Default.Edit,
+                                                    imageVector = Icons.Default.Delete,
                                                     contentDescription = null,
                                                     tint = MaterialTheme.colorScheme.primary
                                                 )
 
                                                 Icon(
-                                                    imageVector = Icons.Default.Delete,
+                                                    imageVector = Icons.Default.Edit,
                                                     contentDescription = null,
                                                     tint = MaterialTheme.colorScheme.primary
                                                 )
