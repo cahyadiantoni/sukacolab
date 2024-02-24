@@ -17,24 +17,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Divider
@@ -43,7 +35,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SmallTopAppBar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -59,7 +50,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -68,10 +58,10 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.alert.AlertLogout
-import com.sukacolab.app.ui.feature.user.profile.uiState.CertificationUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.EducationUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.ExperienceUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.SkillUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.EducationUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
@@ -274,6 +264,7 @@ fun ProfileScreen(
                 borderCompose()
 
                 ExperienceCompose(
+                    navController = navController,
                     viewModel = viewModel
                 )
                 borderCompose()
@@ -334,10 +325,6 @@ fun SkillsCompose(
                     horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 
                     Icon(
-                        imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                    )
-                    Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary,
                     )
@@ -352,13 +339,15 @@ fun SkillsCompose(
                             fontWeight = FontWeight.Bold,
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 20.dp)
+                                .padding(top = 20.dp),
+                            lineHeight = 18.sp
                         )
 
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp)
+                                .padding(top = 10.dp),
+                            verticalAlignment = Alignment.CenterVertically
                         ) {
 
                             Image(painter = painterResource(id = R.drawable.skills),
@@ -370,7 +359,8 @@ fun SkillsCompose(
                                 text = skill.description,
                                 fontWeight = FontWeight.Medium,
                                 fontSize = 15.sp,
-                                modifier = Modifier.padding(7.dp)
+                                modifier = Modifier.padding(horizontal = 7.dp),
+                                lineHeight = 16.sp
                             )
                         }
 
@@ -462,10 +452,6 @@ fun LicenseCompose(
                 ) {
 
                     Icon(
-                        imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -495,12 +481,14 @@ fun LicenseCompose(
 
                                 Text(
                                     text = certification.name,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    lineHeight = 18.sp
                                 )
 
                                 Text(
                                     text = certification.publisher,
                                     fontWeight = FontWeight.Medium,
+                                    lineHeight = 18.sp
                                 )
 
                                 val start = certification.publishDate.convertToMonthYearFormat()
@@ -509,6 +497,7 @@ fun LicenseCompose(
                                 Text(
                                     text = "Issued $start - Expired $end",
                                     fontWeight = FontWeight.Normal,
+                                    lineHeight = 18.sp
                                 )
 
                                 Box(
@@ -522,6 +511,7 @@ fun LicenseCompose(
                                         text = certification.credential, modifier = Modifier
                                             .padding(start = 10.dp, end = 10.dp, top = 5.dp, bottom = 5.dp),
                                         fontWeight = FontWeight.Light,
+                                        lineHeight = 18.sp
                                     )
                                 }
                             }
@@ -613,10 +603,6 @@ fun EducationCompose(
                 ) {
 
                     Icon(
-                        imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
-                    Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -646,12 +632,14 @@ fun EducationCompose(
 
                                 Text(
                                     text = education.instansi,
-                                    fontWeight = FontWeight.Bold
+                                    fontWeight = FontWeight.Bold,
+                                    lineHeight = 18.sp
                                 )
 
                                 Text(
                                     text = education.major,
                                     fontWeight = FontWeight.Medium,
+                                    lineHeight = 18.sp
                                 )
 
                                 val start = education.startDate.convertToMonthYearFormat()
@@ -664,6 +652,7 @@ fun EducationCompose(
                                 Text(
                                     text = "$start - $end",
                                     fontWeight = FontWeight.Normal,
+                                    lineHeight = 18.sp
                                 )
                             }
                         }
@@ -722,6 +711,7 @@ fun EducationCompose(
 
 @Composable
 fun ExperienceCompose(
+    navController: NavController,
     viewModel: ProfileViewModel,
 ) {
     val responseExperience = viewModel.responseExperience.value
@@ -748,14 +738,13 @@ fun ExperienceCompose(
                 }
 
                 Row(
-                    modifier = Modifier.wrapContentSize(),
-                    horizontalArrangement = Arrangement.spacedBy(20.dp)
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .clickable {
+                            navController.navigate(Screen.Experience.route)
+                        },
+                    horizontalArrangement = Arrangement.spacedBy(20.dp),
                 ) {
-
-                    Icon(
-                        imageVector = Icons.Default.Add, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
-                    )
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
@@ -785,11 +774,13 @@ fun ExperienceCompose(
                                 Text(
                                     text = experience.title,
                                     fontWeight = FontWeight.Bold,
+                                    lineHeight = 18.sp
                                 )
 
                                 Text(
                                     text = "${experience.company} - ${experience.role}",
                                     fontWeight = FontWeight.Medium,
+                                    lineHeight = 18.sp
                                 )
                                 val start = experience.startDate.convertToMonthYearFormat()
                                 val end = if (experience.isNow == 1) {
@@ -800,6 +791,7 @@ fun ExperienceCompose(
                                 Text(
                                     text = "$start - $end",
                                     fontWeight = FontWeight.Normal,
+                                    lineHeight = 18.sp
                                 )
                             }
                         }
@@ -830,10 +822,12 @@ fun ExperienceCompose(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 15.dp),
+                    .padding(top = 15.dp)
+                    .clickable {
+                        navController.navigate(Screen.Experience.route)
+                    },
                 contentAlignment = Alignment.Center
             ) {
-
                 Row(
                     horizontalArrangement = Arrangement.spacedBy(5.dp),
                     modifier = Modifier.wrapContentSize()

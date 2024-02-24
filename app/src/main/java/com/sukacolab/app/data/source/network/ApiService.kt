@@ -49,6 +49,26 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): EducationResponse
 
+    @GET("/api/auth/all_experience")
+    suspend fun getAllExperience(
+        @Header("Authorization") token: String,
+    ): ExperienceResponse
+
+    @GET("/api/auth/certification")
+    suspend fun getAllCertification(
+        @Header("Authorization") token: String,
+    ): CertificationResponse
+
+    @GET("/api/auth/skill")
+    suspend fun getAllSkill(
+        @Header("Authorization") token: String,
+    ): SkillResponse
+
+    @GET("/api/auth/education")
+    suspend fun getAllEducation(
+        @Header("Authorization") token: String,
+    ): EducationResponse
+
     @POST("/v1/auth/update-user/{userId}")
     suspend fun editProfile(
         @Header("Authorization") token: String,

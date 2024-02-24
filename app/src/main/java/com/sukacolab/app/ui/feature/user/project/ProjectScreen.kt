@@ -26,7 +26,7 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.sukacolab.app.ui.feature.user.project.subScreen.AppStatusScreen
 import com.sukacolab.app.ui.feature.user.project.subScreen.UrProjectScreen
-import com.sukacolab.app.ui.feature.user.projectDetail.ProjectDetailScreen
+import com.sukacolab.app.ui.feature.user.project_detail.ProjectDetailScreen
 import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.navigation.TabItems

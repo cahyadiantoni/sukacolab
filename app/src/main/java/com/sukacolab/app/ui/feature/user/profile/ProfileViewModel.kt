@@ -6,11 +6,11 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sukacolab.app.data.repository.ProfileRepository
 import com.sukacolab.app.data.source.local.AuthPreferences
-import com.sukacolab.app.ui.feature.user.profile.uiState.CertificationUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.EducationUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.ExperienceUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.ProfileUiState
-import com.sukacolab.app.ui.feature.user.profile.uiState.SkillUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.EducationUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.ProfileUiState
+import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
@@ -25,6 +25,10 @@ class ProfileViewModel(
         CertificationUiState.Empty)
     val responseSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
     val responseEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
+    val responseAllCertification: MutableState<CertificationUiState> = mutableStateOf(
+        CertificationUiState.Empty)
+    val responseAllSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
+    val responseAllEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
 
     val id: Int?
         get() = (response.value as? ProfileUiState.Success)?.data?.id
@@ -55,6 +59,9 @@ class ProfileViewModel(
         getCertification()
         getSkill()
         getEducation()
+        getAllCertification()
+        getAllSkill()
+        getAllEducation()
     }
 
     private fun profileDetails() = viewModelScope.launch {
@@ -68,7 +75,7 @@ class ProfileViewModel(
             }
     }
 
-    fun getExperience() = viewModelScope.launch {
+    private fun getExperience() = viewModelScope.launch {
         profileRepo.getExperience()
             .onStart {
                 responseExperience.value = ExperienceUiState.Loading
@@ -79,7 +86,7 @@ class ProfileViewModel(
             }
     }
 
-    fun getCertification() = viewModelScope.launch {
+    private fun getCertification() = viewModelScope.launch {
         profileRepo.getCertification()
             .onStart {
                 responseCertification.value = CertificationUiState.Loading
@@ -90,7 +97,7 @@ class ProfileViewModel(
             }
     }
 
-    fun getSkill() = viewModelScope.launch {
+    private fun getSkill() = viewModelScope.launch {
         profileRepo.getSkill()
             .onStart {
                 responseSkill.value = SkillUiState.Loading
@@ -101,7 +108,7 @@ class ProfileViewModel(
             }
     }
 
-    fun getEducation() = viewModelScope.launch {
+    private fun getEducation() = viewModelScope.launch {
         profileRepo.getEducation()
             .onStart {
                 responseEducation.value = EducationUiState.Loading
@@ -109,6 +116,39 @@ class ProfileViewModel(
                 responseEducation.value = EducationUiState.Failure(it)
             }.collect {
                 responseEducation.value = EducationUiState.Success(it)
+            }
+    }
+
+    private fun getAllCertification() = viewModelScope.launch {
+        profileRepo.getAllCertification()
+            .onStart {
+                responseAllCertification.value = CertificationUiState.Loading
+            }.catch {
+                responseAllCertification.value = CertificationUiState.Failure(it)
+            }.collect {
+                responseAllCertification.value = CertificationUiState.Success(it)
+            }
+    }
+
+    private fun getAllSkill() = viewModelScope.launch {
+        profileRepo.getAllSkill()
+            .onStart {
+                responseAllSkill.value = SkillUiState.Loading
+            }.catch {
+                responseAllSkill.value = SkillUiState.Failure(it)
+            }.collect {
+                responseAllSkill.value = SkillUiState.Success(it)
+            }
+    }
+
+    private fun getAllEducation() = viewModelScope.launch {
+        profileRepo.getAllEducation()
+            .onStart {
+                responseAllEducation.value = EducationUiState.Loading
+            }.catch {
+                responseAllEducation.value = EducationUiState.Failure(it)
+            }.collect {
+                responseAllEducation.value = EducationUiState.Success(it)
             }
     }
 

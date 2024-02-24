@@ -30,6 +30,7 @@ import com.sukacolab.app.ui.navigation.*
 import com.sukacolab.app.ui.navigation.nav_graph.authNavGraph
 import com.sukacolab.app.ui.navigation.nav_graph.homeNavGraph
 import com.sukacolab.app.ui.feature.splash.SplashScreen
+import com.sukacolab.app.ui.navigation.nav_graph.profileNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,22 +44,18 @@ fun JetSukacolabApp(
 
     Scaffold(
         bottomBar = {
-            val excludedRoutes = listOf(
-                Screen.Login.route,
-                Screen.Register.route,
-                Screen.Splash.route,
-                Screen.Onboarding.route,
-                Screen.UrProjectDetail.route,
-                Screen.ProjectDetail.route,
-                Screen.Resume.route,
-                Screen.HomeAdmin.route
+            val userRoutes = listOf(
+                Screen.Home.route,
+                Screen.Profile.route,
+                Screen.Project.route,
+                Screen.Bookmark.route,
             )
 
             val adminRoutes = listOf(
                 Screen.HomeAdmin.route
             )
 
-            if (currentRoute !in excludedRoutes) {
+            if (currentRoute in userRoutes) {
                 BottomBar(navController)
             }
 
@@ -85,6 +82,7 @@ fun JetSukacolabApp(
             }
             authNavGraph(navController)
             homeNavGraph(navController)
+            profileNavGraph(navController)
         }
     }
 }

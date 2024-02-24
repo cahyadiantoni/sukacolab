@@ -100,7 +100,7 @@ fun ItemListProfile(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(modifier = Modifier.align(Alignment.CenterVertically)) {
+                Column(modifier = Modifier.align(Alignment.CenterVertically).weight(1f)) {
 
                     Text(
                         text = name,

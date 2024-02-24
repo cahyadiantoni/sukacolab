@@ -12,10 +12,11 @@ import com.sukacolab.app.domain.usecase.LoginUseCase
 import com.sukacolab.app.ui.feature.login.LoginViewModel
 import com.sukacolab.app.data.repository.ProfileRepository
 import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
-import com.sukacolab.app.ui.feature.user.profile.screen.ProfileEditViewModel
+import com.sukacolab.app.ui.feature.user.profile.subScreen.profile_edit.ProfileEditViewModel
 import com.sukacolab.app.ui.feature.register.RegisterViewModel
 import com.sukacolab.app.ui.feature.splash.SplashViewModel
 import com.sukacolab.app.ui.feature.user.home.HomeViewModel
+import com.sukacolab.app.ui.feature.user.profile.subScreen.experience.ExperienceViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -57,6 +58,7 @@ val viewModelModules = module {
     viewModel { RegisterViewModel(get()) }
     viewModel { HomeViewModel() }
     viewModel { ProfileViewModel(get(),get()) }
+    viewModel { ExperienceViewModel(get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 
