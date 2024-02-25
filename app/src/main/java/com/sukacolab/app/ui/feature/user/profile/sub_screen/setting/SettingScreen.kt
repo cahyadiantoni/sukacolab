@@ -118,7 +118,11 @@ fun SettingScreen(
 
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(vertical = 10.dp)
+                                modifier = Modifier
+                                    .padding(vertical = 10.dp)
+                                    .clickable {
+                                        navController.navigate(Screen.SettingPassword.route)
+                                    },
                             ) {
                                 Text(
                                     text = "Setting Password",
