@@ -60,7 +60,11 @@ fun TextFieldComponent(
             keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
-            colors = TextFieldDefaults.outlinedTextFieldColors(),
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                focusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+            ),
             isError = hasError,
             label = {
                 Text(

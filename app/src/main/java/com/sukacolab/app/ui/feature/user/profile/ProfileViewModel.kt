@@ -25,10 +25,6 @@ class ProfileViewModel(
         CertificationUiState.Empty)
     val responseSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
     val responseEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
-    val responseAllCertification: MutableState<CertificationUiState> = mutableStateOf(
-        CertificationUiState.Empty)
-    val responseAllSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
-    val responseAllEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
 
     val id: Int?
         get() = (response.value as? ProfileUiState.Success)?.data?.id
@@ -59,8 +55,6 @@ class ProfileViewModel(
         getCertification()
         getSkill()
         getEducation()
-        getAllSkill()
-        getAllEducation()
     }
 
     private fun profileDetails() = viewModelScope.launch {
@@ -115,28 +109,6 @@ class ProfileViewModel(
                 responseEducation.value = EducationUiState.Failure(it)
             }.collect {
                 responseEducation.value = EducationUiState.Success(it)
-            }
-    }
-
-    private fun getAllSkill() = viewModelScope.launch {
-        profileRepo.getAllSkill()
-            .onStart {
-                responseAllSkill.value = SkillUiState.Loading
-            }.catch {
-                responseAllSkill.value = SkillUiState.Failure(it)
-            }.collect {
-                responseAllSkill.value = SkillUiState.Success(it)
-            }
-    }
-
-    private fun getAllEducation() = viewModelScope.launch {
-        profileRepo.getAllEducation()
-            .onStart {
-                responseAllEducation.value = EducationUiState.Loading
-            }.catch {
-                responseAllEducation.value = EducationUiState.Failure(it)
-            }.collect {
-                responseAllEducation.value = EducationUiState.Success(it)
             }
     }
 

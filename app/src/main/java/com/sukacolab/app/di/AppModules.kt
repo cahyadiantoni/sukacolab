@@ -19,6 +19,7 @@ import com.sukacolab.app.ui.feature.user.home.HomeViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
@@ -65,6 +66,7 @@ val viewModelModules = module {
     viewModel { CertificationViewModel(get()) }
     viewModel { SkillViewModel(get()) }
     viewModel { EducationViewModel(get()) }
+    viewModel { SettingEmailViewModel(get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 
@@ -72,6 +74,7 @@ val useCaseModule = module {
     single { LoginUseCase(get()) }
     single<AuthRepository> { DefaultAuthRepository() }
     single { ProfileRepository(get(),get()) }
+    single { ResourcesProvider(androidContext()) }
 }
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "auth_key")
@@ -80,6 +83,12 @@ val dataPreferencesModule = module {
 
     single {
         AuthPreferences( dataStore = androidContext().dataStore)
+    }
+}
+
+class ResourcesProvider(private val context: Context) {
+    fun getString(resId: Int): String {
+        return context.getString(resId)
     }
 }
 

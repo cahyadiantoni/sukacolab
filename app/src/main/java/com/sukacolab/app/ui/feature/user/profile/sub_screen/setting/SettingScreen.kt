@@ -1,6 +1,7 @@
 package com.sukacolab.app.ui.feature.user.profile.sub_screen.setting
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -35,6 +36,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sukacolab.app.ui.component.StatelessTopBar
+import com.sukacolab.app.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,7 +88,11 @@ fun SettingScreen(
 
                             Row(
                                 verticalAlignment = Alignment.CenterVertically,
-                                modifier = Modifier.padding(vertical = 10.dp)
+                                modifier = Modifier
+                                    .padding(vertical = 10.dp)
+                                    .clickable {
+                                        navController.navigate(Screen.SettingEmail.route)
+                                    },
                             ) {
                                 Text(
                                     text = "Setting Email",
