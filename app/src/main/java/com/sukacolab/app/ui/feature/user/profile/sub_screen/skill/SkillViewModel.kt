@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.skill
+package com.sukacolab.app.ui.feature.user.profile.sub_screen.skill
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

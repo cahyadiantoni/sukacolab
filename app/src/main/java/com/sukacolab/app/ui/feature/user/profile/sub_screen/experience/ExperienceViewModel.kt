@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.experience
+package com.sukacolab.app.ui.feature.user.profile.sub_screen.experience
 
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf

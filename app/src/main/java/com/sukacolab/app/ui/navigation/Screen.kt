@@ -25,6 +25,7 @@ sealed class Screen(val route: String) {
         fun createRoute(cvLink: String) = "resume/$cvLink"
     }
 
+    object Setting : Screen("setting")
     object Experience : Screen("experience")
     object Certification : Screen("certification")
     object Skill : Screen("skill")

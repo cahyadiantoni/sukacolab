@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.profile_edit
+package com.sukacolab.app.ui.feature.user.profile.sub_screen.profile_edit
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box

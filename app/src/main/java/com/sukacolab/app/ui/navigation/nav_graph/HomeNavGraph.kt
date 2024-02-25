@@ -10,7 +10,7 @@ import com.sukacolab.app.ui.feature.admin.home_admin.HomeAdminScreen
 import com.sukacolab.app.ui.feature.user.bookmark.BookmarkScreen
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.user.profile.ProfileScreen
-import com.sukacolab.app.ui.feature.user.profile.subScreen.ResumeScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.project.ProjectScreen
 import com.sukacolab.app.ui.feature.user.project_detail.ProjectDetailScreen
 import com.sukacolab.app.ui.navigation.CV_LINK
@@ -37,21 +37,6 @@ fun NavGraphBuilder.homeNavGraph(
     }
     composable(Screen.Bookmark.route) {
         BookmarkScreen(navController = navController)
-    }
-
-    composable(
-        route = Screen.Resume.route,
-        arguments = listOf(
-            navArgument(CV_LINK) {
-                type = NavType.StringType
-            }
-        )
-    ) {
-        Log.d("Args", it.arguments?.getString(CV_LINK).toString())
-        val cvLink = it.arguments?.getString(CV_LINK).toString()
-        ResumeScreen(
-            cvLink = cvLink,
-        )
     }
 
     composable(

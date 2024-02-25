@@ -1,11 +1,10 @@
-package com.sukacolab.app.ui.feature.user.profile.subScreen.certification
+package com.sukacolab.app.ui.feature.user.profile.sub_screen.skill
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -37,17 +36,16 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
-import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
-import com.sukacolab.app.util.convertToMonthYearFormat
+import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CertificationScreen(
+fun SkillScreen(
     navController: NavController,
 ) {
-    val viewModel: CertificationViewModel = getViewModel()
-    val responseCertification = viewModel.responseAllCertification.value
+    val viewModel: SkillViewModel = getViewModel()
+    val responseSkill = viewModel.responseAllSkill.value
 
     Scaffold(
         modifier = Modifier,
@@ -64,7 +62,7 @@ fun CertificationScreen(
                         )
                     }
                 },
-                title = "All Certification",
+                title = "All Skill",
                 actionIcon = {
                     IconButton(onClick = {
 
@@ -92,9 +90,9 @@ fun CertificationScreen(
                     ) {
 
                         Column(modifier = Modifier.padding(horizontal = 20.dp)) {
-                            when (responseCertification) {
-                                is CertificationUiState.Success -> {
-                                    if (responseCertification.data.isEmpty()) {
+                            when (responseSkill) {
+                                is SkillUiState.Success -> {
+                                    if (responseSkill.data.isEmpty()) {
                                         Box(
                                             modifier = Modifier
                                                 .fillMaxSize()
@@ -102,71 +100,61 @@ fun CertificationScreen(
                                             contentAlignment = Alignment.Center
                                         ) {
                                             Text(
-                                                text = "Certification belum ditambahkan",
+                                                text = "Skill belum ditambahkan",
                                                 fontWeight = FontWeight.Light
                                             )
                                         }
                                     }else{
-                                        responseCertification.data.forEachIndexed { index, certification ->
+                                        responseSkill.data.forEachIndexed { index, skill ->
                                             Row(
                                                 modifier = Modifier
                                                     .fillMaxWidth()
-                                                    .padding(top = 10.dp)
+                                                    .padding(top = 10.dp),
+                                                horizontalArrangement = Arrangement.SpaceBetween
                                             ) {
-
-                                                Image(
-                                                    painter = painterResource(id = R.drawable.certi),
-                                                    contentDescription = null,
-                                                    modifier = Modifier.size(60.dp),
-                                                    contentScale = ContentScale.Crop
-                                                )
-
-                                                Spacer(modifier = Modifier.size(10.dp))
-
-                                                Column(modifier = Modifier.fillMaxWidth()) {
-
-                                                    Row(
-                                                        modifier = Modifier.fillMaxWidth(),
-                                                        horizontalArrangement = Arrangement.SpaceBetween
-                                                    ) {
-                                                        Column(Modifier.weight(1f)) {
-                                                            Text(
-                                                                text = certification.name,
-                                                                fontWeight = FontWeight.Bold,
-                                                                lineHeight = 18.sp
-                                                            )
-
-                                                            Text(
-                                                                text = certification.publisher,
-                                                                fontWeight = FontWeight.Medium,
-                                                                lineHeight = 18.sp
-                                                            )
-                                                        }
-
-                                                        Row(modifier = Modifier.wrapContentSize(),
-                                                            horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                            Icon(
-                                                                imageVector = Icons.Default.Delete,
-                                                                contentDescription = null,
-                                                                tint = MaterialTheme.colorScheme.primary
-                                                            )
-                                                            Icon(
-                                                                imageVector = Icons.Default.Edit,
-                                                                contentDescription = null,
-                                                                tint = MaterialTheme.colorScheme.primary
-                                                            )
-                                                        }
-                                                    }
-
-                                                    val start = certification.publishDate.convertToMonthYearFormat()
-                                                    val end = certification.expireDate.convertToMonthYearFormat()
-
+                                                Column(Modifier.weight(1f)) {
                                                     Text(
-                                                        text = "Issued $start - Expired $end",
-                                                        fontWeight = FontWeight.Normal,
+                                                        text = skill.name,
+                                                        fontWeight = FontWeight.Bold,
                                                         lineHeight = 18.sp
                                                     )
                                                 }
+
+                                                Row(modifier = Modifier.wrapContentSize(),
+                                                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                                                    Icon(
+                                                        imageVector = Icons.Default.Delete,
+                                                        contentDescription = null,
+                                                        tint = MaterialTheme.colorScheme.primary
+                                                    )
+
+                                                    Icon(
+                                                        imageVector = Icons.Default.Edit,
+                                                        contentDescription = null,
+                                                        tint = MaterialTheme.colorScheme.primary
+                                                    )
+                                                }
+                                            }
+
+                                            Row(
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(top = 10.dp),
+                                                verticalAlignment = Alignment.CenterVertically
+                                            ) {
+
+                                                Image(painter = painterResource(id = R.drawable.skills),
+                                                    modifier = Modifier.size(40.dp),
+                                                    contentDescription = null,
+                                                    contentScale = ContentScale.Crop)
+
+                                                Text(
+                                                    text = skill.description,
+                                                    fontWeight = FontWeight.Medium,
+                                                    fontSize = 15.sp,
+                                                    modifier = Modifier.padding(horizontal = 7.dp),
+                                                    lineHeight = 16.sp
+                                                )
                                             }
 
                                             Divider(
@@ -178,17 +166,17 @@ fun CertificationScreen(
                                         }
                                     }
                                 }
-                                is CertificationUiState.Failure -> {
-                                    Text(text = responseCertification.error.message ?: "Unknown Error")
+                                is SkillUiState.Failure -> {
+                                    Text(text = responseSkill.error.message ?: "Unknown Error")
                                 }
-                                CertificationUiState.Loading -> {
+                                SkillUiState.Loading -> {
                                     CircularProgressIndicator(
                                         modifier = Modifier
                                             .fillMaxSize()
                                             .wrapContentSize(align = Alignment.Center)
                                     )
                                 }
-                                CertificationUiState.Empty -> {
+                                SkillUiState.Empty -> {
                                     Text(text = "Empty Data")
                                 }
                             }
