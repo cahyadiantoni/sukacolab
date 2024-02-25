@@ -8,7 +8,7 @@ class SettingPasswordViewModel(
     resourcesProvider: ResourcesProvider
 ) : ViewModel()
 {
-    var form = MainForm(resourcesProvider)
+    var form = SettingPasswordForm(resourcesProvider)
 
 
 }
