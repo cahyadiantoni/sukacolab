@@ -206,7 +206,8 @@ fun ProfileScreen(
                             text = viewModel.summary.toString(),
                             fontWeight = FontWeight.Normal,
                             textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp)
+                            modifier = Modifier.padding(top = 8.dp, start = 20.dp, end = 20.dp),
+                            lineHeight = 18.sp
                         )
                     }
                 }
@@ -996,7 +997,9 @@ fun AboutCompose(
                 Text(
                     text = viewModel.about.toString(),
                     fontWeight = FontWeight.Normal,
-                    modifier = Modifier.padding(top = 20.dp)
+                    modifier = Modifier
+                        .padding(top = 20.dp),
+                    lineHeight = 18.sp
                 )
             }
         }
