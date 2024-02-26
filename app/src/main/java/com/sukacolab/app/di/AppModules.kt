@@ -18,6 +18,7 @@ import com.sukacolab.app.ui.feature.splash.SplashViewModel
 import com.sukacolab.app.ui.feature.user.home.HomeViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceViewModel
@@ -73,6 +74,7 @@ val viewModelModules = module {
     viewModel { SettingPasswordViewModel(get(), get(), get()) }
     viewModel { EditAboutViewModel(get(), get(), get()) }
     viewModel { AddExperienceViewModel(get(), get(), get()) }
+    viewModel { AddCertificationViewModel(get(), get(), get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 

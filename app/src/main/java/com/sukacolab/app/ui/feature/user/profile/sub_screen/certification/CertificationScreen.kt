@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
 
@@ -67,7 +68,11 @@ fun CertificationScreen(
                 title = "All Certification",
                 actionIcon = {
                     IconButton(onClick = {
-
+                        navController.navigate(Screen.AddCertification.route) {
+                            popUpTo(Screen.AddCertification.route) {
+                                inclusive = true
+                            }
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,

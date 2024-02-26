@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
@@ -57,6 +58,9 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.Certification.route) {
         CertificationScreen(navController = navController)
+    }
+    composable(Screen.AddCertification.route) {
+        AddCertificationScreen(navController = navController)
     }
     composable(Screen.Skill.route) {
         SkillScreen(navController = navController)
