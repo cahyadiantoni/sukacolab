@@ -31,6 +31,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.Settin
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.SettingPasswordViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -84,6 +85,7 @@ val viewModelModules = module {
     viewModel { AddCertificationViewModel(get(), get(), get()) }
     viewModel { EditCertificationViewModel(get(), get(), get()) }
     viewModel { AddSkillViewModel(get(), get(), get()) }
+    viewModel { EditSkillViewModel(get(), get(), get()) }
     viewModel { AddEducationViewModel(get(), get(), get()) }
     viewModel { EditEducationViewModel(get(), get(), get()) }
     viewModel { ProfileEditViewModel(get(),get()) }

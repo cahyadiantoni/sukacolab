@@ -22,6 +22,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.Settin
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.SettingPasswordScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillScreen
 import com.sukacolab.app.ui.navigation.CV_LINK
 import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen
@@ -103,6 +104,21 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.Skill.route) {
         SkillScreen(navController = navController)
+    }
+    composable(
+        route = Screen.EditSkill.route,
+        arguments = listOf(
+            navArgument(PROJECT_ID) {
+                type = NavType.StringType
+            }
+        )
+    ) {
+        Log.d("Args", it.arguments?.getString(PROJECT_ID).toString())
+        val id = it.arguments?.getString(PROJECT_ID).toString()
+        EditSkillScreen(
+            navController = navController,
+            id = id,
+        )
     }
     composable(Screen.Education.route) {
         EducationScreen(navController = navController)
