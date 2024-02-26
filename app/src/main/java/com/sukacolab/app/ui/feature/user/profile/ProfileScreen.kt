@@ -308,6 +308,7 @@ fun ProfileScreen(
                 borderCompose()
 
                 AboutCompose(
+                    navController = navController,
                     viewModel = viewModel
                 )
                 borderCompose()
@@ -962,6 +963,7 @@ fun borderCompose() {
 
 @Composable
 fun AboutCompose(
+    navController: NavController,
     viewModel: ProfileViewModel,
 ) {
 
@@ -982,11 +984,18 @@ fun AboutCompose(
                     fontWeight = FontWeight.Bold,
                 )
 
-                Icon(
-                    imageVector = Icons.Default.Edit,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary
-                )
+                Row(modifier = Modifier
+                    .wrapContentSize()
+                    .clickable {
+                        navController.navigate(Screen.EditAbout.route)
+                    },
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+
+                    Icon(
+                        imageVector = Icons.Default.Edit, contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
             }
 
             if(viewModel.about == null){

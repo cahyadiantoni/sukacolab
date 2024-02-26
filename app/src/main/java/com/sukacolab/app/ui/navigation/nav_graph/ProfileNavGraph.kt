@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
@@ -28,6 +29,9 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.SettingPassword.route) {
         SettingPasswordScreen(navController = navController)
+    }
+    composable(Screen.EditAbout.route) {
+        EditAboutScreen(navController = navController)
     }
     composable(
         route = Screen.Resume.route,
