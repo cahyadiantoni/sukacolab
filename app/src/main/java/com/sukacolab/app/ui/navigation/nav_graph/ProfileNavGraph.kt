@@ -13,6 +13,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationS
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.edit_experience.EditExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.SettingScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailScreen
@@ -20,6 +21,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.Set
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillScreen
 import com.sukacolab.app.ui.navigation.CV_LINK
+import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen
 
 fun NavGraphBuilder.profileNavGraph(
@@ -57,6 +59,21 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.AddExperience.route) {
         AddExperienceScreen(navController = navController)
+    }
+    composable(
+        route = Screen.EditExperience.route,
+        arguments = listOf(
+            navArgument(PROJECT_ID) {
+                type = NavType.StringType
+            }
+        )
+    ) {
+        Log.d("Args", it.arguments?.getString(PROJECT_ID).toString())
+        val id = it.arguments?.getString(PROJECT_ID).toString()
+        EditExperienceScreen(
+            navController = navController,
+            id = id,
+        )
     }
     composable(Screen.Certification.route) {
         CertificationScreen(navController = navController)

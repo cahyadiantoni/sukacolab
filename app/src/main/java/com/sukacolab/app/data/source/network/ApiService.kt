@@ -11,6 +11,7 @@ import com.sukacolab.app.data.source.network.request.SettingPasswordRequest
 import com.sukacolab.app.data.source.network.request.SkillRequest
 import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.data.source.network.response.CertificationResponse
+import com.sukacolab.app.data.source.network.response.DetailExperienceResponse
 import com.sukacolab.app.data.source.network.response.EducationResponse
 import com.sukacolab.app.data.source.network.response.Experience
 import com.sukacolab.app.data.source.network.response.ExperienceResponse
@@ -82,7 +83,7 @@ interface ApiService {
     suspend fun getDetailExperience(
         @Header("Authorization") token: String,
         @Path("id") id: String,
-    ): ExperienceResponse
+    ): DetailExperienceResponse
 
     @GET("/api/profile/certification/detail/{id}")
     suspend fun getDetailCertification(

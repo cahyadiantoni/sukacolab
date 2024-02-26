@@ -85,4 +85,40 @@ class ProfileRepository(
             token = "Bearer $token"
         ).data)
     }.flowOn(Dispatchers.IO)
+
+    fun getDetailExperience(id: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Experience", "get Experience")
+        emit(apiService.getDetailExperience(
+            token = "Bearer $token",
+            id = id
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getDetailCertification(id: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Certification", "get Certification")
+        emit(apiService.getDetailCertification(
+            token = "Bearer $token",
+            id = id
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getDetailSkill(id: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Skill", "get Skill")
+        emit(apiService.getDetailSkill(
+            token = "Bearer $token",
+            id = id
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getDetailEducation(id: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Education", "get Education")
+        emit(apiService.getDetailEducation(
+            token = "Bearer $token",
+            id = id
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }

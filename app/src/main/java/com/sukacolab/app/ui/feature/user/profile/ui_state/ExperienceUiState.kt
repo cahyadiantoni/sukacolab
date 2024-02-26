@@ -1,5 +1,6 @@
 package com.sukacolab.app.ui.feature.user.profile.ui_state
 
+import com.sukacolab.app.data.source.network.response.DetailExperience
 import com.sukacolab.app.data.source.network.response.Experience
 
 sealed class ExperienceUiState {

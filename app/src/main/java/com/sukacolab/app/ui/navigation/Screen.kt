@@ -32,12 +32,16 @@ sealed class Screen(val route: String) {
 
     object Experience : Screen("experience")
     object AddExperience : Screen("add_experience")
+    object EditExperience : Screen("edit_experience/{$PROJECT_ID}") {
+        fun createRoute(productId: Int) = "edit_experience/$productId"
+    }
 
     object Certification : Screen("certification")
     object AddCertification : Screen("add_certification")
 
     object Skill : Screen("skill")
     object AddSkill : Screen("add_skill")
+
     object Education : Screen("education")
     object AddEducation : Screen("add_education")
 
