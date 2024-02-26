@@ -1,5 +1,7 @@
 package com.sukacolab.app.ui.feature.user.profile.sub_screen.skill
 
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -26,10 +28,16 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -37,6 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
+import com.sukacolab.app.ui.component.alert.AlertDelete
 import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import com.sukacolab.app.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
@@ -48,6 +57,39 @@ fun SkillScreen(
 ) {
     val viewModel: SkillViewModel = getViewModel()
     val responseSkill = viewModel.responseAllSkill.value
+
+    val context = LocalContext.current
+
+    val deleteSkillResult by viewModel.deleteSkillResult.observeAsState()
+    val isLoading = viewModel.isLoading.value
+
+    LaunchedEffect(key1 = deleteSkillResult) {
+        when (deleteSkillResult) {
+            is DeleteSkillResults.Success -> {
+                val message = (deleteSkillResult as DeleteSkillResults.Success).message
+                Log.d("Delete Skill", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.Skill.route) {
+                    popUpTo(Screen.Skill.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is DeleteSkillResults.Error -> {
+                val errorMessage = (deleteSkillResult as DeleteSkillResults.Error).errorMessage
+                Log.d("Delete Skill", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.Skill.route) {
+                    popUpTo(Screen.Skill.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {
+                // Initial state or loading state
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier,
@@ -126,26 +168,44 @@ fun SkillScreen(
                                                     )
                                                 }
 
+                                                val openDialog = remember { mutableStateOf(false) }
+                                                
                                                 Row(modifier = Modifier.wrapContentSize(),
                                                     horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                                                    Icon(
-                                                        imageVector = Icons.Default.Delete,
-                                                        contentDescription = null,
-                                                        tint = MaterialTheme.colorScheme.primary
-                                                    )
+                                                    if (isLoading) {
+                                                        CircularProgressIndicator()
+                                                    } else {
+                                                        Icon(
+                                                            imageVector = Icons.Default.Delete,
+                                                            contentDescription = null,
+                                                            tint = MaterialTheme.colorScheme.primary,
+                                                            modifier = Modifier.clickable {
+                                                                openDialog.value = true
+                                                            }
+                                                        )
 
-                                                    Icon(
-                                                        imageVector = Icons.Default.Edit,
-                                                        contentDescription = null,
-                                                        tint = MaterialTheme.colorScheme.primary,
-                                                        modifier = Modifier.clickable {
-                                                            navController.navigate(
-                                                                Screen.EditSkill.createRoute(
-                                                                    skill.id
+                                                        if (openDialog.value) {
+                                                            AlertDelete(openDialog = openDialog) {
+                                                                openDialog.value = false
+                                                                viewModel.deleteSkill(
+                                                                    skill.id.toString()
                                                                 )
-                                                            )
+                                                            }
                                                         }
-                                                    )
+
+                                                        Icon(
+                                                            imageVector = Icons.Default.Edit,
+                                                            contentDescription = null,
+                                                            tint = MaterialTheme.colorScheme.primary,
+                                                            modifier = Modifier.clickable {
+                                                                navController.navigate(
+                                                                    Screen.EditSkill.createRoute(
+                                                                        skill.id
+                                                                    )
+                                                                )
+                                                            }
+                                                        )
+                                                    }
                                                 }
                                             }
 
