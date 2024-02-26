@@ -31,6 +31,8 @@ sealed class Screen(val route: String) {
     object EditAbout : Screen("edit_about")
 
     object Experience : Screen("experience")
+    object AddExperience : Screen("add_experience")
+
     object Certification : Screen("certification")
     object Skill : Screen("skill")
     object Education : Screen("education")

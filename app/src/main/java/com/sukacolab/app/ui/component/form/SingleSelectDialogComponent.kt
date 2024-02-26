@@ -11,6 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
@@ -92,7 +93,8 @@ fun <T> SingleSelectDialogComponent(
                             onClick = {
                                 onDismissRequest.invoke()
                             },
-                            shape = MaterialTheme.shapes.medium
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.textButtonColors(contentColor = androidx.compose.material3.MaterialTheme.colorScheme.primary)
                         ) {
                             Text(text = stringResource(id = android.R.string.cancel))
                         }
@@ -106,7 +108,8 @@ fun <T> SingleSelectDialogComponent(
                                 }
                                 onDismissRequest.invoke()
                             },
-                            shape = MaterialTheme.shapes.medium
+                            shape = MaterialTheme.shapes.medium,
+                            colors = ButtonDefaults.buttonColors(backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.primary, contentColor = Color.White),
                         ) {
                             Text(text = submitButtonText)
                         }

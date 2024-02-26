@@ -132,7 +132,7 @@ interface ApiService {
         @Body request: ExperienceRequest
     ): Call<BaseResponse>
 
-    @POST("/api/profile/experience/edit/{id}")
+    @PUT("/api/profile/experience/edit/{id}")
     fun editExperience(
         @Header("Authorization") token: String,
         @Path("id") id: String,
@@ -145,7 +145,7 @@ interface ApiService {
         @Body request: CertificationRequest
     ): Call<BaseResponse>
 
-    @POST("/api/profile/certification/edit/{id}")
+    @PUT("/api/profile/certification/edit/{id}")
     fun editCertification(
         @Header("Authorization") token: String,
         @Path("id") id: String,
@@ -158,7 +158,7 @@ interface ApiService {
         @Body request: SkillRequest
     ): Call<BaseResponse>
 
-    @POST("/api/profile/skill/edit/{id}")
+    @PUT("/api/profile/skill/edit/{id}")
     fun editSkill(
         @Header("Authorization") token: String,
         @Path("id") id: String,
@@ -171,7 +171,7 @@ interface ApiService {
         @Body request: EducationRequest
     ): Call<BaseResponse>
 
-    @POST("/api/profile/education/edit/{id}")
+    @PUT("/api/profile/education/edit/{id}")
     fun editEducation(
         @Header("Authorization") token: String,
         @Path("id") id: String,

@@ -10,6 +10,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScree
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.SettingScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailScreen
@@ -50,6 +51,9 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.Experience.route) {
         ExperienceScreen(navController = navController)
+    }
+    composable(Screen.AddExperience.route) {
+        AddExperienceScreen(navController = navController)
     }
     composable(Screen.Certification.route) {
         CertificationScreen(navController = navController)

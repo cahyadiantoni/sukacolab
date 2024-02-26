@@ -29,7 +29,7 @@ fun CheckboxComponent(
             .fillMaxWidth()
             .clip(MaterialTheme.shapes.small)
             .clickable(
-                indication = rememberRipple(color = MaterialTheme.colors.primary),
+                indication = rememberRipple(color = androidx.compose.material3.MaterialTheme.colorScheme.primary),
                 interactionSource = remember { MutableInteractionSource() },
                 onClick = { onCheckedChange(!checked) }
             )

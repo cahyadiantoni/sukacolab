@@ -38,6 +38,7 @@ import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
 import org.koin.androidx.compose.getViewModel
 
@@ -67,7 +68,11 @@ fun ExperienceScreen(
                 title = "All Experience",
                 actionIcon = {
                     IconButton(onClick = {
-
+                        navController.navigate(Screen.AddExperience.route) {
+                            popUpTo(Screen.AddExperience.route) {
+                                inclusive = true
+                            }
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,
