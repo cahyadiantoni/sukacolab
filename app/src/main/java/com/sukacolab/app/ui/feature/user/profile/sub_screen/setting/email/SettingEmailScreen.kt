@@ -70,8 +70,8 @@ fun SettingEmailScreen(
                 val errorMessage = (setEmailResult as SetEmailResults.Error).errorMessage
                 Log.d("Setting Email", "Gagal: $errorMessage")
                 Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
-                navController.navigate(Screen.Profile.route) {
-                    popUpTo(Screen.Profile.route) {
+                navController.navigate(Screen.SettingEmail.route) {
+                    popUpTo(Screen.SettingEmail.route) {
                         inclusive = true
                     }
                 }

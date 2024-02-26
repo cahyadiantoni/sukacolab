@@ -2,6 +2,7 @@ package com.sukacolab.app.data.source.network
 
 import com.sukacolab.app.data.source.network.request.LoginRequest
 import com.sukacolab.app.data.source.network.request.SettingEmailRequest
+import com.sukacolab.app.data.source.network.request.SettingPasswordRequest
 import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.data.source.network.response.CertificationResponse
 import com.sukacolab.app.data.source.network.response.EducationResponse
@@ -75,6 +76,12 @@ interface ApiService {
     fun setEmail(
         @Header("Authorization") token: String,
         @Body request: SettingEmailRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/auth/setting/password")
+    fun setPassword(
+        @Header("Authorization") token: String,
+        @Body request: SettingPasswordRequest
     ): Call<BaseResponse>
 
     @POST("/v1/auth/update-user/{userId}")

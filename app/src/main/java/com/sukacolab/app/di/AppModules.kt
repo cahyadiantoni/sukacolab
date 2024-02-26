@@ -68,7 +68,7 @@ val viewModelModules = module {
     viewModel { SkillViewModel(get()) }
     viewModel { EducationViewModel(get()) }
     viewModel { SettingEmailViewModel(get(), get(), get()) }
-    viewModel { SettingPasswordViewModel(get()) }
+    viewModel { SettingPasswordViewModel(get(), get(), get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 
