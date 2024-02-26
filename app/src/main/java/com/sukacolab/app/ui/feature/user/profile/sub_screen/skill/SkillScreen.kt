@@ -37,6 +37,7 @@ import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
+import com.sukacolab.app.ui.navigation.Screen
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -65,7 +66,11 @@ fun SkillScreen(
                 title = "All Skill",
                 actionIcon = {
                     IconButton(onClick = {
-
+                        navController.navigate(Screen.AddSkill.route) {
+                            popUpTo(Screen.AddSkill.route) {
+                                inclusive = true
+                            }
+                        }
                     }) {
                         Icon(
                             imageVector = Icons.Default.Add,

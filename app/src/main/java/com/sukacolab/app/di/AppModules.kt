@@ -20,11 +20,13 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutViewM
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.SettingPasswordViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -75,6 +77,8 @@ val viewModelModules = module {
     viewModel { EditAboutViewModel(get(), get(), get()) }
     viewModel { AddExperienceViewModel(get(), get(), get()) }
     viewModel { AddCertificationViewModel(get(), get(), get()) }
+    viewModel { AddSkillViewModel(get(), get(), get()) }
+    viewModel { AddEducationViewModel(get(), get(), get()) }
     viewModel { ProfileEditViewModel(get(),get()) }
 }
 

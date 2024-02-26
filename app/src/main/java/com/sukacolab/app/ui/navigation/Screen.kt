@@ -37,7 +37,9 @@ sealed class Screen(val route: String) {
     object AddCertification : Screen("add_certification")
 
     object Skill : Screen("skill")
+    object AddSkill : Screen("add_skill")
     object Education : Screen("education")
+    object AddEducation : Screen("add_education")
 
     //admin
     object HomeAdmin : Screen("home_admin")

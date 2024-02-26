@@ -10,6 +10,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScree
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
@@ -17,6 +18,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.SettingScree
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.SettingPasswordScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillScreen
 import com.sukacolab.app.ui.navigation.CV_LINK
 import com.sukacolab.app.ui.navigation.Screen
 
@@ -62,10 +64,16 @@ fun NavGraphBuilder.profileNavGraph(
     composable(Screen.AddCertification.route) {
         AddCertificationScreen(navController = navController)
     }
+    composable(Screen.AddSkill.route) {
+        AddSkillScreen(navController = navController)
+    }
     composable(Screen.Skill.route) {
         SkillScreen(navController = navController)
     }
     composable(Screen.Education.route) {
         EducationScreen(navController = navController)
+    }
+    composable(Screen.AddEducation.route) {
+        AddEducationScreen(navController = navController)
     }
 }
