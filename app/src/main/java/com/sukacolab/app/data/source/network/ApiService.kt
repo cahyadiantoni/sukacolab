@@ -142,6 +142,12 @@ interface ApiService {
         @Body request: ExperienceRequest
     ): Call<BaseResponse>
 
+    @DELETE("/api/profile/experience/delete/{id}")
+    fun deleteExperience(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): Call<BaseResponse>
+
     @POST("/api/profile/certification/add")
     fun addCertification(
         @Header("Authorization") token: String,
@@ -153,6 +159,12 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("id") id: String,
         @Body request: CertificationRequest
+    ): Call<BaseResponse>
+
+    @DELETE("/api/profile/certification/delete/{id}")
+    fun deleteCertification(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
     ): Call<BaseResponse>
 
     @POST("/api/profile/skill/add")
@@ -168,6 +180,12 @@ interface ApiService {
         @Body request: SkillRequest
     ): Call<BaseResponse>
 
+    @DELETE("/api/profile/skill/delete/{id}")
+    fun deleteSkill(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): Call<BaseResponse>
+
     @POST("/api/profile/education/add")
     fun addEducation(
         @Header("Authorization") token: String,
@@ -181,6 +199,11 @@ interface ApiService {
         @Body request: EducationRequest
     ): Call<BaseResponse>
 
+    @DELETE("/api/profile/education/delete/{id}")
+    fun deleteEducation(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): Call<BaseResponse>
 
     @POST("/v1/auth/update-user/{userId}")
     suspend fun editProfile(

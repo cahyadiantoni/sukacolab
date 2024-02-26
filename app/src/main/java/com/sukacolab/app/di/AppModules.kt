@@ -73,7 +73,7 @@ val viewModelModules = module {
     viewModel { RegisterViewModel(get()) }
     viewModel { HomeViewModel() }
     viewModel { ProfileViewModel(get(),get()) }
-    viewModel { ExperienceViewModel(get()) }
+    viewModel { ExperienceViewModel(get(), get(), get()) }
     viewModel { CertificationViewModel(get()) }
     viewModel { SkillViewModel(get()) }
     viewModel { EducationViewModel(get()) }
