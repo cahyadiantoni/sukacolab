@@ -9,6 +9,7 @@ import androidx.navigation.navArgument
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.edit_certification.EditCertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.edit_education.EditEducationScreen
@@ -81,6 +82,21 @@ fun NavGraphBuilder.profileNavGraph(
     }
     composable(Screen.AddCertification.route) {
         AddCertificationScreen(navController = navController)
+    }
+    composable(
+        route = Screen.EditCertification.route,
+        arguments = listOf(
+            navArgument(PROJECT_ID) {
+                type = NavType.StringType
+            }
+        )
+    ) {
+        Log.d("Args", it.arguments?.getString(PROJECT_ID).toString())
+        val id = it.arguments?.getString(PROJECT_ID).toString()
+        EditCertificationScreen(
+            navController = navController,
+            id = id,
+        )
     }
     composable(Screen.AddSkill.route) {
         AddSkillScreen(navController = navController)

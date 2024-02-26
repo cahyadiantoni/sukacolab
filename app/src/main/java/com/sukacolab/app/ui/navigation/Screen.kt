@@ -38,6 +38,9 @@ sealed class Screen(val route: String) {
 
     object Certification : Screen("certification")
     object AddCertification : Screen("add_certification")
+    object EditCertification : Screen("edit_certification/{$PROJECT_ID}") {
+        fun createRoute(productId: Int) = "edit_certification/$productId"
+    }
 
     object Skill : Screen("skill")
     object AddSkill : Screen("add_skill")

@@ -19,6 +19,7 @@ import com.sukacolab.app.ui.feature.user.home.HomeViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationViewModel
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.edit_certification.EditCertificationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.edit_education.EditEducationScreen
@@ -81,6 +82,7 @@ val viewModelModules = module {
     viewModel { AddExperienceViewModel(get(), get(), get()) }
     viewModel { EditExperienceViewModel(get(), get(), get()) }
     viewModel { AddCertificationViewModel(get(), get(), get()) }
+    viewModel { EditCertificationViewModel(get(), get(), get()) }
     viewModel { AddSkillViewModel(get(), get(), get()) }
     viewModel { AddEducationViewModel(get(), get(), get()) }
     viewModel { EditEducationViewModel(get(), get(), get()) }
