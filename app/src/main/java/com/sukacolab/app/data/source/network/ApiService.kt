@@ -1,8 +1,14 @@
 package com.sukacolab.app.data.source.network
 
+import com.sukacolab.app.data.source.network.request.CertificationRequest
+import com.sukacolab.app.data.source.network.request.EditAboutRequest
+import com.sukacolab.app.data.source.network.request.EditMeRequest
+import com.sukacolab.app.data.source.network.request.EducationRequest
+import com.sukacolab.app.data.source.network.request.ExperienceRequest
 import com.sukacolab.app.data.source.network.request.LoginRequest
 import com.sukacolab.app.data.source.network.request.SettingEmailRequest
 import com.sukacolab.app.data.source.network.request.SettingPasswordRequest
+import com.sukacolab.app.data.source.network.request.SkillRequest
 import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.data.source.network.response.CertificationResponse
 import com.sukacolab.app.data.source.network.response.EducationResponse
@@ -72,6 +78,30 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): EducationResponse
 
+    @GET("/api/profile/experience/detail/{id}")
+    suspend fun getDetailExperience(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): ExperienceResponse
+
+    @GET("/api/profile/certification/detail/{id}")
+    suspend fun getDetailCertification(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): CertificationResponse
+
+    @GET("/api/profile/skill/detail/{id}")
+    suspend fun getDetailSkill(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): SkillResponse
+
+    @GET("/api/profile/education/detail/{id}")
+    suspend fun getDetailEducation(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+    ): EducationResponse
+
     @POST("/api/auth/setting/email")
     fun setEmail(
         @Header("Authorization") token: String,
@@ -83,6 +113,71 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: SettingPasswordRequest
     ): Call<BaseResponse>
+
+    @POST("/api/profile/me/edit")
+    fun editMe(
+        @Header("Authorization") token: String,
+        @Body request: EditMeRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/about/edit")
+    fun editAbout(
+        @Header("Authorization") token: String,
+        @Body request: EditAboutRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/experience/add")
+    fun addExperience(
+        @Header("Authorization") token: String,
+        @Body request: ExperienceRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/experience/edit/{id}")
+    fun editExperience(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body request: ExperienceRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/certification/add")
+    fun addCertification(
+        @Header("Authorization") token: String,
+        @Body request: CertificationRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/certification/edit/{id}")
+    fun editCertification(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body request: CertificationRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/skill/add")
+    fun addSkill(
+        @Header("Authorization") token: String,
+        @Body request: SkillRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/skill/edit/{id}")
+    fun editSkill(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body request: SkillRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/education/add")
+    fun addEducation(
+        @Header("Authorization") token: String,
+        @Body request: EducationRequest
+    ): Call<BaseResponse>
+
+    @POST("/api/profile/education/edit/{id}")
+    fun editEducation(
+        @Header("Authorization") token: String,
+        @Path("id") id: String,
+        @Body request: EducationRequest
+    ): Call<BaseResponse>
+
 
     @POST("/v1/auth/update-user/{userId}")
     suspend fun editProfile(

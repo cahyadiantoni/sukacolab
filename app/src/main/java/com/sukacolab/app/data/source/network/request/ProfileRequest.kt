@@ -3,7 +3,7 @@ package com.sukacolab.app.data.source.network.request
 import com.google.gson.annotations.SerializedName
 import java.io.File
 
-data class EditMe(
+data class EditMeRequest(
     @SerializedName("name")
     val name: String,
     @SerializedName("summary")
@@ -22,12 +22,12 @@ data class EditMe(
     val resume: File
 )
 
-data class EditAbout(
+data class EditAboutRequest(
     @SerializedName("about")
     val about: String,
 )
 
-data class Experience(
+data class ExperienceRequest(
     @SerializedName("title")
     val title: String,
     @SerializedName("company")
@@ -42,7 +42,7 @@ data class Experience(
     val isNow: Boolean
 )
 
-data class Certification(
+data class CertificationRequest(
     @SerializedName("name")
     val name: String,
     @SerializedName("publisher")
@@ -55,14 +55,14 @@ data class Certification(
     val expireDate: String
 )
 
-data class Skill(
+data class SkillRequest(
     @SerializedName("name")
     val name: String,
     @SerializedName("description")
     val description: String
 )
 
-data class Education(
+data class EducationRequest(
     @SerializedName("instansi")
     val instansi: String,
     @SerializedName("major")
