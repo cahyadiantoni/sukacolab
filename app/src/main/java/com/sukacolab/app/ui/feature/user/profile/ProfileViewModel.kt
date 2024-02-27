@@ -1,11 +1,16 @@
 package com.sukacolab.app.ui.feature.user.profile
 
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sukacolab.app.data.repository.ProfileRepository
 import com.sukacolab.app.data.source.local.AuthPreferences
+import com.sukacolab.app.data.source.network.ApiService
+import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.EducationUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
@@ -14,10 +19,18 @@ import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.io.File
 
 class ProfileViewModel(
     private val authPreferences: AuthPreferences,
     private val profileRepo: ProfileRepository,
+    private val apiService: ApiService,
 ) : ViewModel() {
     val response: MutableState<ProfileUiState> = mutableStateOf(ProfileUiState.Empty)
     val responseExperience: MutableState<ExperienceUiState> = mutableStateOf(ExperienceUiState.Empty)
@@ -25,6 +38,12 @@ class ProfileViewModel(
         CertificationUiState.Empty)
     val responseSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
     val responseEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
+
+    private val _editResumeResult = MutableLiveData<EditResumeResults>()
+    val editResumeResult: LiveData<EditResumeResults> = _editResumeResult
+
+    private val _isLoading = mutableStateOf(false)
+    val isLoading: State<Boolean> = _isLoading
 
     val id: Int?
         get() = (response.value as? ProfileUiState.Success)?.data?.id
@@ -118,4 +137,53 @@ class ProfileViewModel(
        }
     }
 
+    fun editResume(pdfFile: File) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val token = authPreferences.getAuthToken()
+                val pdfBody = pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull())
+                val pdfMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData("resume", pdfFile.name, pdfBody)
+                apiService.changeResume(
+                    token = "Bearer $token",
+                    resume = pdfMultiPart
+                ).enqueue(object: Callback<BaseResponse> {
+                    override fun onResponse(
+                        call: Call<BaseResponse>,
+                        response: Response<BaseResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            _isLoading.value = false
+                            val success = response.body()!!.success
+                            val message = response.body()!!.message
+
+                            if (success) {
+                                _editResumeResult.value = EditResumeResults.Success(message)
+                            } else {
+                                _editResumeResult.value = EditResumeResults.Error(message)
+                            }
+                        } else {
+                            _isLoading.value = false
+                            _editResumeResult.value = EditResumeResults.Error(response.message())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                        _isLoading.value = false
+                        _editResumeResult.value = EditResumeResults.Error(t.localizedMessage ?: "Unknown error occurred")
+                    }
+
+                })
+            } catch (e: Exception) {
+                _editResumeResult.value = EditResumeResults.Error(e.localizedMessage ?: "Unknown error occurred")
+            }
+        }
+    }
+
+
+}
+
+sealed class EditResumeResults {
+    data class Success(val message: String) : EditResumeResults()
+    data class Error(val errorMessage: String) : EditResumeResults()
 }

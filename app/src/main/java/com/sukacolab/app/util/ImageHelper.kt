@@ -48,6 +48,23 @@ fun saveUriToFile(context: Context, uri: Uri): File? {
     return null
 }
 
+fun saveUriToFilePdf(context: Context, uri: Uri): File? {
+    val file = File(context.cacheDir, "application.pdf")
+    try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val outputStream = FileOutputStream(file)
+        inputStream?.use { input ->
+            outputStream.use { output ->
+                input.copyTo(output)
+            }
+        }
+        return file
+    } catch (e: IOException) {
+        e.printStackTrace()
+    }
+    return null
+}
+
 fun Context.createTempPictureUri(
     provider: String = "${APPLICATION_ID}.provider",
     fileName: String = "picture_${System.currentTimeMillis()}",

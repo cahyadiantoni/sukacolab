@@ -1,8 +1,14 @@
 package com.sukacolab.app.ui.feature.user.profile
 
+import android.Manifest
 import android.content.Context
 import android.content.Intent
+import android.graphics.Bitmap
 import android.net.Uri
+import android.util.Log
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -43,8 +49,14 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.SideEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -64,13 +76,17 @@ import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.alert.AlertLogout
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.edit_photo.EditPhotoResults
 import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.EducationUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.ExperienceUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.SkillUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
+import com.sukacolab.app.util.saveUriToFile
+import com.sukacolab.app.util.saveUriToFilePdf
 import org.koin.androidx.compose.getViewModel
+import java.io.File
 import java.net.URLEncoder
 import java.nio.charset.StandardCharsets
 
@@ -1023,6 +1039,67 @@ fun ResumeCompose(
     navController: NavController,
     viewModel: ProfileViewModel,
 ) {
+    val context = LocalContext.current
+
+    val editResumeResult by viewModel.editResumeResult.observeAsState()
+    val isLoading = viewModel.isLoading.value
+
+    var cameraPermissionGranted by remember {
+        mutableStateOf(false)
+    }
+
+    val permissionLauncher = rememberLauncherForActivityResult(contract = ActivityResultContracts.RequestPermission(), onResult = { isGranted ->
+        if (isGranted) {
+            cameraPermissionGranted = true
+        }
+    } )
+
+    SideEffect {
+        if (!cameraPermissionGranted) {
+            permissionLauncher.launch(Manifest.permission.CAMERA)
+        }
+    }
+
+    var pdfUri by remember { mutableStateOf<Uri?>(null)}
+    var pdfFile  by remember{ mutableStateOf<File?>(null)}
+    val coroutineScope = rememberCoroutineScope()
+
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent(),
+        onResult = { result ->
+            if (result != null) {
+                pdfUri = result
+                // Convert Uri to File
+                pdfFile = saveUriToFilePdf(context, pdfUri as Uri)
+
+                viewModel.editResume(pdfFile as File)
+            }
+        }
+    )
+
+
+    LaunchedEffect(key1 = editResumeResult) {
+        when (editResumeResult) {
+            is EditResumeResults.Success -> {
+                val message = (editResumeResult as EditResumeResults.Success).message
+                Log.d("Edit Photo", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(Screen.Profile.route) {
+                    popUpTo(Screen.Profile.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is EditResumeResults.Error -> {
+                val errorMessage = (editResumeResult as EditPhotoResults.Error).errorMessage
+                Log.d("Edit Photo", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                // Initial state or loading state
+            }
+        }
+    }
 
     Box(
         modifier = Modifier
@@ -1044,7 +1121,7 @@ fun ResumeCompose(
                 Row(modifier = Modifier
                     .wrapContentSize()
                     .clickable {
-                        navController.navigate(Screen.Resume.route)
+                        launcher.launch("application/pdf")
                     },
                     horizontalArrangement = Arrangement.spacedBy(20.dp)) {
 

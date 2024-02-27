@@ -221,8 +221,8 @@ interface ApiService {
 
     @Multipart
     @POST("/api/profile/me/resume/edit")
-    suspend fun editResume(
+    fun changeResume(
         @Header("Authorization") token: String,
-        @Part pdfFile: MultipartBody.Part,
-    ): ProfileResponse
+        @Part resume: MultipartBody.Part,
+    ): Call<BaseResponse>
 }

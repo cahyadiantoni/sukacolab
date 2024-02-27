@@ -126,14 +126,4 @@ class ProfileRepository(
         ).data)
     }.flowOn(Dispatchers.IO)
 
-    fun editResume(pdfFile: File) = flow {
-        val token = authPreferences.getAuthToken()
-        val pdfBody = pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull())
-        val pdfMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData("resume", pdfFile.name, pdfBody)
-        Log.d("Hit API Edit Resume", "Editing Resume with file: ${pdfFile.name}")
-        emit(apiService.editResume(
-            token = "Bearer $token",
-            pdfFile = pdfMultiPart
-        ).data)
-    }.flowOn(Dispatchers.IO)
 }
