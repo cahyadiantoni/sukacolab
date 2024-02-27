@@ -22,6 +22,7 @@ import com.sukacolab.app.data.source.network.response.ProfileResponse
 import com.sukacolab.app.data.source.network.response.SkillResponse
 import com.sukacolab.app.ui.feature.register.model.RegisterRequest
 import com.sukacolab.app.ui.feature.register.model.RegisterResponse
+import okhttp3.MultipartBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -210,4 +211,18 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: EditMeRequest
     ): Call<BaseResponse>
+
+    @Multipart
+    @POST("/api/profile/me/photo/edit")
+    suspend fun editPhoto(
+        @Header("Authorization") token: String,
+        @Part image: MultipartBody.Part,
+    ): ProfileResponse
+
+    @Multipart
+    @POST("/api/profile/me/resume/edit")
+    suspend fun editResume(
+        @Header("Authorization") token: String,
+        @Part pdfFile: MultipartBody.Part,
+    ): ProfileResponse
 }

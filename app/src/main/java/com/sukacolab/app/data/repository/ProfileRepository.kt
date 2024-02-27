@@ -6,6 +6,10 @@ import com.sukacolab.app.data.source.network.ApiService
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOn
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import okhttp3.MultipartBody
+import okhttp3.RequestBody.Companion.asRequestBody
+import java.io.File
 
 class ProfileRepository(
     private val apiService: ApiService,
@@ -119,6 +123,28 @@ class ProfileRepository(
         emit(apiService.getDetailEducation(
             token = "Bearer $token",
             id = id
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun editPhoto(image: File) = flow {
+        val token = authPreferences.getAuthToken()
+        val imageBody = image.asRequestBody("image/*".toMediaTypeOrNull())
+        val imgMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData("image", image.name, imageBody)
+        Log.d("Hit API Face Shape", "Generate FaceShape ${imageBody.toString()}")
+        emit(apiService.editPhoto(
+            token = "Bearer $token",
+            image = imgMultiPart,
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun editResume(pdfFile: File) = flow {
+        val token = authPreferences.getAuthToken()
+        val pdfBody = pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull())
+        val pdfMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData("resume", pdfFile.name, pdfBody)
+        Log.d("Hit API Edit Resume", "Editing Resume with file: ${pdfFile.name}")
+        emit(apiService.editResume(
+            token = "Bearer $token",
+            pdfFile = pdfMultiPart
         ).data)
     }.flowOn(Dispatchers.IO)
 }

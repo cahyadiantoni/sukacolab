@@ -17,13 +17,16 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.ChangeCircle
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
@@ -59,6 +62,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
+import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.alert.AlertLogout
 import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
 import com.sukacolab.app.ui.feature.user.profile.ui_state.EducationUiState
@@ -135,12 +139,6 @@ fun ProfileScreen(
                             .align(Alignment.BottomStart)
                     ) {
 
-                        Row(
-                            modifier = Modifier.fillMaxWidth(),
-                            horizontalArrangement = Arrangement.SpaceBetween
-                        ) {
-                        }
-
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth(),
@@ -163,6 +161,8 @@ fun ProfileScreen(
                                             .padding(5.dp)
                                             .clip(CircleShape)
                                     )
+
+
                                 }else{
                                     AsyncImage(
                                         model = ImageRequest.Builder(LocalContext.current)
@@ -179,6 +179,30 @@ fun ProfileScreen(
                                     )
                                 }
                             }
+                            Box(
+                                modifier = Modifier
+                                    .size(125.dp)
+                            ) {
+                                Box(
+                                    modifier = Modifier
+                                        .align(Alignment.BottomEnd)
+                                        .background(Color.White, CircleShape)
+                                        .size(29.dp)
+                                ) {
+                                    IconButton(
+                                        onClick = { navController.navigate(Screen.PhotoEdit.route) },
+                                        modifier = Modifier
+                                    ) {
+                                        Icon(
+                                            imageVector = Icons.Default.ChangeCircle, // Ganti dengan icon edit yang diinginkan
+                                            contentDescription = "Edit",
+                                            tint = MaterialTheme.colorScheme.primary, // Warna icon
+                                            modifier = Modifier.size(28.dp) // Ukuran ikon yang lebih besar
+                                        )
+                                    }
+                                }
+                            }
+
                         }
                     }
                 }
@@ -276,34 +300,11 @@ fun ProfileScreen(
                     }
                 }
 
-                viewModel.resume?.let { resumeUrl ->
-                    val encodedUrl = URLEncoder.encode(resumeUrl, StandardCharsets.UTF_8.toString())
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 50.dp, end = 50.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Button(
-                            onClick = {
-                                navController.navigate(
-                                    Screen.Resume.createRoute(
-                                        encodedUrl
-                                    )
-                                )
-                            },
-                            modifier = Modifier
-                                .weight(0.2f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary
-                            )
-                        ) {
-                            Text(text = "Show Resume", color = Color.White)
-                        }
-                    }
-                }
+                borderCompose()
 
-                Spacer(modifier = Modifier.size(10.dp))
+                ResumeCompose(
+                    navController = navController, viewModel = viewModel
+                )
 
                 borderCompose()
 
@@ -1012,6 +1013,87 @@ fun AboutCompose(
                         .padding(top = 20.dp),
                     lineHeight = 18.sp
                 )
+            }
+        }
+    }
+}
+
+@Composable
+fun ResumeCompose(
+    navController: NavController,
+    viewModel: ProfileViewModel,
+) {
+
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+    ) {
+
+        Column(modifier = Modifier.padding(20.dp)) {
+
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+
+                Text(
+                    text = "Resume",
+                    fontWeight = FontWeight.Bold,
+                )
+
+                Row(modifier = Modifier
+                    .wrapContentSize()
+                    .clickable {
+                        navController.navigate(Screen.Resume.route)
+                    },
+                    horizontalArrangement = Arrangement.spacedBy(20.dp)) {
+
+                    Icon(
+                        imageVector = Icons.Default.Edit, contentDescription = null,
+                        tint = MaterialTheme.colorScheme.primary,
+                    )
+                }
+            }
+
+            viewModel.resume?.let { resumeUrl ->
+                val encodedUrl = URLEncoder.encode(resumeUrl, StandardCharsets.UTF_8.toString())
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(start = 10.dp, end = 10.dp, top = 10.dp),
+                    horizontalArrangement = Arrangement.SpaceEvenly
+                ) {
+                    Button(
+                        onClick = {
+                            navController.navigate(
+                                Screen.Resume.createRoute(
+                                    encodedUrl
+                                )
+                            )
+                        },
+                        shape = RoundedCornerShape(10),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(57.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10)),
+                        colors = ButtonDefaults.buttonColors(Color.Transparent)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FileOpen, // Menggunakan ikon file bawaan
+                            contentDescription = "File Icon",
+                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            modifier = Modifier.size(24.dp) // Ukuran ikon
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Show Resume",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
+                }
             }
         }
     }
