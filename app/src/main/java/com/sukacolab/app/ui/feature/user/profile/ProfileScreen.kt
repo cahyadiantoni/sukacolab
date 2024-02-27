@@ -97,7 +97,7 @@ fun ProfileScreen(
                         )
                     }
                     IconButton(onClick = {
-
+                        navController.navigate(Screen.ProfileEdit.route)
                     }) {
                         Icon(
                             imageVector = Icons.Default.Edit,

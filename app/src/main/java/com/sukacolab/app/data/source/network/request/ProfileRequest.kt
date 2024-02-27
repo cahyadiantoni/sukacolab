@@ -7,19 +7,15 @@ data class EditMeRequest(
     @SerializedName("name")
     val name: String,
     @SerializedName("summary")
-    val summary: String,
+    val summary: String?,
     @SerializedName("linkedin")
-    val linkedin: String,
+    val linkedin: String?,
     @SerializedName("github")
-    val github: String,
+    val github: String?,
     @SerializedName("whatsapp")
-    val whatsapp: String,
+    val whatsapp: String?,
     @SerializedName("instagram")
-    val instagram: String,
-    @SerializedName("photo")
-    val photo: File,
-    @SerializedName("resume")
-    val resume: File
+    val instagram: String?
 )
 
 data class EditAboutRequest(

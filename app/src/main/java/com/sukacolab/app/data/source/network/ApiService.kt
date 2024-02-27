@@ -205,10 +205,9 @@ interface ApiService {
         @Path("id") id: String,
     ): Call<BaseResponse>
 
-    @POST("/v1/auth/update-user/{userId}")
-    suspend fun editProfile(
+    @POST("/api/profile/me/edit")
+    fun editProfile(
         @Header("Authorization") token: String,
-        @Path("userId") userId: String,
-        @Body request: RegisterRequest
-    ): RegisterResponse
+        @Body request: EditMeRequest
+    ): Call<BaseResponse>
 }

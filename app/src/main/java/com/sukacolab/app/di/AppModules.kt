@@ -88,7 +88,7 @@ val viewModelModules = module {
     viewModel { EditSkillViewModel(get(), get(), get()) }
     viewModel { AddEducationViewModel(get(), get(), get()) }
     viewModel { EditEducationViewModel(get(), get(), get()) }
-    viewModel { ProfileEditViewModel(get(),get()) }
+    viewModel { ProfileEditViewModel(get(),get(), get()) }
 }
 
 val useCaseModule = module {

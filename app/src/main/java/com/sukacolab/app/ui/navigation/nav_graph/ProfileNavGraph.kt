@@ -16,6 +16,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.edit_educa
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.edit_experience.EditExperienceScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.profile_edit.ProfileEditScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.SettingScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.email.SettingEmailScreen
@@ -30,6 +31,9 @@ import com.sukacolab.app.ui.navigation.Screen
 fun NavGraphBuilder.profileNavGraph(
     navController: NavHostController,
 ) {
+    composable(Screen.ProfileEdit.route) {
+        ProfileEditScreen(navController = navController)
+    }
     composable(Screen.Setting.route) {
         SettingScreen(navController = navController)
     }
