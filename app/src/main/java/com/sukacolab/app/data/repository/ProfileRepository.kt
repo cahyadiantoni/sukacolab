@@ -126,17 +126,6 @@ class ProfileRepository(
         ).data)
     }.flowOn(Dispatchers.IO)
 
-    fun editPhoto(image: File) = flow {
-        val token = authPreferences.getAuthToken()
-        val imageBody = image.asRequestBody("image/*".toMediaTypeOrNull())
-        val imgMultiPart: MultipartBody.Part = MultipartBody.Part.createFormData("image", image.name, imageBody)
-        Log.d("Hit API Face Shape", "Generate FaceShape ${imageBody.toString()}")
-        emit(apiService.editPhoto(
-            token = "Bearer $token",
-            image = imgMultiPart,
-        ).data)
-    }.flowOn(Dispatchers.IO)
-
     fun editResume(pdfFile: File) = flow {
         val token = authPreferences.getAuthToken()
         val pdfBody = pdfFile.asRequestBody("application/pdf".toMediaTypeOrNull())

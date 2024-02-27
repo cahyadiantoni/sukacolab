@@ -190,7 +190,7 @@ fun ProfileScreen(
                                         .size(29.dp)
                                 ) {
                                     IconButton(
-                                        onClick = { navController.navigate(Screen.PhotoEdit.route) },
+                                        onClick = { navController.navigate(Screen.EditPhoto.route) },
                                         modifier = Modifier
                                     ) {
                                         Icon(

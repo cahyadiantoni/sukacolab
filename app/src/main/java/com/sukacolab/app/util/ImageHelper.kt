@@ -7,6 +7,8 @@ import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
+import androidx.core.content.FileProvider
+import com.sukacolab.app.BuildConfig.APPLICATION_ID
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
@@ -46,6 +48,20 @@ fun saveUriToFile(context: Context, uri: Uri): File? {
     return null
 }
 
+fun Context.createTempPictureUri(
+    provider: String = "${APPLICATION_ID}.provider",
+    fileName: String = "picture_${System.currentTimeMillis()}",
+    fileExtension: String = ".png"
+): Uri {
+    val tempFile = File.createTempFile(
+        fileName, fileExtension, cacheDir
+    ).apply {
+        createNewFile()
+    }
+
+    return FileProvider.getUriForFile(applicationContext, provider, tempFile)
+}
+
 
 fun uriToFileConverter(selectedImg: Uri, context: Context): File {
     val contentResolver: ContentResolver = context.contentResolver
@@ -81,16 +97,9 @@ val timeStamp: String = SimpleDateFormat(
 fun reduceFileImage(file: File): File {
     val bitmap = BitmapFactory.decodeFile(file.path)
 
-    var compressQuality = 100
+    var compressQuality = 30
     var streamLength: Int
 
-    do {
-        val bmpStream = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, bmpStream)
-        val bmpPicByteArray = bmpStream.toByteArray()
-        streamLength = bmpPicByteArray.size
-        compressQuality -= 5
-    } while (streamLength > 1000000)
 
     bitmap.compress(Bitmap.CompressFormat.JPEG, compressQuality, FileOutputStream(file))
 

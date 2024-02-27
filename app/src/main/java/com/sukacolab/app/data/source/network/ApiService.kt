@@ -214,10 +214,10 @@ interface ApiService {
 
     @Multipart
     @POST("/api/profile/me/photo/edit")
-    suspend fun editPhoto(
+    fun changePhoto(
         @Header("Authorization") token: String,
-        @Part image: MultipartBody.Part,
-    ): ProfileResponse
+        @Part photo: MultipartBody.Part,
+    ): Call<BaseResponse>
 
     @Multipart
     @POST("/api/profile/me/resume/edit")

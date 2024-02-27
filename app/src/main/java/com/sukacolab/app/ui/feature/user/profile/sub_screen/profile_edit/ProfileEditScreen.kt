@@ -205,7 +205,9 @@ fun ProfileEditScreen(
                                 keyboardType = KeyboardType.Text
                             ).Field()
 
-                            Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)){
+                            Box(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp)){
                                 if (isLoading) {
                                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                 } else {

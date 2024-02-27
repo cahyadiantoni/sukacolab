@@ -10,13 +10,13 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutScree
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.add_certification.AddCertificationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.edit_certification.EditCertificationScreen
+import com.sukacolab.app.ui.feature.user.profile.sub_screen.edit_photo.EditPhotoScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.EducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.add_education.AddEducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.education.edit_education.EditEducationScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience.AddExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.edit_experience.EditExperienceScreen
-import com.sukacolab.app.ui.feature.user.profile.sub_screen.photo.PhotoEditScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.profile_edit.ProfileEditScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.SettingScreen
@@ -35,8 +35,8 @@ fun NavGraphBuilder.profileNavGraph(
     composable(Screen.ProfileEdit.route) {
         ProfileEditScreen(navController = navController)
     }
-    composable(Screen.PhotoEdit.route) {
-        PhotoEditScreen(navController = navController)
+    composable(Screen.EditPhoto.route) {
+        EditPhotoScreen(navController = navController)
     }
     composable(Screen.Setting.route) {
         SettingScreen(navController = navController)
