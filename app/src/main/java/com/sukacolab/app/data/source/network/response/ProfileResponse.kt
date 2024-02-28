@@ -32,5 +32,7 @@ data class ProfileItem(
     val resume: String,
     @SerializedName("about")
     val about: String,
+    @SerializedName("is_complete")
+    val isComplete: Boolean,
 )
 

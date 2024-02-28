@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.horizontalScroll
 import androidx.compose.foundation.layout.Arrangement
@@ -24,7 +25,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -173,13 +176,44 @@ fun HomeContent(
                 .fillMaxSize()
         ) {
             item {
-                val name = viewModelProfile.name
+                val name = if(viewModelProfile.name == null){
+                    ""
+                }else{
+                    viewModelProfile.name
+                }
                 Text(
                     text = "Hey, $name",
                     fontSize = 24.sp,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
                     modifier = Modifier.padding(16.dp)
                 )
+                Box(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp, end = 20.dp)){
+                    Button(
+                        onClick = {
+                            navController.navigate(Screen.Profile.route)
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(40.dp),
+                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Warning, // Menggunakan ikon file bawaan
+                            contentDescription = "Edit Icon",
+                            tint = Color.Yellow, // Warna ikon disesuaikan dengan warna primer
+                            modifier = Modifier.size(16.dp) // Ukuran ikon
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = "Lengkapi Profilmu!",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = Color.Yellow,
+                                fontWeight = FontWeight.SemiBold,
+                                fontSize = 16.sp
+                            )
+                        )
+                    }
+                }
                 CarouselCard()
                 Text(
                     text = "Category",
@@ -321,7 +355,9 @@ fun HomeContent(
 
                         Row(
                             horizontalArrangement = Arrangement.spacedBy(5.dp),
-                            modifier = Modifier.wrapContentSize().padding(bottom = 16.dp)
+                            modifier = Modifier
+                                .wrapContentSize()
+                                .padding(bottom = 16.dp)
                         ) {
 
                             Text(
@@ -348,7 +384,7 @@ fun HomeContent(
 @Composable
 fun MainMenu(title: String, icon: Int, onClick: () -> Unit) {
     Card(
-        modifier =Modifier
+        modifier = Modifier
             .width(80.dp)
             .height(100.dp)
             .padding(horizontal = 4.dp),
@@ -370,7 +406,10 @@ fun MainMenu(title: String, icon: Int, onClick: () -> Unit) {
                 Box(
                     modifier = Modifier
                         .size(40.dp)
-                        .background(MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(15.dp)),
+                        .background(
+                            MaterialTheme.colorScheme.primary,
+                            shape = RoundedCornerShape(15.dp)
+                        ),
                     contentAlignment = Alignment.Center
                 ) {
                     Image(painter = painterResource(id = icon), contentDescription = null,

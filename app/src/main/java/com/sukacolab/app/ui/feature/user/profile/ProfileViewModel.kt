@@ -68,6 +68,9 @@ class ProfileViewModel(
     val about: String?
         get() = (response.value as? ProfileUiState.Success)?.data?.about
 
+    val isComplete: Boolean?
+        get() = (response.value as? ProfileUiState.Success)?.data?.isComplete
+
     init {
         profileDetails()
         getExperience()

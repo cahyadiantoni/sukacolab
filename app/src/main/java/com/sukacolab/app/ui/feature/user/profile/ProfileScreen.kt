@@ -33,6 +33,7 @@ import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.ChangeCircle
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileOpen
+import androidx.compose.material.icons.filled.FileUpload
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
@@ -1131,15 +1132,41 @@ fun ResumeCompose(
                     )
                 }
             }
-
-            viewModel.resume?.let { resumeUrl ->
-                val encodedUrl = URLEncoder.encode(resumeUrl, StandardCharsets.UTF_8.toString())
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 10.dp, end = 10.dp, top = 10.dp),
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 10.dp, end = 10.dp, top = 10.dp),
+                horizontalArrangement = Arrangement.SpaceEvenly
+            ) {
+                if (viewModel.resume == null){
+                    Button(
+                        onClick = {
+                            launcher.launch("application/pdf")
+                        },
+                        shape = RoundedCornerShape(10),
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(57.dp)
+                            .border(2.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10)),
+                        colors = ButtonDefaults.buttonColors(Color.Transparent)
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.FileUpload, // Menggunakan ikon file bawaan
+                            contentDescription = "File Icon",
+                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            modifier = Modifier.size(24.dp) // Ukuran ikon
+                        )
+                        Spacer(modifier = Modifier.width(10.dp))
+                        Text(
+                            text = "Upload Resume",
+                            style = MaterialTheme.typography.titleMedium.copy(
+                                color = MaterialTheme.colorScheme.primary,
+                                fontWeight = FontWeight.SemiBold
+                            )
+                        )
+                    }
+                }else{
+                    val encodedUrl = URLEncoder.encode(viewModel.resume, StandardCharsets.UTF_8.toString())
                     Button(
                         onClick = {
                             navController.navigate(
@@ -1172,6 +1199,7 @@ fun ResumeCompose(
                     }
                 }
             }
+
         }
     }
 }
