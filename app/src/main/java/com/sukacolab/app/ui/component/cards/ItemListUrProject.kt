@@ -1,7 +1,9 @@
 package com.sukacolab.app.ui.component.cards
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -9,12 +11,16 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -30,11 +36,11 @@ fun ItemListUrProject(
     position: String,
     company: String,
     date: String,
-    type: Int,
-) {
+    status: Int,
+    ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(bottom = 10.dp)
             .fillMaxSize()
             .clickable {
 
@@ -48,18 +54,6 @@ fun ItemListUrProject(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    .data(image)
-//                    .crossfade(true)
-//                    .build(),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop,
-//                placeholder = painterResource(id = R.drawable.img_logo),
-//                modifier = Modifier
-//                    .size(60.dp)
-//            )
             Image(
                 painter = painterResource(id = R.drawable.img_logo),
                 contentDescription = null,
@@ -85,47 +79,32 @@ fun ItemListUrProject(
                     lineHeight = 14.sp
                 )
 
-                Text(
-                    text = date,
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Light
-                )
+                val textContent = if (status == 1) {
+                    "Review Admin"
+                } else if (status == 2){
+                    "Tidak Aktif"
+                } else if (status == 3){
+                    "Aktif"
+                } else {
+                    "Ditolak Admin"
+                }
 
+                Box(
+                    modifier = Modifier
+                        .wrapContentSize()
+                        .padding(top = 5.dp)
+                        .border(1.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp))
+                ) {
+                    Row(){
+                        Text(
+                            text = textContent, modifier = Modifier
+                                .padding(horizontal = 5.dp),
+                            fontSize = 12.sp,
+                            color = MaterialTheme.colorScheme.primary
+                        )
+                    }
 
-//                val changeColor = if (type == 1) {
-//                    darkGold
-//                } else if (type == 2){
-//                    darkGreen
-//                } else if (type == 3){
-//                    Color.Blue
-//                } else{
-//                    Color.Gray
-//                }
-//
-//                val textContent = if (type == 1) {
-//                    "Loker"
-//                } else if (type == 2){
-//                    "Kompetisi"
-//                } else if (type == 3){
-//                    "Portofolio"
-//                } else {
-//                    "Lainnya"
-//                }
-//
-//                Box(
-//                    modifier = Modifier
-//                        .wrapContentSize()
-//                        .padding(top = 5.dp)
-//                        .border(1.dp, changeColor, shape = RoundedCornerShape(20.dp))
-//                ) {
-//
-//                    Text(
-//                        text = textContent, modifier = Modifier
-//                            .padding(horizontal = 5.dp),
-//                        fontSize = 12.sp,
-//                        color = changeColor
-//                    )
-//                }
+                }
             }
         }
     }

@@ -13,6 +13,7 @@ import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Reviews
 import androidx.compose.material.icons.filled.RunCircle
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material.icons.filled.TouchApp
 import androidx.compose.material.icons.filled.TrackChanges
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.*
@@ -49,8 +50,8 @@ fun JetSukacolabApp(
             val userRoutes = listOf(
                 Screen.Home.route,
                 Screen.Profile.route,
-                Screen.Project.route,
-                Screen.Bookmark.route,
+                Screen.UrProject.route,
+                Screen.Application.route,
             )
 
             val adminRoutes = listOf(
@@ -108,14 +109,14 @@ private fun BottomBar(
                 screen = Screen.Home
             ),
             NavigationItem(
-                title = "Project",
-                icon = Icons.Default.Work,
-                screen = Screen.Project
+                title ="Application",
+                icon = Icons.Default.TouchApp,
+                screen = Screen.Application
             ),
             NavigationItem(
-                title ="Bookmark",
-                icon = Icons.Default.Bookmark,
-                screen = Screen.Bookmark
+                title = "Project",
+                icon = Icons.Default.Work,
+                screen = Screen.UrProject
             ),
             NavigationItem(
                 title ="Profile",

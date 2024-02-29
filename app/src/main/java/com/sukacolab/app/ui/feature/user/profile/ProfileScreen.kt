@@ -104,7 +104,7 @@ fun ProfileScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Text(text = "Profilmu", color = Color.White)
+                    Text(text = "Profile", color = Color.White)
                 },
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 actions = {

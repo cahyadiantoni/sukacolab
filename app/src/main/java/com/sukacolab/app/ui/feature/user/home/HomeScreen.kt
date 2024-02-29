@@ -67,6 +67,7 @@ import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.CarouselCard
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.component.cards.ItemListProject
+import com.sukacolab.app.ui.component.cards.ItemListUrProject
 import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.primaryColor
@@ -176,6 +177,7 @@ fun HomeContent(
                 .fillMaxSize()
         ) {
             item {
+                Spacer(modifier = Modifier.padding(top = 16.dp))
                 val name = if(viewModelProfile.name == null){
                     ""
                 }else{
@@ -185,35 +187,39 @@ fun HomeContent(
                     text = "Hey, $name",
                     fontSize = 24.sp,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
-                    modifier = Modifier.padding(16.dp)
+                    modifier = Modifier.padding(horizontal = 16.dp)
                 )
-                Box(modifier = Modifier.padding(start = 20.dp, bottom = 20.dp, end = 20.dp)){
-                    Button(
-                        onClick = {
-                            navController.navigate(Screen.Profile.route)
-                        },
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(40.dp),
-                        colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
-                    ) {
-                        Icon(
-                            imageVector = Icons.Default.Warning, // Menggunakan ikon file bawaan
-                            contentDescription = "Edit Icon",
-                            tint = Color.Yellow, // Warna ikon disesuaikan dengan warna primer
-                            modifier = Modifier.size(16.dp) // Ukuran ikon
-                        )
-                        Spacer(modifier = Modifier.width(8.dp))
-                        Text(
-                            text = "Lengkapi Profilmu!",
-                            style = MaterialTheme.typography.titleMedium.copy(
-                                color = Color.Yellow,
-                                fontWeight = FontWeight.SemiBold,
-                                fontSize = 16.sp
+                if(viewModelProfile.isComplete == false){
+                    Spacer(modifier = Modifier.padding(top = 8.dp))
+                    Box(modifier = Modifier.padding(horizontal = 16.dp)){
+                        Button(
+                            onClick = {
+                                navController.navigate(Screen.Profile.route)
+                            },
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(40.dp),
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+                        ) {
+                            Icon(
+                                imageVector = Icons.Default.Warning, // Menggunakan ikon file bawaan
+                                contentDescription = "Edit Icon",
+                                tint = Color.Yellow, // Warna ikon disesuaikan dengan warna primer
+                                modifier = Modifier.size(16.dp) // Ukuran ikon
                             )
-                        )
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Text(
+                                text = "Lengkapi Profilmu!",
+                                style = MaterialTheme.typography.titleMedium.copy(
+                                    color = Color.Yellow,
+                                    fontWeight = FontWeight.SemiBold,
+                                    fontSize = 16.sp
+                                )
+                            )
+                        }
                     }
                 }
+                Spacer(modifier = Modifier.padding(top = 16.dp))
                 CarouselCard()
                 Text(
                     text = "Category",
@@ -271,22 +277,15 @@ fun HomeContent(
                 Text(
                         text = "Recent Projects",
                         style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(horizontal = 16.dp)
+                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
                 )
             }
-            item {
-                val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp)
-                com.google.accompanist.flowlayout.FlowRow(
-                    mainAxisSize = SizeMode.Expand,
-                    mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
+            item{
+                Box(
                     modifier = Modifier
-                        .padding(top = 4.dp),
+                        .fillMaxWidth()
                 ) {
-                    Box(
-                        modifier = Modifier
-                            .width(itemSize),
-                        contentAlignment = Alignment.Center
-                    ) {
+                    Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 20.dp)) {
                         ItemListProject(
                             navController = navController,
                             id = 123,
@@ -296,13 +295,7 @@ fun HomeContent(
                             date = "16 Februari 2024",
                             type = "Loker"
                         )
-                    }
 
-                    Box(
-                        modifier = Modifier
-                            .width(itemSize),
-                        contentAlignment = Alignment.Center
-                    ) {
                         ItemListProject(
                             navController = navController,
                             id = 123,
@@ -312,13 +305,7 @@ fun HomeContent(
                             date = "14 Februari 2024",
                             type = "Portofolio"
                         )
-                    }
 
-                    Box(
-                        modifier = Modifier
-                            .width(itemSize),
-                        contentAlignment = Alignment.Center
-                    ) {
                         ItemListProject(
                             navController = navController,
                             id = 123,
@@ -328,13 +315,7 @@ fun HomeContent(
                             date = "2 Februari 2024",
                             type = "Lomba"
                         )
-                    }
 
-                    Box(
-                        modifier = Modifier
-                            .width(itemSize),
-                        contentAlignment = Alignment.Center
-                    ) {
                         ItemListProject(
                             navController = navController,
                             id = 123,
@@ -344,34 +325,37 @@ fun HomeContent(
                             date = "2 Januari 2024",
                             type = "Lain Lain"
                         )
-                    }
 
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 4.dp),
-                        contentAlignment = Alignment.Center
-                    ) {
-
-                        Row(
-                            horizontalArrangement = Arrangement.spacedBy(5.dp),
+                        Box(
                             modifier = Modifier
-                                .wrapContentSize()
-                                .padding(bottom = 16.dp)
+                                .fillMaxWidth()
+                                .padding(top = 4.dp),
+                            contentAlignment = Alignment.Center
                         ) {
 
-                            Text(
-                                text = "Show All Projects",
-                                color = MaterialTheme.colorScheme.primary,
-                                fontSize = 14.sp,
-                                fontWeight = FontWeight.ExtraBold
-                            )
+                            Row(
+                                horizontalArrangement = Arrangement.spacedBy(5.dp),
+                                modifier = Modifier
+                                    .wrapContentSize()
+                                    .padding(bottom = 6.dp)
+                                    .clickable {
+                                        navController.navigate(Screen.Project.route)
+                                    }
+                            ) {
 
-                            Icon(
-                                imageVector = Icons.Default.ArrowForward,
-                                contentDescription = null,
-                                tint = MaterialTheme.colorScheme.primary
-                            )
+                                Text(
+                                    text = "Show All Projects",
+                                    color = MaterialTheme.colorScheme.primary,
+                                    fontSize = 14.sp,
+                                    fontWeight = FontWeight.ExtraBold
+                                )
+
+                                Icon(
+                                    imageVector = Icons.Default.ArrowForward,
+                                    contentDescription = null,
+                                    tint = MaterialTheme.colorScheme.primary
+                                )
+                            }
                         }
                     }
                 }

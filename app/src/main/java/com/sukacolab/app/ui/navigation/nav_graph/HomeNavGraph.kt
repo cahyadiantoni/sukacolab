@@ -7,13 +7,13 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sukacolab.app.ui.feature.admin.home_admin.HomeAdminScreen
-import com.sukacolab.app.ui.feature.user.bookmark.BookmarkScreen
+import com.sukacolab.app.ui.feature.user.application.ApplicationScreen
+import com.sukacolab.app.ui.feature.user.application.bookmark.BookmarkScreen
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.user.profile.ProfileScreen
-import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
 import com.sukacolab.app.ui.feature.user.project.ProjectScreen
 import com.sukacolab.app.ui.feature.user.project_detail.ProjectDetailScreen
-import com.sukacolab.app.ui.navigation.CV_LINK
+import com.sukacolab.app.ui.feature.user.ur_project.UrProjectScreen
 import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen
 
@@ -32,11 +32,17 @@ fun NavGraphBuilder.homeNavGraph(
     composable(Screen.Profile.route) {
         ProfileScreen(navController = navController)
     }
+    composable(Screen.UrProject.route) {
+        UrProjectScreen(navController = navController)
+    }
     composable(Screen.Project.route) {
-        ProjectScreen()
+        ProjectScreen(navController = navController)
     }
     composable(Screen.Bookmark.route) {
         BookmarkScreen(navController = navController)
+    }
+    composable(Screen.Application.route) {
+        ApplicationScreen(navController = navController)
     }
 
     composable(

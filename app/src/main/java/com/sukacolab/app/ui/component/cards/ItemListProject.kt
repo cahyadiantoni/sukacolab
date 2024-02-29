@@ -37,7 +37,7 @@ fun ItemListProject(
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(bottom = 10.dp)
             .fillMaxSize()
             .clickable {
                 navController.navigate(
@@ -55,18 +55,6 @@ fun ItemListProject(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    .data(image)
-//                    .crossfade(true)
-//                    .build(),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop,
-//                placeholder = painterResource(id = R.drawable.img_logo),
-//                modifier = Modifier
-//                    .size(60.dp)
-//            )
             val img = if (type == "Loker") {
                     R.drawable.paid
                 } else if (type == "Portofolio"){
@@ -76,6 +64,7 @@ fun ItemListProject(
                 } else{
                     R.drawable.unknown
                 }
+
             Image(
                 painter = painterResource(id = img),
                 contentDescription = null,
@@ -107,41 +96,6 @@ fun ItemListProject(
                     fontWeight = FontWeight.Light
                 )
 
-
-//                val changeColor = if (type == 1) {
-//                    darkGold
-//                } else if (type == 2){
-//                    darkGreen
-//                } else if (type == 3){
-//                    Color.Blue
-//                } else{
-//                    Color.Gray
-//                }
-//
-//                val textContent = if (type == 1) {
-//                    "Loker"
-//                } else if (type == 2){
-//                    "Kompetisi"
-//                } else if (type == 3){
-//                    "Portofolio"
-//                } else {
-//                    "Lainnya"
-//                }
-//
-//                Box(
-//                    modifier = Modifier
-//                        .wrapContentSize()
-//                        .padding(top = 5.dp)
-//                        .border(1.dp, changeColor, shape = RoundedCornerShape(20.dp))
-//                ) {
-//
-//                    Text(
-//                        text = textContent, modifier = Modifier
-//                            .padding(horizontal = 5.dp),
-//                        fontSize = 12.sp,
-//                        color = changeColor
-//                    )
-//                }
             }
         }
     }

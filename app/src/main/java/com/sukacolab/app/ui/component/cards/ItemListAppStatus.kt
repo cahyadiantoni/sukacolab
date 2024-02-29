@@ -53,7 +53,7 @@ fun ItemListAppStatus(
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 16.dp, vertical = 4.dp)
+            .padding(bottom = 10.dp)
             .fillMaxSize()
             .clickable {
 
@@ -67,18 +67,6 @@ fun ItemListAppStatus(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
-
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    .data(image)
-//                    .crossfade(true)
-//                    .build(),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop,
-//                placeholder = painterResource(id = R.drawable.img_logo),
-//                modifier = Modifier
-//                    .size(60.dp)
-//            )
             Image(
                 painter = painterResource(id = R.drawable.img_logo),
                 contentDescription = null,
@@ -103,39 +91,28 @@ fun ItemListAppStatus(
                     fontWeight = FontWeight.Normal,
                 )
 
-
-                val changeColor = if (status == 1) {
-                    Color.Gray
-                } else if (status == 2){
-                    Color.Red
-                } else if (status == 3){
-                    Color.Green
-                } else{
-                    Color.Blue
-                }
-
                 val textContent = if (status == 1) {
-                    "Submitted"
+                    "Menunggu"
                 } else if (status == 2){
-                    "Rejected"
+                    "Ditolak"
                 } else if (status == 3){
-                    "Accepted"
+                    "Diterima"
                 } else {
-                    "OnSelection"
+                    "Seleksi"
                 }
 
                 Box(
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(top = 5.dp)
-                        .border(1.dp, changeColor, shape = RoundedCornerShape(20.dp))
+                        .border(1.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp))
                 ) {
                     Row(){
                         Text(
                             text = textContent, modifier = Modifier
                                 .padding(horizontal = 5.dp),
                             fontSize = 12.sp,
-                            color = changeColor
+                            color = MaterialTheme.colorScheme.primary
                         )
                     }
 

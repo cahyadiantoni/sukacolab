@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.ur_project_detail
+package com.sukacolab.app.ui.feature.user.ur_project.ur_project_detail
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background

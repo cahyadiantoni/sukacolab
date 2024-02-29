@@ -8,7 +8,8 @@ const val CV_LINK = "cvLink"
 sealed class Screen(val route: String) {
     object Onboarding : Screen("onboarding")
     object Home : Screen("home")
-    object Project : Screen("project")
+    object UrProject : Screen("ur_project")
+    object Application : Screen("application")
     object Profile : Screen("profile")
     object ProfileEdit : Screen("profile_edit")
     object EditPhoto : Screen("edit_photo")
@@ -17,8 +18,7 @@ sealed class Screen(val route: String) {
     object Login : Screen("login")
     object Register : Screen("register")
     object Splash : Screen("splash")
-    object UrProject : Screen("ur_project")
-    object AppStatus : Screen("app_status")
+    object Project : Screen("project")
     object Bookmark : Screen("bookmark")
     object ProjectDetail : Screen("product_detail/{$PROJECT_ID}") {
         fun createRoute(projectId: Int) = "product_detail/$projectId"
