@@ -40,7 +40,7 @@ class EducationViewModel(
     }
 
     private fun getAllEducation() = viewModelScope.launch {
-        profileRepo.getAllEducation()
+        profileRepo.getEducation(0)
             .onStart {
                 responseAllEducation.value = EducationUiState.Loading
             }.catch {

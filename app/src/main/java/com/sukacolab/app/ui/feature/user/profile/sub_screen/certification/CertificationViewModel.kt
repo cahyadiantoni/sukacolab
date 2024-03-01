@@ -40,7 +40,7 @@ class CertificationViewModel(
     }
 
     private fun getAllCertification() = viewModelScope.launch {
-        profileRepo.getAllCertification()
+        profileRepo.getCertification(0)
             .onStart {
                 responseAllCertification.value = CertificationUiState.Loading
             }.catch {

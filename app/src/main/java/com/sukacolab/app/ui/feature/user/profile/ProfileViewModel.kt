@@ -91,7 +91,7 @@ class ProfileViewModel(
     }
 
     private fun getExperience() = viewModelScope.launch {
-        profileRepo.getExperience()
+        profileRepo.getExperience(2)
             .onStart {
                 responseExperience.value = ExperienceUiState.Loading
             }.catch {
@@ -102,7 +102,7 @@ class ProfileViewModel(
     }
 
     private fun getCertification() = viewModelScope.launch {
-        profileRepo.getCertification()
+        profileRepo.getCertification(2)
             .onStart {
                 responseCertification.value = CertificationUiState.Loading
             }.catch {
@@ -113,7 +113,7 @@ class ProfileViewModel(
     }
 
     private fun getSkill() = viewModelScope.launch {
-        profileRepo.getSkill()
+        profileRepo.getSkill(2)
             .onStart {
                 responseSkill.value = SkillUiState.Loading
             }.catch {
@@ -124,7 +124,7 @@ class ProfileViewModel(
     }
 
     private fun getEducation() = viewModelScope.launch {
-        profileRepo.getEducation()
+        profileRepo.getEducation(2)
             .onStart {
                 responseEducation.value = EducationUiState.Loading
             }.catch {

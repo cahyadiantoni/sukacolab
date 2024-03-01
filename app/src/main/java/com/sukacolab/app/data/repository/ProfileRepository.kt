@@ -26,67 +26,39 @@ class ProfileRepository(
         )
     }.flowOn(Dispatchers.IO)
 
-    fun getExperience() = flow {
+    fun getExperience(take: Int) = flow {
         val token = authPreferences.getAuthToken()
         Log.d("Hit API Experience", "get Experience")
         emit(apiService.getExperience(
-            token = "Bearer $token"
+            token = "Bearer $token",
+            take = take
         ).data)
     }.flowOn(Dispatchers.IO)
 
-    fun getCertification() = flow {
+    fun getCertification(take: Int) = flow {
         val token = authPreferences.getAuthToken()
         Log.d("Hit API Certification", "get Certification")
         emit(apiService.getCertification(
-            token = "Bearer $token"
+            token = "Bearer $token",
+            take = take
         ).data)
     }.flowOn(Dispatchers.IO)
 
-    fun getSkill() = flow {
+    fun getSkill(take: Int) = flow {
         val token = authPreferences.getAuthToken()
         Log.d("Hit API Skill", "get Skill")
         emit(apiService.getSkill(
-            token = "Bearer $token"
+            token = "Bearer $token",
+            take = take
         ).data)
     }.flowOn(Dispatchers.IO)
 
-    fun getEducation() = flow {
+    fun getEducation(take: Int) = flow {
         val token = authPreferences.getAuthToken()
         Log.d("Hit API Education", "get Education")
         emit(apiService.getEducation(
-            token = "Bearer $token"
-        ).data)
-    }.flowOn(Dispatchers.IO)
-
-    fun getAllExperience() = flow {
-        val token = authPreferences.getAuthToken()
-        Log.d("Hit API Experience", "get Experience")
-        emit(apiService.getAllExperience(
-            token = "Bearer $token"
-        ).data)
-    }.flowOn(Dispatchers.IO)
-
-    fun getAllCertification() = flow {
-        val token = authPreferences.getAuthToken()
-        Log.d("Hit API Certification", "get Certification")
-        emit(apiService.getAllCertification(
-            token = "Bearer $token"
-        ).data)
-    }.flowOn(Dispatchers.IO)
-
-    fun getAllSkill() = flow {
-        val token = authPreferences.getAuthToken()
-        Log.d("Hit API Skill", "get Skill")
-        emit(apiService.getAllSkill(
-            token = "Bearer $token"
-        ).data)
-    }.flowOn(Dispatchers.IO)
-
-    fun getAllEducation() = flow {
-        val token = authPreferences.getAuthToken()
-        Log.d("Hit API Education", "get Education")
-        emit(apiService.getAllEducation(
-            token = "Bearer $token"
+            token = "Bearer $token",
+            take = take
         ).data)
     }.flowOn(Dispatchers.IO)
 

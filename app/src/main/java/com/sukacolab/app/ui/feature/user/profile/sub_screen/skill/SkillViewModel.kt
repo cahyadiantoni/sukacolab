@@ -41,7 +41,7 @@ class SkillViewModel(
     }
 
     private fun getAllSkill() = viewModelScope.launch {
-        profileRepo.getAllSkill()
+        profileRepo.getSkill(0)
             .onStart {
                 responseAllSkill.value = SkillUiState.Loading
             }.catch {

@@ -40,7 +40,7 @@ class ExperienceViewModel(
     }
 
     private fun getAllExperience() = viewModelScope.launch {
-        profileRepo.getAllExperience()
+        profileRepo.getExperience(0)
             .onStart {
                 responseAllExperience.value = ExperienceUiState.Loading
             }.catch {

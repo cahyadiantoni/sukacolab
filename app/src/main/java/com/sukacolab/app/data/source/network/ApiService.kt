@@ -44,44 +44,28 @@ interface ApiService {
         @Header("Authorization") token: String
     ): ProfileResponse
 
-    @GET("/api/profile/experience")
+    @GET("/api/profile/experience/{take}")
     suspend fun getExperience(
         @Header("Authorization") token: String,
+        @Path("take") take: Int,
     ): ExperienceResponse
 
-    @GET("/api/profile/certification")
+    @GET("/api/profile/certification/{take}")
     suspend fun getCertification(
         @Header("Authorization") token: String,
+        @Path("take") take: Int,
     ): CertificationResponse
 
-    @GET("/api/profile/skill")
+    @GET("/api/profile/skill/{take}")
     suspend fun getSkill(
         @Header("Authorization") token: String,
+        @Path("take") take: Int,
     ): SkillResponse
 
-    @GET("/api/profile/education")
+    @GET("/api/profile/education/{take}")
     suspend fun getEducation(
         @Header("Authorization") token: String,
-    ): EducationResponse
-
-    @GET("/api/profile/experience/all")
-    suspend fun getAllExperience(
-        @Header("Authorization") token: String,
-    ): ExperienceResponse
-
-    @GET("/api/profile/certification/all")
-    suspend fun getAllCertification(
-        @Header("Authorization") token: String,
-    ): CertificationResponse
-
-    @GET("/api/profile/skill/all")
-    suspend fun getAllSkill(
-        @Header("Authorization") token: String,
-    ): SkillResponse
-
-    @GET("/api/profile/education/all")
-    suspend fun getAllEducation(
-        @Header("Authorization") token: String,
+        @Path("take") take: Int,
     ): EducationResponse
 
     @GET("/api/profile/experience/detail/{id}")
