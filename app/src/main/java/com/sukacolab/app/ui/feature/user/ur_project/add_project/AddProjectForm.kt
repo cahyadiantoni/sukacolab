@@ -48,19 +48,63 @@ class AddProjectForm(resourcesProvider: ResourcesProvider): Form() {
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
             NotEmptyValidator(),
+        ),
+        isVisible = { position.state.value?.name == "Other" },
+    )
+
+    @FormField
+    val isRemote = FieldState(
+        state = mutableStateOf<Boolean?>(false),
+    )
+
+    @FormField
+    val location = FieldState(
+        state = mutableStateOf<String?>(null),
+        validators = mutableListOf(
+            NotEmptyValidator(),
+        ),
+        isVisible = { isRemote.state.value == false },
+    )
+
+    @FormField
+    val tipe = FieldState(
+        state = mutableStateOf<Tipe?>(null),
+        options = mutableListOf(
+            Tipe(name = "Loker"),
+            Tipe(name = "Portofolio"),
+            Tipe(name = "Kompetisi"),
+            Tipe(name = "Other"),
+        ),
+        optionItemFormatter = { "${it?.name}" },
+        validators = mutableListOf(
+            NotEmptyValidator()
         )
     )
 
     @FormField
-    val role = FieldState(
-        state = mutableStateOf<Role?>(null),
+    val otherTipe = FieldState(
+        state = mutableStateOf<String?>(null),
+        validators = mutableListOf(
+            NotEmptyValidator(),
+        ),
+        isVisible = { tipe.state.value?.name == "Other" },
+    )
+
+    @FormField
+    val isPaid = FieldState(
+        state = mutableStateOf<Boolean?>(false),
+    )
+
+    @FormField
+    val time = FieldState(
+        state = mutableStateOf<Time?>(null),
         options = mutableListOf(
-            Role(name = "Full Time", nama = "Waktu penuh"),
-            Role(name = "Part Time", nama = "Paruh waktu"),
-            Role(name = "Enterpriser", nama = "Wiraswasta"),
-            Role(name = "Freelance", nama = "Bekerja lepas"),
-            Role(name = "Contract", nama = "Kontrak"),
-            Role(name = "Internship", nama = "Magang"),
+            Time(name = "Full Time", nama = "Waktu penuh"),
+            Time(name = "Part Time", nama = "Paruh waktu"),
+            Time(name = "Enterpriser", nama = "Wiraswasta"),
+            Time(name = "Freelance", nama = "Bekerja lepas"),
+            Time(name = "Contract", nama = "Kontrak"),
+            Time(name = "Internship", nama = "Magang"),
         ),
         optionItemFormatter = { "${it?.nama} (${it?.name})" },
         validators = mutableListOf(
@@ -69,29 +113,18 @@ class AddProjectForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val startDate = FieldState(
-        state = mutableStateOf<Date?>(null),
-        validators = mutableListOf(
-            NotEmptyValidator()
-        )
-    )
-
-    @FormField
-    val isNow = FieldState(
-        state = mutableStateOf<Boolean?>(false),
-    )
-
-    @FormField
-    val endDate = FieldState(
-        state = mutableStateOf<Date?>(null),
-        isVisible = { isNow.state.value == false },
+    val description = FieldState(
+        state = mutableStateOf<String?>(null),
         validators = mutableListOf(
             NotEmptyValidator(),
-            DateValidator(
-                minDateTime = {startDate.state.value?.time ?: 0},
-                errorText = "Tanggal ini harus setelah tanggal mulai."
-            )
         )
     )
 
+    @FormField
+    val requirements = FieldState(
+        state = mutableStateOf<String?>(null),
+        validators = mutableListOf(
+            NotEmptyValidator(),
+        )
+    )
 }

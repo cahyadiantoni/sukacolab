@@ -193,7 +193,8 @@ fun EditExperienceScreen(
                                         modifier = Modifier.padding(bottom = 8.dp),
                                         label = "Jenis Pekerjaan",
                                         form = viewModel.form,
-                                        fieldState = viewModel.form.role
+                                        fieldState = viewModel.form.role,
+                                        isSearchable = false
                                     ).Field()
 
                                     val dateStart = responseExperience.data.startDate

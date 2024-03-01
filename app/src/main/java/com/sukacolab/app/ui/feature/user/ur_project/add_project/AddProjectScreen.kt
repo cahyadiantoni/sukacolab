@@ -1,7 +1,8 @@
-package com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.add_experience
+package com.sukacolab.app.ui.feature.user.ur_project.add_project
 
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -12,14 +13,19 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -30,45 +36,47 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.StatelessTopBar
+import com.sukacolab.app.ui.component.alert.AlertProjectReview
+import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.component.fields.CheckboxField
 import com.sukacolab.app.ui.component.fields.DateField
 import com.sukacolab.app.ui.component.fields.PickerField
 import com.sukacolab.app.ui.component.fields.TextField
-import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.form.formatters.dateShort
 import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddExperienceScreen(
+fun AddProjectScreen(
     navController: NavController,
 ){
-    val viewModel: AddExperienceViewModel = getViewModel()
+    var openDialog = remember { mutableStateOf(false) }
+    val viewModel: AddProjectViewModel = getViewModel()
 
     val context = LocalContext.current
 
-    val addExperienceResult by viewModel.addExperienceResult.observeAsState()
+    val addProjectResult by viewModel.addProjectResult.observeAsState()
     val isLoading = viewModel.isLoading.value
 
-    LaunchedEffect(key1 = addExperienceResult) {
-        when (addExperienceResult) {
-            is AddExperienceResults.Success -> {
-                val message = (addExperienceResult as AddExperienceResults.Success).message
-                Log.d("Add Experience", "Sukses: $message")
+    LaunchedEffect(key1 = addProjectResult) {
+        when (addProjectResult) {
+            is AddProjectResults.Success -> {
+                val message = (addProjectResult as AddProjectResults.Success).message
+                Log.d("Add Project", "Sukses: $message")
                 Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
-                navController.navigate(Screen.Experience.route) {
-                    popUpTo(Screen.Experience.route) {
+                navController.navigate(Screen.UrProject.route) {
+                    popUpTo(Screen.Project.route) {
                         inclusive = true
                     }
                 }
             }
-            is AddExperienceResults.Error -> {
-                val errorMessage = (addExperienceResult as AddExperienceResults.Error).errorMessage
-                Log.d("Add Experience", "Gagal: $errorMessage")
+            is AddProjectResults.Error -> {
+                val errorMessage = (addProjectResult as AddProjectResults.Error).errorMessage
+                Log.d("Add Project", "Gagal: $errorMessage")
                 Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
-                navController.navigate(Screen.AddExperience.route) {
-                    popUpTo(Screen.AddExperience.route) {
+                navController.navigate(Screen.AddProject.route) {
+                    popUpTo(Screen.AddProject.route) {
                         inclusive = true
                     }
                 }
@@ -94,14 +102,14 @@ fun AddExperienceScreen(
                         )
                     }
                 },
-                title = "Add Experience",
+                title = "Add Project",
                 actionIcon = {
                 }
             )
         },
         content = {
             Box(modifier = Modifier.padding(it)) {
-                Column(modifier = Modifier.padding(50.dp)) {
+                Column(modifier = Modifier.padding(horizontal = 20.dp)) {
                     Row(
                         modifier = Modifier
                             .weight(1f)
@@ -110,58 +118,106 @@ fun AddExperienceScreen(
 
                         Column {
                             TextField(
-                                modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Posisi",
+                                modifier = Modifier.padding(top = 20.dp, bottom = 8.dp),
+                                label = "Nama Project",
                                 form = viewModel.form,
-                                fieldState = viewModel.form.title,
-                                keyboardType = KeyboardType.Text,
-                            ).Field()
-
-                            TextField(
-                                modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Nama Perusahaan",
-                                form = viewModel.form,
-                                fieldState = viewModel.form.company,
+                                fieldState = viewModel.form.name,
                                 keyboardType = KeyboardType.Text,
                             ).Field()
 
                             PickerField(
                                 modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Jenis Pekerjaan",
+                                label = "Posisi",
                                 form = viewModel.form,
-                                fieldState = viewModel.form.role,
+                                fieldState = viewModel.form.position,
                                 isSearchable = false
                             ).Field()
 
-                            DateField(
+                            TextField(
                                 modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Tanggal mulai",
+                                label = "(Other) Tulis Posisi",
                                 form = viewModel.form,
-                                fieldState = viewModel.form.startDate,
-                                formatter = ::dateShort
+                                fieldState = viewModel.form.otherPosition,
+                                keyboardType = KeyboardType.Text,
                             ).Field()
 
                             CheckboxField(
                                 modifier = Modifier.padding(bottom = 8.dp),
-                                fieldState = viewModel.form.isNow,
-                                label = "Ini adalah peran saya pada saat ini",
+                                fieldState = viewModel.form.isRemote,
+                                label = "Project ini remote",
                                 form = viewModel.form
                             ).Field()
 
-                            DateField(
+                            TextField(
                                 modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Tanggal Berakhir",
+                                label = "Lokasi",
                                 form = viewModel.form,
-                                fieldState = viewModel.form.endDate,
-                                imeAction = ImeAction.Done,
-                                formatter = ::dateShort
+                                fieldState = viewModel.form.location,
+                                keyboardType = KeyboardType.Text,
                             ).Field()
 
-                            Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)){
+                            PickerField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "Tipe",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.tipe,
+                                isSearchable = false
+                            ).Field()
+
+                            TextField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "(Other) Tulis Tipe",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.otherTipe,
+                                keyboardType = KeyboardType.Text,
+                            ).Field()
+
+                            CheckboxField(
+                                fieldState = viewModel.form.isPaid,
+                                label = "Project ini dibayar",
+                                form = viewModel.form
+                            ).Field()
+
+                            if(viewModel.form.isPaid.state.value == true){
+                                Text(
+                                    text = "Project Paid (digaji) akan diverifikasi terlebih dahulu oleh admin",
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            PickerField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "Waktu",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.time,
+                                isSearchable = false
+                            ).Field()
+
+                            TextField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "Deskripsi Project",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.description,
+                                imeAction = ImeAction.Default,
+                                keyboardType = KeyboardType.Text,
+                            ).Field()
+
+                            TextField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "Kriteria Pelamar",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.requirements,
+                                imeAction = ImeAction.Default,
+                                keyboardType = KeyboardType.Text,
+                            ).Field()
+
+                            Box(modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 10.dp, bottom = 260.dp)){
                                 if (isLoading) {
                                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                 } else {
-                                    PrimaryButton(title = "Add Experience", onClick = {
+                                    PrimaryButton(title = "Add Project", onClick = {
                                         viewModel.validate()
                                     })
                                 }

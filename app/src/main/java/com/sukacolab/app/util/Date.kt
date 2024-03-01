@@ -24,6 +24,16 @@ fun String.convertToYearMonthDayFormat(): String {
     return yearMonthDayFormat.format(date)
 }
 
+fun String.convertToDayMonthYear(): String {
+    // Parsing tanggal ke objek Date
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    val date = dateFormat.parse(this)
+
+    // Format tanggal ke format yang diinginkan (1 Maret 2024 15:08)
+    val yearMonthDayFormat = SimpleDateFormat("d MMMM yyyy HH:mm", Locale.getDefault())
+    return yearMonthDayFormat.format(date)
+}
+
 fun String.convertToOriginalFormat(): String {
     // Parsing tanggal ke objek Date
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())

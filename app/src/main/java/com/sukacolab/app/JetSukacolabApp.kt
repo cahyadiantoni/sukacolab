@@ -34,6 +34,7 @@ import com.sukacolab.app.ui.navigation.nav_graph.authNavGraph
 import com.sukacolab.app.ui.navigation.nav_graph.homeNavGraph
 import com.sukacolab.app.ui.feature.splash.SplashScreen
 import com.sukacolab.app.ui.navigation.nav_graph.profileNavGraph
+import com.sukacolab.app.ui.navigation.nav_graph.projectNavGraph
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -86,6 +87,7 @@ fun JetSukacolabApp(
             authNavGraph(navController)
             homeNavGraph(navController)
             profileNavGraph(navController)
+            projectNavGraph(navController)
         }
     }
 }

@@ -6,6 +6,7 @@ import com.sukacolab.app.data.source.network.request.EditMeRequest
 import com.sukacolab.app.data.source.network.request.EducationRequest
 import com.sukacolab.app.data.source.network.request.ExperienceRequest
 import com.sukacolab.app.data.source.network.request.LoginRequest
+import com.sukacolab.app.data.source.network.request.ProjectRequest
 import com.sukacolab.app.data.source.network.request.SettingEmailRequest
 import com.sukacolab.app.data.source.network.request.SettingPasswordRequest
 import com.sukacolab.app.data.source.network.request.SkillRequest
@@ -19,6 +20,7 @@ import com.sukacolab.app.data.source.network.response.EducationResponse
 import com.sukacolab.app.data.source.network.response.ExperienceResponse
 import com.sukacolab.app.data.source.network.response.LoginResponse
 import com.sukacolab.app.data.source.network.response.ProfileResponse
+import com.sukacolab.app.data.source.network.response.ProjectResponse
 import com.sukacolab.app.data.source.network.response.SkillResponse
 import com.sukacolab.app.ui.feature.register.model.RegisterRequest
 import com.sukacolab.app.ui.feature.register.model.RegisterResponse
@@ -224,5 +226,16 @@ interface ApiService {
     fun changeResume(
         @Header("Authorization") token: String,
         @Part resume: MultipartBody.Part,
+    ): Call<BaseResponse>
+
+    @GET("/api/project/me")
+    suspend fun getUrProject(
+        @Header("Authorization") token: String,
+    ): ProjectResponse
+
+    @POST("/api/project/add")
+    fun addProject(
+        @Header("Authorization") token: String,
+        @Body request: ProjectRequest
     ): Call<BaseResponse>
 }

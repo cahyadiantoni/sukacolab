@@ -12,6 +12,7 @@ object Constant {
 
     //Alert
     const val ALERT_HOMESCREEN = "Mohon maaf untuk saat ini fitur yang anda pilih masih dalam tahap pengembangan. Namun anda dapat mencoba fitur ini dengan dengan browser anda."
+    const val ALERT_PROJECT_REVIEW = "Untuk project paid (digaji), akan ada review oleh admin. Hubungi admin jika memerlukan bantuan!"
     const val ABOUT_APP = "Aplikasi ini adalah produk dari capstone project yang dikerjakan untuk program Bangkit Academy. Projek mulai dikerjakan pada tanggal 13 April 2023 oleh 6 orang developer:"
     const val ABOUT_ONE = "Andre Christoga Pramaditya, Universitas Indonesia\nSoftware Engineer"
     const val ABOUT_TWO = "Irfan Maulana, Universitas Singaperbangsa Karawang\nAndroid Developer"

@@ -27,16 +27,16 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.sukacolab.app.R
+import com.sukacolab.app.util.convertToDayMonthYear
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListUrProject(
     id: Int,
-    image: String,
     position: String,
-    company: String,
+    project: String,
     date: String,
-    status: Int,
+    isActive: Int,
     ) {
     Card(
         modifier = Modifier
@@ -73,17 +73,24 @@ fun ItemListUrProject(
                 )
 
                 Text(
-                    text = company,
+                    text = project,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     lineHeight = 14.sp
                 )
 
-                val textContent = if (status == 1) {
+                Text(
+                    text = date.convertToDayMonthYear(),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    lineHeight = 14.sp
+                )
+
+                val textContent = if (isActive == 0) {
                     "Review Admin"
-                } else if (status == 2){
+                } else if (isActive == 2){
                     "Tidak Aktif"
-                } else if (status == 3){
+                } else if (isActive == 1){
                     "Aktif"
                 } else {
                     "Ditolak Admin"

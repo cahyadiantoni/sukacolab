@@ -33,6 +33,8 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.Set
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillViewModel
+import com.sukacolab.app.ui.feature.user.ur_project.UrProjectViewModel
+import com.sukacolab.app.ui.feature.user.ur_project.add_project.AddProjectViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -91,12 +93,15 @@ val viewModelModules = module {
     viewModel { EditEducationViewModel(get(), get(), get()) }
     viewModel { ProfileEditViewModel(get(),get(), get()) }
     viewModel { EditPhotoViewModel(get(), get()) }
+    viewModel { UrProjectViewModel(get()) }
+    viewModel { AddProjectViewModel(get(), get(), get()) }
 }
 
 val useCaseModule = module {
     single { LoginUseCase(get()) }
     single<AuthRepository> { DefaultAuthRepository() }
     single { ProfileRepository(get(),get()) }
+    single { ProjectRepository(get(),get()) }
     single { ResourcesProvider(androidContext()) }
 }
 
