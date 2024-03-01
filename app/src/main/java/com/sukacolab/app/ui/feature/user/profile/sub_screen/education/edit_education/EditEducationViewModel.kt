@@ -46,11 +46,6 @@ class EditEducationViewModel(
         } else {
             ""
         }
-        Log.d("Edit Education", "Instansi = ${form.instansi.state.value},\n" +
-                "                major = ${form.major.state.value},\n" +
-                "                startDate = ${start},\n" +
-                "                endDate = ${end},\n" +
-                "                isNow = ${form.isNow.state.value!!}")
 
         if(form.isValid){
             editEducation(

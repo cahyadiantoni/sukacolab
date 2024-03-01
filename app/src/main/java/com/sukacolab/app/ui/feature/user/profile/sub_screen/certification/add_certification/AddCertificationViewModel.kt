@@ -46,11 +46,6 @@ class AddCertificationViewModel(
         } else {
             ""
         }
-        Log.d("Add Certification", "name = ${form.name.state.value},\n" +
-                "                publisher = ${form.publisher.state.value},\n" +
-                "                credential = ${form.credential.state.value},\n" +
-                "                startDate = ${start},\n" +
-                "                endDate = ${end},\n")
 
         if(form.isValid){
             addCertification(

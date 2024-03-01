@@ -36,8 +36,6 @@ class AddSkillViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        Log.d("Add Skill", "name = ${form.name.state.value},\n" +
-                "                description = ${form.description.state.value},\n")
 
         if(form.isValid){
             addSkill(

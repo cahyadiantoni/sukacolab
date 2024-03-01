@@ -46,11 +46,6 @@ class AddEducationViewModel(
         } else {
             ""
         }
-        Log.d("Add Education", "Instansi = ${form.instansi.state.value},\n" +
-                "                major = ${form.major.state.value},\n" +
-                "                startDate = ${start},\n" +
-                "                endDate = ${end},\n" +
-                "                isNow = ${form.isNow.state.value!!}")
 
         if(form.isValid){
             addEducation(

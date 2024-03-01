@@ -98,7 +98,6 @@ fun SettingPasswordScreen(
                             .weight(1f)
                             .verticalScroll(rememberScrollState())
                     ) {
-
                         Column {
                             PasswordField(
                                 modifier = Modifier.padding(bottom = 8.dp),

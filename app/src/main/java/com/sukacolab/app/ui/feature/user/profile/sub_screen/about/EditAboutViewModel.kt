@@ -35,7 +35,6 @@ class EditAboutViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        Log.d("About", "About: ${form.about.state.value.toString()}")
 
         if(form.isValid){
             editAbout(about = form.about.state.value.toString())

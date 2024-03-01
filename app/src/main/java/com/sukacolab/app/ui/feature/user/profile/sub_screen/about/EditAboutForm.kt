@@ -18,10 +18,6 @@ class EditAboutForm(resourcesProvider: ResourcesProvider): Form() {
         state = mutableStateOf<String?>(null),
         validators = mutableListOf(
             NotEmptyValidator(),
-            MinLengthValidator(
-                minLength = 3,
-                errorText = "Input ini tidak sesuai dengan persyaratan panjang minimum."
-            )
         )
     )
 }

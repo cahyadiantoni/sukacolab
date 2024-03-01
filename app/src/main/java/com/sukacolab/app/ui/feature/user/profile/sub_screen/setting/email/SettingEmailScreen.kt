@@ -113,6 +113,7 @@ fun SettingEmailScreen(
                     ) {
 
                         Column {
+                            viewModel.form.email.state.value = profileViewModel.email
                             TextField(
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 label = "E Mail",
@@ -120,9 +121,6 @@ fun SettingEmailScreen(
                                 fieldState = viewModel.form.email,
                                 imeAction = ImeAction.Done,
                                 keyboardType = KeyboardType.Email,
-                                formatter = { rawEmail ->
-                                    rawEmail ?: profileViewModel.email ?: ""
-                                }
                             ).Field()
 
                             Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)){

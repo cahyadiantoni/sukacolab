@@ -106,6 +106,7 @@ fun EditAboutScreen(
                     ) {
 
                         Column {
+                            viewModel.form.about.state.value = profileViewModel.about
                             TextField(
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 label = "About",
@@ -113,9 +114,6 @@ fun EditAboutScreen(
                                 fieldState = viewModel.form.about,
                                 imeAction = ImeAction.Default,
                                 keyboardType = KeyboardType.Text,
-                                formatter = { rawAbout ->
-                                    rawAbout ?: profileViewModel.about ?: ""
-                                }
                             ).Field()
 
                             Box(modifier = Modifier.fillMaxWidth().padding(top = 10.dp)){

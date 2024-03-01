@@ -35,7 +35,6 @@ class SettingPasswordViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        Log.d("Password", "Password: ${form.password.state.value.toString()}")
 
         if(form.isValid){
             setPassword(oldPassword = form.oldPassword.state.value.toString(), password = form.password.state.value.toString())

@@ -46,12 +46,6 @@ class EditExperienceViewModel(
         } else {
             ""
         }
-        Log.d("Edit Experience", "title = ${form.title.state.value},\n" +
-                "                company = ${form.company.state.value},\n" +
-                "                role = ${form.role.state.value!!.name},\n" +
-                "                startDate = ${start},\n" +
-                "                endDate = ${end},\n" +
-                "                isNow = ${form.isNow.state.value!!}")
 
         if(form.isValid){
             editExperience(

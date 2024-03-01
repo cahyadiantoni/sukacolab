@@ -82,13 +82,15 @@ fun ItemListAppStatus(
                     text = position,
                     fontSize = 16.sp,
                     color = Color.Black,
-                    fontWeight = FontWeight.Bold
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 16.sp
                 )
 
                 Text(
                     text = company,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
+                    lineHeight = 14.sp
                 )
 
                 val textContent = if (status == 1) {

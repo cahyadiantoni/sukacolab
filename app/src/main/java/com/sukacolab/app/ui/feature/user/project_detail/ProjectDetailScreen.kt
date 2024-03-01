@@ -20,9 +20,14 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BookmarkBorder
+import androidx.compose.material.icons.filled.BuildCircle
 import androidx.compose.material.icons.filled.CurrencyExchange
+import androidx.compose.material.icons.filled.IncompleteCircle
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.LockClock
+import androidx.compose.material.icons.filled.Paid
+import androidx.compose.material.icons.filled.Quiz
+import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -200,7 +205,7 @@ fun ProjectDetailContent(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
-                                imageVector = Icons.Default.Work,
+                                imageVector = Icons.Default.BuildCircle,
                                 contentDescription = "",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(36.dp)
@@ -222,7 +227,7 @@ fun ProjectDetailContent(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
-                                imageVector = Icons.Default.CurrencyExchange,
+                                imageVector = Icons.Default.Paid,
                                 contentDescription = "",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(36.dp)
@@ -244,7 +249,7 @@ fun ProjectDetailContent(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ){
                             Icon(
-                                imageVector = Icons.Default.LockClock,
+                                imageVector = Icons.Default.Timer,
                                 contentDescription = "",
                                 tint = MaterialTheme.colorScheme.primary,
                                 modifier = Modifier.size(36.dp)

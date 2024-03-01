@@ -35,12 +35,6 @@ class ProfileEditViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        Log.d("Edit Profile", "name = ${form.name.state.value},\n" +
-                "                summary = ${form.summary.state.value},\n" +
-                "                linkedin = ${form.linkedin.state.value},\n" +
-                "                github = ${form.github.state.value},\n" +
-                "                whatsapp = ${form.whatsapp.state.value},\n" +
-                "                instagram = ${form.instagram.state.value}")
 
         if(form.isValid){
             editProfile(

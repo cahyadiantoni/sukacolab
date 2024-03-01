@@ -35,8 +35,6 @@ class SettingEmailViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        Log.d("Email", "Email: ${form.email.state.value.toString()}")
-
         if(form.isValid){
             setEmail(email = form.email.state.value.toString())
         }
