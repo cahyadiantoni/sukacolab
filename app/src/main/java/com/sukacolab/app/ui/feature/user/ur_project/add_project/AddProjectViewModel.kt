@@ -54,14 +54,16 @@ class AddProjectViewModel(
             form.otherTipe.state.value
         }
 
+        val isPaid = form.tipe.state.value!!.name == "Loker"
+
         if(form.isValid){
             addProject(
                 name = form.name.state.value.toString(),
                 position = position.toString(),
                 location = location.toString(),
                 tipe = tipe.toString(),
-                is_paid = form.isPaid.state.value!!,
-                time = form.time.state.value!!.name.toString(),
+                is_paid = isPaid,
+                time = form.time.state.value!!.name,
                 description = form.description.state.value.toString(),
                 requirements = form.requirements.state.value.toString(),
                 )

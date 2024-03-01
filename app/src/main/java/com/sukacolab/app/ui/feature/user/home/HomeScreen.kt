@@ -25,6 +25,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.FileOpen
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Warning
@@ -33,6 +34,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -68,13 +70,12 @@ import com.sukacolab.app.ui.component.CarouselCard
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.component.cards.ItemListProject
 import com.sukacolab.app.ui.component.cards.ItemListUrProject
+import com.sukacolab.app.ui.feature.user.home.ui_state.HomeUiState
 import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.primaryColor
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Composable
 fun HomeScreen(
@@ -124,6 +125,9 @@ private fun BackPressSample() {
 fun HomeContent(
     navController: NavController,
 ) {
+    val viewModel: HomeViewModel = getViewModel()
+    val responseProject = viewModel.responseProject.value
+
     var openDialog = remember { mutableStateOf(false) }
     var url by remember { mutableStateOf("") }
     val ctx = LocalContext.current
@@ -186,6 +190,7 @@ fun HomeContent(
                 Text(
                     text = "Hey, $name",
                     fontSize = 24.sp,
+                    lineHeight = 26.sp,
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
@@ -274,11 +279,33 @@ fun HomeContent(
 
             item {
                 Spacer(modifier = Modifier.padding(top = 16.dp))
-                Text(
-                        text = "Recent Projects",
-                        style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
-                        modifier = Modifier.padding(start = 16.dp, bottom = 8.dp)
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+
+                    Column(modifier = Modifier.wrapContentSize()) {
+
+                        Text(
+                            text = "Recent Projects",
+                            style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
+                        )
+
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .wrapContentSize()
+                            .clickable {
+                                navController.navigate(Screen.Project.route)
+                            }
+                            .padding(top = 5.dp, end = 8.dp),
+                        horizontalArrangement = Arrangement.spacedBy(20.dp),
+                    ) {
+                        Text(text = "See All", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
+                    }
+                }
+                Spacer(modifier = Modifier.padding(bottom = 8.dp))
             }
             item{
                 Box(
@@ -286,45 +313,47 @@ fun HomeContent(
                         .fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(start = 16.dp, end = 16.dp, bottom = 20.dp)) {
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "UI/UX Designer",
-                            company = "Universitas Singaperbangsa Karawang",
-                            date = "16 Februari 2024",
-                            type = "Loker"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Android Developer",
-                            company = "PT. Sukacode Solusi Teknologi",
-                            date = "14 Februari 2024",
-                            type = "Portofolio"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Web Developer",
-                            company = "CV. Karib Solutions",
-                            date = "2 Februari 2024",
-                            type = "Lomba"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Project Manager",
-                            company = "PT. Maju Mundur",
-                            date = "2 Januari 2024",
-                            type = "Lain Lain"
-                        )
+                        when (responseProject) {
+                            is HomeUiState.Success -> {
+                                if (responseProject.data.isEmpty()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(top = 30.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Belum ada project",
+                                            fontWeight = FontWeight.Light
+                                        )
+                                    }
+                                }else{
+                                    responseProject.data.forEachIndexed { index, project ->
+                                        ItemListProject(
+                                            navController = navController,
+                                            id = project.id,
+                                            position = project.position,
+                                            project = project.name,
+                                            date = project.updatedAt,
+                                            type = project.tipe
+                                        )
+                                    }
+                                }
+                            }
+                            is HomeUiState.Failure -> {
+                                Text(text = responseProject.error.message ?: "Unknown Error")
+                            }
+                            HomeUiState.Loading -> {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .wrapContentSize(align = Alignment.Center)
+                                )
+                            }
+                            HomeUiState.Empty -> {
+                                Text(text = "Empty Data")
+                            }
+                        }
 
                         Box(
                             modifier = Modifier

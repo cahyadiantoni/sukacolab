@@ -19,4 +19,13 @@ class ProjectRepository(
         ).data)
     }.flowOn(Dispatchers.IO)
 
+    fun getProject(active: Int, take: Int) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Experience", "get Experience")
+        emit(apiService.getProject(
+            token = "Bearer $token",
+            active = active,
+            take = take
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }

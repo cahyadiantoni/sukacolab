@@ -51,7 +51,6 @@ import org.koin.androidx.compose.getViewModel
 fun AddProjectScreen(
     navController: NavController,
 ){
-    var openDialog = remember { mutableStateOf(false) }
     val viewModel: AddProjectViewModel = getViewModel()
 
     val context = LocalContext.current
@@ -172,13 +171,7 @@ fun AddProjectScreen(
                                 keyboardType = KeyboardType.Text,
                             ).Field()
 
-                            CheckboxField(
-                                fieldState = viewModel.form.isPaid,
-                                label = "Project ini dibayar",
-                                form = viewModel.form
-                            ).Field()
-
-                            if(viewModel.form.isPaid.state.value == true){
+                            if(viewModel.form.tipe.state.value?.name == "Loker"){
                                 Text(
                                     text = "Project Paid (digaji) akan diverifikasi terlebih dahulu oleh admin",
                                     color = MaterialTheme.colorScheme.primary
@@ -213,7 +206,7 @@ fun AddProjectScreen(
 
                             Box(modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(top = 10.dp, bottom = 260.dp)){
+                                .padding(top = 10.dp, bottom = 50.dp)){
                                 if (isLoading) {
                                     CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
                                 } else {

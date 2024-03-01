@@ -83,40 +83,36 @@ fun BookmarkScreen(navController: NavController){
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "UI/UX Designer",
-                            company = "Universitas Singaperbangsa Karawang",
-                            date = "16 Februari 2024",
+                            project = "Universitas Singaperbangsa Karawang",
+                            date = "2024-03-01 15:30:22",
                             type = "Loker"
                         )
 
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Android Developer",
-                            company = "PT. Sukacode Solusi Teknologi",
-                            date = "14 Februari 2024",
+                            project = "PT. Sukacode Solusi Teknologi",
+                            date = "2024-03-01 15:30:22",
                             type = "Portofolio"
                         )
 
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Web Developer",
-                            company = "CV. Karib Solutions",
-                            date = "2 Februari 2024",
-                            type = "Lomba"
+                            project = "CV. Karib Solutions",
+                            date = "2024-03-01 15:30:22",
+                            type = "Kompetisi"
                         )
 
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Project Manager",
-                            company = "PT. Maju Mundur",
-                            date = "2 Januari 2024",
+                            project = "PT. Maju Mundur",
+                            date = "2024-03-01 15:30:22",
                             type = "Lain Lain"
                         )
                     }

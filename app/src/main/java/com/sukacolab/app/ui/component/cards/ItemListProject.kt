@@ -23,15 +23,15 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.navigation.Screen
+import com.sukacolab.app.util.convertToDayMonthYear
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListProject(
     navController: NavController,
     id: Int,
-    image: String,
     position: String,
-    company: String,
+    project: String,
     date: String,
     type: String,
 ) {
@@ -59,7 +59,7 @@ fun ItemListProject(
                     R.drawable.paid
                 } else if (type == "Portofolio"){
                     R.drawable.portofolio
-                } else if (type == "Lomba"){
+                } else if (type == "Kompetisi"){
                     R.drawable.competition
                 } else{
                     R.drawable.unknown
@@ -84,14 +84,14 @@ fun ItemListProject(
                 )
 
                 Text(
-                    text = company,
+                    text = project,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     lineHeight = 14.sp
                 )
 
                 Text(
-                    text = date,
+                    text = date.convertToDayMonthYear(),
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Light
                 )

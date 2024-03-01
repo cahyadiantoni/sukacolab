@@ -250,9 +250,8 @@ fun HomeAdminContent(
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "UI/UX Designer",
-                            company = "Universitas Singaperbangsa Karawang",
+                            project = "Universitas Singaperbangsa Karawang",
                             date = "16 Februari 2024",
                             type = "Loker"
                         )
@@ -266,9 +265,8 @@ fun HomeAdminContent(
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Android Developer",
-                            company = "PT. Sukacode Solusi Teknologi",
+                            project = "PT. Sukacode Solusi Teknologi",
                             date = "14 Februari 2024",
                             type = "Portofolio"
                         )
@@ -282,9 +280,8 @@ fun HomeAdminContent(
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Web Developer",
-                            company = "CV. Karib Solutions",
+                            project = "CV. Karib Solutions",
                             date = "2 Februari 2024",
                             type = "Lomba"
                         )
@@ -298,9 +295,8 @@ fun HomeAdminContent(
                         ItemListProject(
                             navController = navController,
                             id = 123,
-                            image = "Test",
                             position = "Project Manager",
-                            company = "PT. Maju Mundur",
+                            project = "PT. Maju Mundur",
                             date = "2 Januari 2024",
                             type = "Lain Lain"
                         )

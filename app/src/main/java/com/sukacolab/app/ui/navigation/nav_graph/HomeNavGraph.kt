@@ -12,7 +12,7 @@ import com.sukacolab.app.ui.feature.user.application.bookmark.BookmarkScreen
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.user.profile.ProfileScreen
 import com.sukacolab.app.ui.feature.user.project.ProjectScreen
-import com.sukacolab.app.ui.feature.user.project_detail.ProjectDetailScreen
+import com.sukacolab.app.ui.feature.user.project.project_detail.ProjectDetailScreen
 import com.sukacolab.app.ui.feature.user.ur_project.UrProjectScreen
 import com.sukacolab.app.ui.navigation.PROJECT_ID
 import com.sukacolab.app.ui.navigation.Screen

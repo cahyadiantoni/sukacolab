@@ -233,6 +233,13 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ProjectResponse
 
+    @GET("/api/project/{active}/{take}")
+    suspend fun getProject(
+        @Header("Authorization") token: String,
+        @Path("active") active: Int,
+        @Path("take") take: Int,
+    ): ProjectResponse
+
     @POST("/api/project/add")
     fun addProject(
         @Header("Authorization") token: String,

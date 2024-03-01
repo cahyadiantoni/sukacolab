@@ -2,6 +2,7 @@ package com.sukacolab.app.ui.feature.user.project
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,16 +10,19 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.Bookmarks
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -30,17 +34,23 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.component.cards.ItemListProject
+import com.sukacolab.app.ui.feature.user.project.ui_state.ProjectUiState
 import com.sukacolab.app.ui.navigation.Screen
+import org.koin.androidx.compose.getViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectScreen(navController: NavController){
+    val viewModel: ProjectViewModel = getViewModel()
+    val responseProject = viewModel.responseProject.value
+
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primary),
@@ -116,45 +126,47 @@ fun ProjectScreen(navController: NavController){
                         .fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "UI/UX Designer",
-                            company = "Universitas Singaperbangsa Karawang",
-                            date = "16 Februari 2024",
-                            type = "Loker"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Android Developer",
-                            company = "PT. Sukacode Solusi Teknologi",
-                            date = "14 Februari 2024",
-                            type = "Portofolio"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Web Developer",
-                            company = "CV. Karib Solutions",
-                            date = "2 Februari 2024",
-                            type = "Lomba"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            image = "Test",
-                            position = "Project Manager",
-                            company = "PT. Maju Mundur",
-                            date = "2 Januari 2024",
-                            type = "Lain Lain"
-                        )
+                        when (responseProject) {
+                            is ProjectUiState.Success -> {
+                                if (responseProject.data.isEmpty()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(top = 30.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Belum ada project",
+                                            fontWeight = FontWeight.Light
+                                        )
+                                    }
+                                }else{
+                                    responseProject.data.forEachIndexed { index, project ->
+                                        ItemListProject(
+                                            navController = navController,
+                                            id = project.id,
+                                            position = project.position,
+                                            project = project.name,
+                                            date = project.updatedAt,
+                                            type = project.tipe
+                                        )
+                                    }
+                                }
+                            }
+                            is ProjectUiState.Failure -> {
+                                Text(text = responseProject.error.message ?: "Unknown Error")
+                            }
+                            ProjectUiState.Loading -> {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .wrapContentSize(align = Alignment.Center)
+                                )
+                            }
+                            ProjectUiState.Empty -> {
+                                Text(text = "Empty Data")
+                            }
+                        }
                     }
                 }
             }

@@ -91,11 +91,6 @@ class AddProjectForm(resourcesProvider: ResourcesProvider): Form() {
     )
 
     @FormField
-    val isPaid = FieldState(
-        state = mutableStateOf<Boolean?>(false),
-    )
-
-    @FormField
     val time = FieldState(
         state = mutableStateOf<Time?>(null),
         options = mutableListOf(

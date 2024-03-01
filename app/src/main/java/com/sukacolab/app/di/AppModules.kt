@@ -33,6 +33,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.Set
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillViewModel
+import com.sukacolab.app.ui.feature.user.project.ProjectViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.UrProjectViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.add_project.AddProjectViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
@@ -74,7 +75,8 @@ val viewModelModules = module {
     viewModel { SplashViewModel(get()) }
     viewModel { LoginViewModel(get(), get()) }
     viewModel { RegisterViewModel(get()) }
-    viewModel { HomeViewModel() }
+    viewModel { HomeViewModel(get()) }
+    viewModel { ProjectViewModel(get()) }
     viewModel { ProfileViewModel(get(),get(), get()) }
     viewModel { ExperienceViewModel(get(), get(), get()) }
     viewModel { CertificationViewModel(get(), get(), get()) }
