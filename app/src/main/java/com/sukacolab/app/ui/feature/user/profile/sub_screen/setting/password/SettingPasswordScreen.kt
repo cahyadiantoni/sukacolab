@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.sukacolab.app.ui.component.PrimaryButton
@@ -117,7 +118,8 @@ fun SettingPasswordScreen(
                                 modifier = Modifier.padding(bottom = 8.dp),
                                 label = "Konfirmasi Password Baru",
                                 form = viewModel.form,
-                                fieldState = viewModel.form.passwordConfirm
+                                fieldState = viewModel.form.passwordConfirm,
+                                imeAction = ImeAction.Done
                             ).Field()
 
                             Box(modifier = Modifier.padding(top = 20.dp)){

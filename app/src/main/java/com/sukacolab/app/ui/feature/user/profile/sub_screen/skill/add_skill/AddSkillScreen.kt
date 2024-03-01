@@ -24,6 +24,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -118,6 +119,7 @@ fun AddSkillScreen(
                                 label = "Deskripsi skill digunakan",
                                 form = viewModel.form,
                                 fieldState = viewModel.form.description,
+                                imeAction = ImeAction.Done,
                                 keyboardType = KeyboardType.Text,
                             ).Field()
 

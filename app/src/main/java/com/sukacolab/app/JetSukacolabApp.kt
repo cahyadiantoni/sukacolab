@@ -172,8 +172,8 @@ private fun BottomBarAdmin(
                 screen = Screen.HomeAdmin
             ),
             NavigationItem(
-                title = "Create",
-                icon = Icons.Default.LibraryAdd,
+                title = "Project",
+                icon = Icons.Default.Work,
                 screen = Screen.Project
             ),
             NavigationItem(

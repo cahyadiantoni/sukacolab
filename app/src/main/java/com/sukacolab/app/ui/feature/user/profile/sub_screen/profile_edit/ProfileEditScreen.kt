@@ -42,6 +42,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -202,6 +203,7 @@ fun ProfileEditScreen(
                                 label = "Username Instagram",
                                 form = viewModel.form,
                                 fieldState = viewModel.form.instagram,
+                                imeAction = ImeAction.Done,
                                 keyboardType = KeyboardType.Text
                             ).Field()
 

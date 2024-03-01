@@ -30,6 +30,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
@@ -167,6 +168,7 @@ fun EditCertificationScreen(
                                         label = "Kredensial sertifikat",
                                         form = viewModel.form,
                                         fieldState = viewModel.form.credential,
+                                        imeAction = ImeAction.Done,
                                         keyboardType = KeyboardType.Text,
                                     ).Field()
 

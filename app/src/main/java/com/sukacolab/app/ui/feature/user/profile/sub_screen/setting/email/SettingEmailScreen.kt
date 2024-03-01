@@ -35,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -117,6 +118,7 @@ fun SettingEmailScreen(
                                 label = "E Mail",
                                 form = viewModel.form,
                                 fieldState = viewModel.form.email,
+                                imeAction = ImeAction.Done,
                                 keyboardType = KeyboardType.Email,
                                 formatter = { rawEmail ->
                                     rawEmail ?: profileViewModel.email ?: ""
