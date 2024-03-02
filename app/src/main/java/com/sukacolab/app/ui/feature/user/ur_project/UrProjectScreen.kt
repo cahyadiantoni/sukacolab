@@ -108,6 +108,7 @@ fun UrProjectScreen(
                                 }else{
                                     responseUrProject.data.forEachIndexed { index, project ->
                                         ItemListUrProject(
+                                            navController = navController,
                                             id = project.id,
                                             position = project.position,
                                             project = project.name,

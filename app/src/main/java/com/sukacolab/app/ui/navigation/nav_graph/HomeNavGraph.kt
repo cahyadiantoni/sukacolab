@@ -41,17 +41,4 @@ fun NavGraphBuilder.homeNavGraph(
     composable(Screen.Application.route) {
         ApplicationScreen(navController = navController)
     }
-
-    composable(
-        route = Screen.ProjectDetail.route,
-        arguments = listOf(
-            navArgument(PROJECT_ID) {
-                type = NavType.IntType
-            }
-        )
-    ) {
-        Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
-        val projectId = it.arguments?.getInt(PROJECT_ID).toString()
-        ProjectDetailScreen()
-    }
 }

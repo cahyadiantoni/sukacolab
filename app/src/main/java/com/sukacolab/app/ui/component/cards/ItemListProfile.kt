@@ -96,34 +96,21 @@ fun ItemListProfile(
 
             Spacer(modifier = Modifier.size(10.dp))
 
-            Row(
+            Column(
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                Column(modifier = Modifier.align(Alignment.CenterVertically).weight(1f)) {
+                Text(
+                    text = name,
+                    fontSize = 16.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Bold,
+                )
 
-                    Text(
-                        text = name,
-                        fontSize = 16.sp,
-                        color = Color.Black,
-                        fontWeight = FontWeight.Bold,
-                    )
-
-                }
-
-                Row(modifier = Modifier.wrapContentSize(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                        Icon(
-                            imageVector = Icons.Default.Close,
-                            contentDescription = null,
-                            tint = Color.Red
-                        )
-                        Icon(
-                            imageVector = Icons.Default.Done,
-                            contentDescription = null,
-                            tint = Color.Green
-                        )
-                }
+                Text(
+                    text = name,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Normal,
+                )
             }
         }
     }

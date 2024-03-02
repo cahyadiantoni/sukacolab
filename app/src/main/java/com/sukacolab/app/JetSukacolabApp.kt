@@ -110,7 +110,7 @@ private fun BottomBar(
                         screen = Screen.Home
                     ),
                     NavigationItem(
-                        title ="Review",
+                        title = "Review",
                         icon = Icons.Default.Reviews,
                         screen = Screen.Review
                     ),

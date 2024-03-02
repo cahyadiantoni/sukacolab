@@ -24,6 +24,8 @@ import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.Paid
+import androidx.compose.material.icons.filled.Preview
+import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Button
@@ -35,6 +37,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,29 +52,30 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.SizeMode
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.component.cards.ItemListProfile
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.tertiaryColor
 
-@Composable
-fun UrProjectDetailScreen(){
-    UrProjectDetailContent()
-}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UrProjectDetailContent(
-
+fun UrProjectDetailScreen(
+    navController: NavController,
+    idProject: String,
 ){
+    var openPage = remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = Modifier,
         topBar = {
             StatelessTopBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -81,7 +86,15 @@ fun UrProjectDetailContent(
                 },
                 title = "Your Project Detail",
                 actionIcon = {
-
+                    IconButton(onClick = {
+                        navController.navigate(
+                            Screen.ProjectDetail.createRoute(
+                                1
+                            )
+                        )
+                    }) {
+                        Icon(imageVector = Icons.Default.Preview, contentDescription = "", tint = Color.White)
+                    }
                 }
             )
         }
@@ -272,86 +285,145 @@ fun UrProjectDetailContent(
                             .padding(start = 20.dp, end = 20.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ){
+                        val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
+                        val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
                         Button(
-                            onClick = {},
+                            onClick = { openPage.value = false },
                             modifier = Modifier
                                 .weight(0.2f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = colorButton1
                             ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
 
-                            Text(text = "Sellection", color = Color.White)
+                            Text(text = "Selection", color = colorText1)
 
                         }
 
+                        val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
+                        val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
                         Button(
-                            onClick = {},
+                            onClick = { openPage.value = true },
                             modifier = Modifier
                                 .weight(0.2f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = tertiaryColor
+                                containerColor = colorButton2
                             ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
 
-                            Text(text = "Accepted", color = MaterialTheme.colorScheme.primary)
+                            Text(text = "Accepted", color = colorText2)
 
                         }
                     }
                 }
                 item {
-                    val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp)
-                    com.google.accompanist.flowlayout.FlowRow(
-                        mainAxisSize = SizeMode.Expand,
-                        mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
-                        modifier = Modifier
-                            .padding(horizontal = 4.dp),
-                    ) {
-                        Box(
+                    if(openPage.value){
+                        val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp)
+                        com.google.accompanist.flowlayout.FlowRow(
+                            mainAxisSize = SizeMode.Expand,
+                            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
                             modifier = Modifier
-                                .width(itemSize),
-                            contentAlignment = Alignment.Center
+                                .padding(horizontal = 4.dp),
                         ) {
-                            ItemListProfile(
-                                id = 123,
-                                image = "Test",
-                                name = "Cahya Diantoni"
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Kanan",
+                                    name = "Cahya Kanan"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Muhammad Diantoni"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Cahya Anthan"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Cahya Anthan"
+                                )
+                            }
                         }
-                        Box(
+                    }else{
+                        val itemSize: Dp = (LocalConfiguration.current.screenWidthDp.dp)
+                        com.google.accompanist.flowlayout.FlowRow(
+                            mainAxisSize = SizeMode.Expand,
+                            mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
                             modifier = Modifier
-                                .width(itemSize),
-                            contentAlignment = Alignment.Center
+                                .padding(horizontal = 4.dp),
                         ) {
-                            ItemListProfile(
-                                id = 123,
-                                image = "Test",
-                                name = "Muhammad Diantoni"
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .width(itemSize),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ItemListProfile(
-                                id = 123,
-                                image = "Test",
-                                name = "Cahya Anthan"
-                            )
-                        }
-                        Box(
-                            modifier = Modifier
-                                .width(itemSize),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ItemListProfile(
-                                id = 123,
-                                image = "Test",
-                                name = "Cahya Anthan"
-                            )
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Kiri",
+                                    name = "Cahya Kiri"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Muhammad Diantoni"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Cahya Anthan"
+                                )
+                            }
+                            Box(
+                                modifier = Modifier
+                                    .width(itemSize),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ItemListProfile(
+                                    id = 123,
+                                    image = "Test",
+                                    name = "Cahya Anthan"
+                                )
+                            }
                         }
                     }
                     Box(modifier = Modifier.size(100.dp))
@@ -384,17 +456,5 @@ fun UrProjectDetailContent(
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun prevUrProjectDetail(){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-    ) {
-        UrProjectDetailScreen()
     }
 }

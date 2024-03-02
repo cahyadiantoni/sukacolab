@@ -38,6 +38,8 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -49,26 +51,29 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.StatelessTopBar
+import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import com.sukacolab.app.ui.theme.tertiaryColor
 
-@Composable
-fun ProjectDetailScreen(){
-    ProjectDetailContent()
-}
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ProjectDetailContent(
-
+fun ProjectDetailScreen(
+    navController: NavController,
+    idProject: String,
 ){
+    var openPage = remember { mutableStateOf(false) }
+
     Scaffold(
         modifier = Modifier,
         topBar = {
             StatelessTopBar(
                 navigationIcon = {
                     IconButton(onClick = {
-
+                        navController.navigateUp()
                     }) {
                         Icon(
                             imageVector = Icons.Default.ArrowBack,
@@ -271,79 +276,92 @@ fun ProjectDetailContent(
                             .padding(start = 20.dp, end = 20.dp),
                         horizontalArrangement = Arrangement.SpaceEvenly
                     ){
+                        val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
+                        val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
                         Button(
-                            onClick = {},
+                            onClick = { openPage.value = false },
                             modifier = Modifier
                                 .weight(0.2f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = MaterialTheme.colorScheme.primary
+                                containerColor = colorButton1
                             ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
 
-                            Text(text = "About", color = Color.White)
+                            Text(text = "About", color = colorText1)
 
                         }
 
+                        val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
+                        val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
                         Button(
-                            onClick = {},
+                            onClick = { openPage.value = true },
                             modifier = Modifier
                                 .weight(0.2f),
                             colors = ButtonDefaults.buttonColors(
-                                containerColor = tertiaryColor
+                                containerColor = colorButton2
                             ),
                             shape = RoundedCornerShape(8.dp)
                         ) {
 
-                            Text(text = "Requirements", color = MaterialTheme.colorScheme.primary)
+                            Text(text = "Requirements", color = colorText2)
 
                         }
                     }
-
-                    Row(
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                    ){
+                    if(openPage.value) {
                         Text(
-                            text = "Author : ",
+                            text = "Ini adalah requirements : I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
                             color = Color.DarkGray,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
                             textAlign = TextAlign.Justify,
                             fontWeight = FontWeight.Normal,
                         )
+                    }else{
+                        Row(
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                        ){
+                            Text(
+                                text = "Author : ",
+                                color = Color.DarkGray,
+                                textAlign = TextAlign.Justify,
+                                fontWeight = FontWeight.Normal,
+                            )
 
-                        Box(
-                            modifier = Modifier
-                                .size(20.dp)
-                                .clip(CircleShape)
-                                .background(Color.White)
-
-                        ) {
-
-                            Image(
-                                painter = painterResource(id = R.drawable.img_logo),
-                                contentDescription = null,
-                                contentScale = ContentScale.Crop,
+                            Box(
                                 modifier = Modifier
+                                    .size(20.dp)
                                     .clip(CircleShape)
+                                    .background(Color.White)
+
+                            ) {
+
+                                Image(
+                                    painter = painterResource(id = R.drawable.img_logo),
+                                    contentDescription = null,
+                                    contentScale = ContentScale.Crop,
+                                    modifier = Modifier
+                                        .clip(CircleShape)
+                                )
+                            }
+
+                            Text(
+                                modifier = Modifier
+                                    .padding(start = 4.dp),
+                                text = "Cahya Diantoni",
+                                color = Color.DarkGray,
+                                textAlign = TextAlign.Justify,
+                                fontWeight = FontWeight.SemiBold,
                             )
                         }
 
                         Text(
-                            modifier = Modifier
-                                .padding(start = 4.dp),
-                            text = "Cahya Diantoni",
+                            text = "I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
                             color = Color.DarkGray,
+                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
                             textAlign = TextAlign.Justify,
-                            fontWeight = FontWeight.SemiBold,
+                            fontWeight = FontWeight.Normal,
                         )
                     }
-
-                    Text(
-                        text = "I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
-                        color = Color.DarkGray,
-                        modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                        textAlign = TextAlign.Justify,
-                        fontWeight = FontWeight.Normal,
-                    )
 
                     Box(
                         modifier = Modifier
@@ -356,37 +374,29 @@ fun ProjectDetailContent(
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(vertical = 20.dp, horizontal = 30.dp)
                     .align(Alignment.BottomStart),
                 horizontalArrangement = Arrangement.SpaceEvenly
             ){
-                Button(
-                    onClick = {},
+                Box(
                     modifier = Modifier
-                        .weight(0.2f)
-                        .height(50.dp),
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    ),
-                    shape = RoundedCornerShape(8.dp),
+                        .fillMaxWidth()
+                        .background(color = tertiaryColor)
+                        .padding(vertical = 15.dp, horizontal = 30.dp)
                 ) {
-
-                    Text(text = "Join Project", color = Color.White)
-
+                    Button(
+                        onClick = {},
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = MaterialTheme.colorScheme.primary
+                        ),
+                        shape = RoundedCornerShape(8.dp)
+                    ) {
+                        Text(text = "Join Project", color = Color.White)
+                    }
                 }
             }
         }
-    }
-}
-
-@Preview
-@Composable
-fun prevProjectDetail(){
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .background(Color.White)
-    ) {
-        ProjectDetailScreen()
     }
 }

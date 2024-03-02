@@ -26,12 +26,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
 import com.sukacolab.app.R
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToDayMonthYear
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListUrProject(
+    navController: NavController,
     id: Int,
     position: String,
     project: String,
@@ -43,7 +46,11 @@ fun ItemListUrProject(
             .padding(bottom = 10.dp)
             .fillMaxSize()
             .clickable {
-
+                navController.navigate(
+                    Screen.UrProjectDetail.createRoute(
+                        id
+                    )
+                )
             },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
