@@ -1,5 +1,6 @@
 package com.sukacolab.app.ui.feature.user.project.project_detail
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -14,9 +15,12 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.BookmarkBorder
@@ -31,6 +35,7 @@ import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -38,6 +43,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -45,27 +51,59 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
 import com.sukacolab.app.R
+import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.component.alert.PrimaryAlert
+import com.sukacolab.app.ui.component.fields.DateField
+import com.sukacolab.app.ui.component.fields.TextField
+import com.sukacolab.app.ui.feature.user.profile.ui_state.DetailCertificationUiState
+import com.sukacolab.app.ui.feature.user.project.ProjectViewModel
+import com.sukacolab.app.ui.feature.user.project.ui_state.DetailProjectUiState
 import com.sukacolab.app.ui.theme.tertiaryColor
+import com.sukacolab.app.util.form.formatters.dateShort
+import kotlinx.coroutines.launch
+import org.koin.androidx.compose.getViewModel
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ProjectDetailScreen(
     navController: NavController,
-    idProject: String,
+    projectId: String,
 ){
     var openPage = remember { mutableStateOf(false) }
+    val viewModel: ProjectDetailViewModel = getViewModel()
+    val idState = remember { mutableStateOf("") }
+    val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                idState.value = projectId
+                viewModel.getDetailProject(projectId = projectId)
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier,
@@ -93,281 +131,327 @@ fun ProjectDetailScreen(
         }
     ){
         Box(modifier = Modifier.fillMaxSize()){
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(it)
-            ) {
-                item {
-
-                    Box(
+            val responseDetail = viewModel.responseDetail.value
+            Log.d("Response Isi", "$responseDetail")
+            when (responseDetail) {
+                is DetailProjectUiState.Loading -> {
+                    CircularProgressIndicator(
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(160.dp)
+                            .fillMaxSize()
+                            .wrapContentSize(align = Alignment.Center)
+                    )
+                }
+                is DetailProjectUiState.Success -> {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(it)
                     ) {
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(95.dp)
-                                .background(MaterialTheme.colorScheme.primary),
-                        )
-
-                        Box(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .align(Alignment.BottomStart)
-                        ) {
-
-                            Row(
-                                modifier = Modifier.fillMaxWidth(),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                            }
+                        item {
 
                             Box(
                                 modifier = Modifier
-                                    .fillMaxWidth(),
-                                contentAlignment = Alignment.Center
-                            ){
+                                    .fillMaxWidth()
+                                    .height(160.dp)
+                            ) {
+
                                 Box(
                                     modifier = Modifier
-                                        .size(150.dp)
-                                        .padding(10.dp)
-                                        .clip(CircleShape)
-                                        .background(Color.White)
+                                        .fillMaxWidth()
+                                        .height(95.dp)
+                                        .background(MaterialTheme.colorScheme.primary),
+                                )
+
+                                Box(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .align(Alignment.BottomStart)
                                 ) {
 
-                                    Image(
-                                        painter = painterResource(id = R.drawable.img_logo),
-                                        contentDescription = null,
-                                        contentScale = ContentScale.Crop,
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
+                                    ) {
+                                    }
+
+                                    Box(
                                         modifier = Modifier
-                                            .border(2.dp, Color.LightGray, shape = CircleShape)
-                                            .padding(5.dp)
-                                            .clip(CircleShape)
-                                    )
+                                            .fillMaxWidth(),
+                                        contentAlignment = Alignment.Center
+                                    ){
+                                        Box(
+                                            modifier = Modifier
+                                                .size(150.dp)
+                                                .padding(10.dp)
+                                                .clip(CircleShape)
+                                                .background(Color.White)
+                                        ) {
+
+                                            val img = if (responseDetail.data.tipe == "Loker") {
+                                                R.drawable.paid
+                                            } else if (responseDetail.data.tipe == "Portofolio"){
+                                                R.drawable.portofolio
+                                            } else if (responseDetail.data.tipe == "Kompetisi"){
+                                                R.drawable.competition
+                                            } else{
+                                                R.drawable.unknown
+                                            }
+                                            
+                                            Image(
+                                                painter = painterResource(id = img),
+                                                contentDescription = null,
+                                                contentScale = ContentScale.Crop,
+                                                modifier = Modifier
+                                                    .border(2.dp, Color.LightGray, shape = CircleShape)
+                                                    .padding(5.dp)
+                                                    .clip(CircleShape)
+                                            )
+                                        }
+                                    }
                                 }
                             }
-                        }
-                    }
 
-                    Column(
-                        verticalArrangement = Arrangement.Center,
-                        horizontalAlignment = Alignment.CenterHorizontally,
-                        modifier = Modifier.fillMaxSize()
-                    ) {
-                        Text(
-                            text = "Android Developer",
-                            color = Color.Black,
-                            fontSize = 20.sp,
-                            fontWeight = FontWeight.Bold,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(start = 20.dp, end = 20.dp)
-                        )
-
-                        Text(
-                            text = "PT. Sukacode Solusi Teknologi",
-                            color = Color.DarkGray,
-                            fontSize = 18.sp,
-                            textAlign = TextAlign.Center,
-                            modifier = Modifier.padding(top= 8.dp, start = 20.dp, end = 20.dp)
-                        )
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 16.dp, bottom = 8.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ) {
-                        Column(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(80.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(
-                                imageVector = Icons.Default.LocationOn,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(36.dp)
-                            )
-
-                            Text(
-                                text = "Remote",
-                                color = Color.DarkGray,
-                                fontSize = 12.sp,
-                                textAlign = TextAlign.Center,
-                                lineHeight = 12.sp
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(80.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(
-                                imageVector = Icons.Default.BuildCircle,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(36.dp)
-                            )
-
-                            Text(
-                                text = "Loker",
-                                color = Color.DarkGray,
-                                fontSize = 12.sp,
-                                textAlign = TextAlign.Center,
-                                lineHeight = 12.sp
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(80.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(
-                                imageVector = Icons.Default.Paid,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(36.dp)
-                            )
-
-                            Text(
-                                text = "Rp. 6jt/blnasdasd",
-                                color = Color.DarkGray,
-                                fontSize = 12.sp,
-                                textAlign = TextAlign.Center,
-                                lineHeight = 12.sp
-                            )
-                        }
-
-                        Column(
-                            modifier = Modifier
-                                .width(60.dp)
-                                .height(80.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ){
-                            Icon(
-                                imageVector = Icons.Default.Timer,
-                                contentDescription = "",
-                                tint = MaterialTheme.colorScheme.primary,
-                                modifier = Modifier.size(36.dp)
-                            )
-
-                            Text(
-                                text = "Part Time",
-                                color = Color.DarkGray,
-                                fontSize = 12.sp,
-                                textAlign = TextAlign.Center,
-                                lineHeight = 12.sp
-                            )
-                        }
-                    }
-
-                    Row(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(start = 20.dp, end = 20.dp),
-                        horizontalArrangement = Arrangement.SpaceEvenly
-                    ){
-                        val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
-                        val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
-                        Button(
-                            onClick = { openPage.value = false },
-                            modifier = Modifier
-                                .weight(0.2f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorButton1
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-
-                            Text(text = "About", color = colorText1)
-
-                        }
-
-                        val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
-                        val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
-                        Button(
-                            onClick = { openPage.value = true },
-                            modifier = Modifier
-                                .weight(0.2f),
-                            colors = ButtonDefaults.buttonColors(
-                                containerColor = colorButton2
-                            ),
-                            shape = RoundedCornerShape(8.dp)
-                        ) {
-
-                            Text(text = "Requirements", color = colorText2)
-
-                        }
-                    }
-                    if(openPage.value) {
-                        Text(
-                            text = "Ini adalah requirements : I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
-                            color = Color.DarkGray,
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                            textAlign = TextAlign.Justify,
-                            fontWeight = FontWeight.Normal,
-                        )
-                    }else{
-                        Row(
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                        ){
-                            Text(
-                                text = "Author : ",
-                                color = Color.DarkGray,
-                                textAlign = TextAlign.Justify,
-                                fontWeight = FontWeight.Normal,
-                            )
-
-                            Box(
-                                modifier = Modifier
-                                    .size(20.dp)
-                                    .clip(CircleShape)
-                                    .background(Color.White)
-
+                            Column(
+                                verticalArrangement = Arrangement.Center,
+                                horizontalAlignment = Alignment.CenterHorizontally,
+                                modifier = Modifier.fillMaxSize()
                             ) {
+                                Text(
+                                    text = responseDetail.data.position,
+                                    color = Color.Black,
+                                    fontSize = 20.sp,
+                                    fontWeight = FontWeight.Bold,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+                                )
 
-                                Image(
-                                    painter = painterResource(id = R.drawable.img_logo),
-                                    contentDescription = null,
-                                    contentScale = ContentScale.Crop,
-                                    modifier = Modifier
-                                        .clip(CircleShape)
+                                Text(
+                                    text = responseDetail.data.name,
+                                    color = Color.DarkGray,
+                                    fontSize = 18.sp,
+                                    textAlign = TextAlign.Center,
+                                    modifier = Modifier.padding(top= 8.dp, start = 20.dp, end = 20.dp)
                                 )
                             }
 
-                            Text(
+                            Row(
                                 modifier = Modifier
-                                    .padding(start = 4.dp),
-                                text = "Cahya Diantoni",
-                                color = Color.DarkGray,
-                                textAlign = TextAlign.Justify,
-                                fontWeight = FontWeight.SemiBold,
+                                    .fillMaxWidth()
+                                    .padding(top = 16.dp),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ) {
+                                Column(
+                                    modifier = Modifier
+                                        .width(60.dp)
+                                        .height(70.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ){
+                                    Icon(
+                                        imageVector = Icons.Default.LocationOn,
+                                        contentDescription = "",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(36.dp)
+                                    )
+
+                                    Text(
+                                        text = responseDetail.data.location,
+                                        color = Color.DarkGray,
+                                        fontSize = 12.sp,
+                                        textAlign = TextAlign.Center,
+                                        lineHeight = 12.sp
+                                    )
+                                }
+
+                                Column(
+                                    modifier = Modifier
+                                        .width(60.dp)
+                                        .height(70.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ){
+                                    Icon(
+                                        imageVector = Icons.Default.BuildCircle,
+                                        contentDescription = "",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(36.dp)
+                                    )
+
+                                    Text(
+                                        text = responseDetail.data.tipe,
+                                        color = Color.DarkGray,
+                                        fontSize = 12.sp,
+                                        textAlign = TextAlign.Center,
+                                        lineHeight = 12.sp
+                                    )
+                                }
+
+                                Column(
+                                    modifier = Modifier
+                                        .width(60.dp)
+                                        .height(70.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ){
+                                    Icon(
+                                        imageVector = Icons.Default.Paid,
+                                        contentDescription = "",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(36.dp)
+                                    )
+
+                                    val isPaid= if(responseDetail.data.isPaid == 1){
+                                        "Paid"
+                                    }else{
+                                        "Unpaid"
+                                    }
+
+                                    Text(
+                                        text = isPaid,
+                                        color = Color.DarkGray,
+                                        fontSize = 12.sp,
+                                        textAlign = TextAlign.Center,
+                                        lineHeight = 12.sp
+                                    )
+                                }
+
+                                Column(
+                                    modifier = Modifier
+                                        .width(60.dp)
+                                        .height(70.dp),
+                                    horizontalAlignment = Alignment.CenterHorizontally
+                                ){
+                                    Icon(
+                                        imageVector = Icons.Default.Timer,
+                                        contentDescription = "",
+                                        tint = MaterialTheme.colorScheme.primary,
+                                        modifier = Modifier.size(36.dp)
+                                    )
+
+                                    Text(
+                                        text = responseDetail.data.time,
+                                        color = Color.DarkGray,
+                                        fontSize = 12.sp,
+                                        textAlign = TextAlign.Center,
+                                        lineHeight = 12.sp
+                                    )
+                                }
+                            }
+
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(start = 20.dp, end = 20.dp),
+                                horizontalArrangement = Arrangement.SpaceEvenly
+                            ){
+                                val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
+                                val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
+                                Button(
+                                    onClick = { openPage.value = false },
+                                    modifier = Modifier
+                                        .weight(0.2f),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = colorButton1
+                                    ),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+
+                                    Text(text = "About", color = colorText1)
+
+                                }
+
+                                val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
+                                val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
+                                Button(
+                                    onClick = { openPage.value = true },
+                                    modifier = Modifier
+                                        .weight(0.2f),
+                                    colors = ButtonDefaults.buttonColors(
+                                        containerColor = colorButton2
+                                    ),
+                                    shape = RoundedCornerShape(8.dp)
+                                ) {
+
+                                    Text(text = "Requirements", color = colorText2)
+
+                                }
+                            }
+                            if(openPage.value) {
+                                Text(
+                                    text = responseDetail.data.requirements,
+                                    color = Color.DarkGray,
+                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                                    textAlign = TextAlign.Justify,
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            }else{
+                                Row(
+                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                                ){
+                                    Text(
+                                        text = "Author : ",
+                                        color = Color.DarkGray,
+                                        textAlign = TextAlign.Justify,
+                                        fontWeight = FontWeight.Normal,
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                            .clip(CircleShape)
+                                            .background(Color.White)
+
+                                    ) {
+
+//                                        Image(
+//                                            painter = painterResource(id = R.drawable.img_logo),
+//                                            contentDescription = null,
+//                                            contentScale = ContentScale.Crop,
+//                                            modifier = Modifier
+//                                                .clip(CircleShape)
+//                                        )
+
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(LocalContext.current)
+                                                .data(responseDetail.data.userPhoto)
+                                                .crossfade(true)
+                                                .build(),
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .clip(CircleShape)
+                                        )
+                                    }
+
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(start = 4.dp),
+                                        text = responseDetail.data.userName,
+                                        color = Color.DarkGray,
+                                        textAlign = TextAlign.Justify,
+                                        fontWeight = FontWeight.SemiBold,
+                                    )
+                                }
+
+                                Text(
+                                    text = responseDetail.data.description,
+                                    color = Color.DarkGray,
+                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                                    textAlign = TextAlign.Justify,
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            }
+
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(100.dp)
                             )
                         }
-
-                        Text(
-                            text = "I am a passionate and results-driven programmer with a strong focus on creating innovative and user-friendly Android applications.  I am always eager to stay up-to-date with the latest trends in technologies and embrace best practices to ensure the highest quality standards. If you're seeking someone for an Android Developer or Software Engineer role with a proven track record of delivering outstanding applications, I would be thrilled to connect with you.",
-                            color = Color.DarkGray,
-                            modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                            textAlign = TextAlign.Justify,
-                            fontWeight = FontWeight.Normal,
-                        )
                     }
-
-                    Box(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(100.dp)
-                    )
+                }
+                is DetailProjectUiState.Failure -> {
+                    Text(text = responseDetail.error.message ?: "Unknown Error")
+                }
+                DetailProjectUiState.Empty -> {
+                    Text(text = "Empty Data")
                 }
             }
             Spacer(modifier = Modifier.padding(100.dp))

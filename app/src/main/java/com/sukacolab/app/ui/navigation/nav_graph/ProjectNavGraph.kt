@@ -29,7 +29,7 @@ fun NavGraphBuilder.projectNavGraph(
     ) {
         Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
         val projectId = it.arguments?.getInt(PROJECT_ID).toString()
-        ProjectDetailScreen(navController = navController, idProject = projectId)
+        ProjectDetailScreen(navController = navController, projectId = projectId)
     }
 
     composable(

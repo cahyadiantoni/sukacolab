@@ -15,6 +15,7 @@ import com.sukacolab.app.data.source.network.response.CertificationResponse
 import com.sukacolab.app.data.source.network.response.DetailCertificationResponse
 import com.sukacolab.app.data.source.network.response.DetailEducationResponse
 import com.sukacolab.app.data.source.network.response.DetailExperienceResponse
+import com.sukacolab.app.data.source.network.response.DetailProjectResponse
 import com.sukacolab.app.data.source.network.response.DetailSkillResponse
 import com.sukacolab.app.data.source.network.response.EducationResponse
 import com.sukacolab.app.data.source.network.response.ExperienceResponse
@@ -228,6 +229,12 @@ interface ApiService {
         @Path("active") active: Int,
         @Path("take") take: Int,
     ): ProjectResponse
+
+    @GET("/api/project/detail/{projectId}")
+    suspend fun getDetailProject(
+        @Header("Authorization") token: String,
+        @Path("projectId") projectId: String,
+    ): DetailProjectResponse
 
     @POST("/api/project/add")
     fun addProject(
