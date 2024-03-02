@@ -194,7 +194,7 @@ fun HomeContent(
                     style = MaterialTheme.typography.titleMedium.copy(fontWeight = FontWeight.Bold), textAlign = TextAlign.Start,
                     modifier = Modifier.padding(horizontal = 16.dp)
                 )
-                if(viewModelProfile.isComplete == false){
+                if(viewModelProfile.isComplete == false && viewModelProfile.id != 1){
                     Spacer(modifier = Modifier.padding(top = 8.dp))
                     Box(modifier = Modifier.padding(horizontal = 16.dp)){
                         Button(

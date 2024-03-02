@@ -27,14 +27,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.sukacolab.app.data.source.local.AuthPreferences
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.onboarding.OnboardingScreen
 import com.sukacolab.app.ui.navigation.*
 import com.sukacolab.app.ui.navigation.nav_graph.authNavGraph
 import com.sukacolab.app.ui.navigation.nav_graph.homeNavGraph
 import com.sukacolab.app.ui.feature.splash.SplashScreen
+import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.nav_graph.profileNavGraph
 import com.sukacolab.app.ui.navigation.nav_graph.projectNavGraph
+import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -54,17 +57,8 @@ fun JetSukacolabApp(
                 Screen.UrProject.route,
                 Screen.Application.route,
             )
-
-            val adminRoutes = listOf(
-                Screen.HomeAdmin.route
-            )
-
             if (currentRoute in userRoutes) {
                 BottomBar(navController)
-            }
-
-            if (currentRoute in adminRoutes) {
-                BottomBarAdmin(navController)
             }
         },
         modifier = modifier
@@ -99,96 +93,61 @@ private fun BottomBar(
     navController: NavHostController,
     modifier: Modifier = Modifier
 ) {
+    val viewModelProfile: ProfileViewModel = getViewModel()
+
     NavigationBar(
         modifier = modifier
     ) {
         val navBackStackEntry by navController.currentBackStackEntryAsState()
         val currentRoute = navBackStackEntry?.destination?.route
-        val navigationItems = listOf(
-            NavigationItem(
-                title = "Home",
-                icon = Icons.Default.Home,
-                screen = Screen.Home
-            ),
-            NavigationItem(
-                title ="Application",
-                icon = Icons.Default.TouchApp,
-                screen = Screen.Application
-            ),
-            NavigationItem(
-                title = "Project",
-                icon = Icons.Default.Work,
-                screen = Screen.UrProject
-            ),
-            NavigationItem(
-                title ="Profile",
-                icon = Icons.Default.ManageAccounts,
-                screen = Screen.Profile
-            ),
-        )
-        NavigationBar() {
-            navigationItems.map { item ->
-                NavigationBarItem(
-                    icon = {
-                        Icon(
-                            imageVector = item.icon,
-                            contentDescription = item.title
-                        )
-                    },
-                    label = { Text(item.title) },
-                    selected = currentRoute == item.screen.route,
-                    colors = NavigationBarItemDefaults.colors(
-                        selectedIconColor = MaterialTheme.colorScheme.primary,
-                        unselectedIconColor = Color.Gray,
-                        indicatorColor = Color.White
+        val navigationItems =
+            if(viewModelProfile.id == 1){
+                listOf(
+                    NavigationItem(
+                        title = "Home",
+                        icon = Icons.Default.Home,
+                        screen = Screen.Home
                     ),
-                    onClick = {
-                        navController.navigate(item.screen.route) {
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            restoreState = true
-                            launchSingleTop = true
-                        }
-                    }
+                    NavigationItem(
+                        title ="Review",
+                        icon = Icons.Default.Reviews,
+                        screen = Screen.Bookmark
+                    ),
+                    NavigationItem(
+                        title = "Project",
+                        icon = Icons.Default.Work,
+                        screen = Screen.UrProject
+                    ),
+                    NavigationItem(
+                        title ="Profile",
+                        icon = Icons.Default.ManageAccounts,
+                        screen = Screen.Profile
+                    ),
+                )
+            }else{
+                listOf(
+                    NavigationItem(
+                        title = "Home",
+                        icon = Icons.Default.Home,
+                        screen = Screen.Home
+                    ),
+                    NavigationItem(
+                        title ="Application",
+                        icon = Icons.Default.TouchApp,
+                        screen = Screen.Application
+                    ),
+                    NavigationItem(
+                        title = "Project",
+                        icon = Icons.Default.Work,
+                        screen = Screen.UrProject
+                    ),
+                    NavigationItem(
+                        title ="Profile",
+                        icon = Icons.Default.ManageAccounts,
+                        screen = Screen.Profile
+                    ),
                 )
             }
-        }
-    }
-}
-
-@Composable
-private fun BottomBarAdmin(
-    navController: NavHostController,
-    modifier: Modifier = Modifier
-) {
-    NavigationBar(
-        modifier = modifier
-    ) {
-        val navBackStackEntry by navController.currentBackStackEntryAsState()
-        val currentRoute = navBackStackEntry?.destination?.route
-        val navigationItems = listOf(
-            NavigationItem(
-                title = "Home",
-                icon = Icons.Default.Home,
-                screen = Screen.HomeAdmin
-            ),
-            NavigationItem(
-                title = "Project",
-                icon = Icons.Default.Work,
-                screen = Screen.Project
-            ),
-            NavigationItem(
-                title ="Review",
-                icon = Icons.Default.Reviews,
-                screen = Screen.Bookmark
-            ),
-            NavigationItem(
-                title ="Profile",
-                icon = Icons.Default.ManageAccounts,
-                screen = Screen.Profile
-            ),
-        )
         NavigationBar() {
             navigationItems.map { item ->
                 NavigationBarItem(

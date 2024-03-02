@@ -75,6 +75,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
+import com.sukacolab.app.data.source.local.AuthPreferences
 import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.alert.AlertLogout
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.edit_photo.EditPhotoResults
@@ -331,29 +332,31 @@ fun ProfileScreen(
                 )
                 borderCompose()
 
-                ExperienceCompose(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-                borderCompose()
+                if(viewModel.id != 1){
+                    ExperienceCompose(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                    borderCompose()
 
-                LicenseCompose(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-                borderCompose()
+                    LicenseCompose(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                    borderCompose()
 
-                SkillsCompose(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-                borderCompose()
+                    SkillsCompose(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                    borderCompose()
 
-                EducationCompose(
-                    navController = navController,
-                    viewModel = viewModel
-                )
-                borderCompose()
+                    EducationCompose(
+                        navController = navController,
+                        viewModel = viewModel
+                    )
+                    borderCompose()
+                }
 
                 MenuCompose(
                     navController = navController,
@@ -1295,9 +1298,6 @@ fun MenuCompose(
                                 inclusive = true
                             }
                             popUpTo(Screen.Home.route) {
-                                inclusive = true
-                            }
-                            popUpTo(Screen.HomeAdmin.route) {
                                 inclusive = true
                             }
                         }

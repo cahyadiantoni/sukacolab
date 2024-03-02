@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.sukacolab.app.ui.feature.admin.home_admin.HomeAdminScreen
 import com.sukacolab.app.ui.feature.user.application.ApplicationScreen
 import com.sukacolab.app.ui.feature.user.application.bookmark.BookmarkScreen
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
@@ -20,10 +19,6 @@ import com.sukacolab.app.ui.navigation.Screen
 fun NavGraphBuilder.homeNavGraph(
     navController: NavHostController,
 ) {
-    //admin
-    composable(Screen.HomeAdmin.route) {
-        HomeAdminScreen(navController = navController)
-    }
 
     //user
     composable(Screen.Home.route) {

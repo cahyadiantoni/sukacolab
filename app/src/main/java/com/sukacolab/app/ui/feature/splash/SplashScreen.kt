@@ -40,11 +40,7 @@ fun SplashScreen(
             if (isUserLoggedIn) {
                 // User is logged in, navigate to the home screen
                 val userId = viewModel.getUserId().toString()
-                val screen = if (userId == "1") {
-                    Screen.HomeAdmin.route
-                } else{
-                    Screen.Home.route
-                }
+                val screen = Screen.Home.route
 
                 navController.navigate(screen) {
                     popUpTo(Screen.Splash.route) {

@@ -59,7 +59,4 @@ sealed class Screen(val route: String) {
         fun createRoute(productId: Int) = "edit_education/$productId"
     }
 
-    //admin
-    object HomeAdmin : Screen("home_admin")
-
 }

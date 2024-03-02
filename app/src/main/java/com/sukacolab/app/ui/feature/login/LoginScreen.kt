@@ -104,11 +104,7 @@ fun LoginScreenContent(
                val token = (loginResult as LoginApiResults.Success).token
                // Handle successful login
                Log.d("LOGIN TAG SUCCESS", "LoginScreenContent: $userId, $token")
-               val screen = if (userId == 1) {
-                   Screen.HomeAdmin.route
-               } else{
-                   Screen.Home.route
-               }
+               val screen = Screen.Home.route
                navController.navigate(screen) {
                    popUpTo(Screen.Login.route) {
                        inclusive = true

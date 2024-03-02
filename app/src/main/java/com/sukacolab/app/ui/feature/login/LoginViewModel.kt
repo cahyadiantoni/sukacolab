@@ -84,11 +84,7 @@ class LoginViewModel(
                                }
                                // Update the login result with success
 
-                               val screen = if (userId == 1) {
-                                   Screen.HomeAdmin.route
-                               } else{
-                                   Screen.Home.route
-                               }
+                               val screen = Screen.Home.route
 
                                _loginResult.value = LoginApiResults.Success(userId, token)
                                viewModelScope.launch {
