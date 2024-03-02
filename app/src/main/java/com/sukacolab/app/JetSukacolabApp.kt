@@ -56,6 +56,7 @@ fun JetSukacolabApp(
                 Screen.Profile.route,
                 Screen.UrProject.route,
                 Screen.Application.route,
+                Screen.Review.route,
             )
             if (currentRoute in userRoutes) {
                 BottomBar(navController)
@@ -111,7 +112,7 @@ private fun BottomBar(
                     NavigationItem(
                         title ="Review",
                         icon = Icons.Default.Reviews,
-                        screen = Screen.Bookmark
+                        screen = Screen.Review
                     ),
                     NavigationItem(
                         title = "Project",

@@ -217,6 +217,11 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ProjectResponse
 
+    @GET("/api/project/review")
+    suspend fun getReviewProject(
+        @Header("Authorization") token: String,
+    ): ProjectResponse
+
     @GET("/api/project/{active}/{take}")
     suspend fun getProject(
         @Header("Authorization") token: String,

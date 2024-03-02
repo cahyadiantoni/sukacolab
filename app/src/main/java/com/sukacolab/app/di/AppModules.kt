@@ -11,6 +11,7 @@ import com.sukacolab.app.domain.repository.AuthRepository
 import com.sukacolab.app.domain.usecase.LoginUseCase
 import com.sukacolab.app.ui.feature.login.LoginViewModel
 import com.sukacolab.app.data.repository.ProfileRepository
+import com.sukacolab.app.ui.feature.admin.review.ReviewViewModel
 import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.profile_edit.ProfileEditViewModel
 import com.sukacolab.app.ui.feature.register.RegisterViewModel
@@ -96,6 +97,7 @@ val viewModelModules = module {
     viewModel { ProfileEditViewModel(get(),get(), get()) }
     viewModel { EditPhotoViewModel(get(), get()) }
     viewModel { UrProjectViewModel(get()) }
+    viewModel { ReviewViewModel(get()) }
     viewModel { AddProjectViewModel(get(), get(), get()) }
 }
 
