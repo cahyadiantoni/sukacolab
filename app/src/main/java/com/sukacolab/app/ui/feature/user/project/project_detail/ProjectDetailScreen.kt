@@ -283,17 +283,19 @@ fun ProjectDetailScreen(
                         },
                         title = "Project Detail",
                         actionIcon = {
-                            if (responseDetail.data.isBookmarked == 0){
-                                IconButton(onClick = {
-                                    viewModel.bookmarkProject(projectId)
-                                }) {
-                                    Icon(imageVector = Icons.Default.BookmarkBorder, contentDescription = "", tint = Color.White)
-                                }
-                            }else{
-                                IconButton(onClick = {
-                                    viewModel.bookmarkProject(projectId)
-                                }) {
-                                    Icon(imageVector = Icons.Default.Bookmark, contentDescription = "", tint = Color.White)
+                            if(profileViewModel.id != responseDetail.data.userId){
+                                if (responseDetail.data.isBookmarked == 0){
+                                    IconButton(onClick = {
+                                        viewModel.bookmarkProject(projectId)
+                                    }) {
+                                        Icon(imageVector = Icons.Default.BookmarkBorder, contentDescription = "", tint = Color.White)
+                                    }
+                                }else{
+                                    IconButton(onClick = {
+                                        viewModel.bookmarkProject(projectId)
+                                    }) {
+                                        Icon(imageVector = Icons.Default.Bookmark, contentDescription = "", tint = Color.White)
+                                    }
                                 }
                             }
                         }
