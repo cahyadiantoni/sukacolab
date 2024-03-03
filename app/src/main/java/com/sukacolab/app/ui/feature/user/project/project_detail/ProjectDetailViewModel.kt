@@ -32,6 +32,9 @@ class ProjectDetailViewModel(
     private val _bookmarkProjectResult = MutableLiveData<BookmarkProjectResults>()
     val bookmarkProjectResult: LiveData<BookmarkProjectResults> = _bookmarkProjectResult
 
+    private val _reviewProjectResult = MutableLiveData<ReviewProjectResults>()
+    val reviewProjectResult: LiveData<ReviewProjectResults> = _reviewProjectResult
+
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
 
@@ -128,6 +131,47 @@ class ProjectDetailViewModel(
         }
     }
 
+    fun reviewProject(projectId: String, review: String){
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val token = authPreferences.getAuthToken()
+                apiService.reviewProject(
+                    token = "Bearer $token",
+                    projectId = projectId,
+                    review = review
+                ).enqueue(object: Callback<BaseResponse> {
+                    override fun onResponse(
+                        call: Call<BaseResponse>,
+                        response: Response<BaseResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            _isLoading.value = false
+                            val success = response.body()!!.success
+                            val message = response.body()!!.message
+
+                            if(success) {
+                                _reviewProjectResult.value = ReviewProjectResults.Success(message)
+                            } else {
+                                _reviewProjectResult.value = ReviewProjectResults.Error(message)
+                            }
+                        } else {
+                            _isLoading.value = false
+                            _reviewProjectResult.value = ReviewProjectResults.Error(response.message())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                        _isLoading.value = false
+                        _reviewProjectResult.value = ReviewProjectResults.Error(t.localizedMessage ?: "Unknown error occurred")
+                    }
+
+                })
+            } catch (e: Exception) {
+                _reviewProjectResult.value = ReviewProjectResults.Error(e.localizedMessage ?: "Unknown error occurred")
+            }
+        }
+    }
 }
 
 sealed class JoinProjectResults {
@@ -138,4 +182,9 @@ sealed class JoinProjectResults {
 sealed class BookmarkProjectResults {
     data class Success(val message: String) : BookmarkProjectResults()
     data class Error(val errorMessage: String) : BookmarkProjectResults()
+}
+
+sealed class ReviewProjectResults {
+    data class Success(val message: String) : ReviewProjectResults()
+    data class Error(val errorMessage: String) : ReviewProjectResults()
 }

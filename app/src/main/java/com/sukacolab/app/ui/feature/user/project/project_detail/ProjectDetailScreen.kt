@@ -35,6 +35,7 @@ import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Quiz
 import androidx.compose.material.icons.filled.Timer
 import androidx.compose.material.icons.filled.Work
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,6 +51,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,6 +77,7 @@ import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.StatelessTopBar
+import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.feature.user.project.ui_state.DetailProjectUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.tertiaryColor
@@ -89,6 +92,8 @@ fun ProjectDetailScreen(
 ){
     var openPage = remember { mutableStateOf(false) }
     val viewModel: ProjectDetailViewModel = getViewModel()
+    val profileViewModel: ProfileViewModel = getViewModel()
+
     val idState = remember { mutableStateOf("") }
     val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
 
@@ -96,7 +101,43 @@ fun ProjectDetailScreen(
 
     val joinProjectResult by viewModel.joinProjectResult.observeAsState()
     val bookmarkProjectResult by viewModel.bookmarkProjectResult.observeAsState()
+    val reviewProjectResult by viewModel.reviewProjectResult.observeAsState()
     val isLoading = viewModel.isLoading.value
+
+    var showDialog by remember { mutableStateOf(false) }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = {
+                showDialog = false
+            },
+            title = {
+                Text(text = "Konfirmasi")
+            },
+            text = {
+                Text(text = "Apakah Anda yakin ingin menonaktifkan proyek?")
+            },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        showDialog = false
+                        viewModel.reviewProject(projectId, "2")
+                    }
+                ) {
+                    Text(text = "Ya")
+                }
+            },
+            dismissButton = {
+                Button(
+                    onClick = {
+                        showDialog = false
+                    }
+                ) {
+                    Text(text = "Tidak")
+                }
+            }
+        )
+    }
 
     LaunchedEffect(key1 = joinProjectResult) {
         when (joinProjectResult) {
@@ -170,6 +211,41 @@ fun ProjectDetailScreen(
         }
     }
 
+    LaunchedEffect(key1 = reviewProjectResult) {
+        when (reviewProjectResult) {
+            is ReviewProjectResults.Success -> {
+                val message = (reviewProjectResult as ReviewProjectResults.Success).message
+                Log.d("Add Bookmark", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is ReviewProjectResults.Error -> {
+                val errorMessage = (reviewProjectResult as ReviewProjectResults.Error).errorMessage
+                Log.d("Add Bookmark", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {
+                // Initial state or loading state
+            }
+        }
+    }
 
     LaunchedEffect(key1 = Unit) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
@@ -583,81 +659,120 @@ fun ProjectDetailScreen(
                                     )
                                 )
                             } else {
-                                when (responseDetail.data.statusApplied) {
-                                    null -> {
-                                        Button(
-                                            onClick = {
-                                                viewModel.joinProject(projectId)
-                                            },
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(50.dp),
-                                            colors = ButtonDefaults.buttonColors(
-                                                containerColor = MaterialTheme.colorScheme.primary
-                                            ),
-                                            shape = RoundedCornerShape(8.dp)
-                                        ) {
-                                            Text(text = "Join Project", color = Color.White)
+                                if(profileViewModel.id == responseDetail.data.userId){
+                                    when (responseDetail.data.isActive) {
+                                        1 -> {
+                                            Button(
+                                                onClick = {
+                                                    showDialog = true
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = Color.Red
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(text = "Non Aktifkan Project", color = Color.White)
+                                            }
+                                        }
+
+                                        2 -> {
+                                            Button(
+                                                onClick = {
+
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = Color.Gray
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(text = "Project non Active", color = Color.White)
+                                            }
                                         }
                                     }
 
-                                    0 -> {
-                                        Button(
-                                            onClick = {
-                                                viewModel.joinProject(projectId)
-                                            },
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(50.dp),
-                                            colors = ButtonDefaults.buttonColors(
-                                                containerColor = Color.Red
-                                            ),
-                                            shape = RoundedCornerShape(8.dp)
-                                        ) {
-                                            Text(
-                                                text = "Cancel Join Project",
-                                                color = Color.White
-                                            )
+                                }else{
+                                    when (responseDetail.data.statusApplied) {
+                                        null -> {
+                                            Button(
+                                                onClick = {
+                                                    viewModel.joinProject(projectId)
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = MaterialTheme.colorScheme.primary
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(text = "Join Project", color = Color.White)
+                                            }
                                         }
-                                    }
 
-                                    1 -> {
-                                        Button(
-                                            onClick = {
-
-                                            },
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(50.dp),
-                                            colors = ButtonDefaults.buttonColors(
-                                                containerColor = MaterialTheme.colorScheme.primary
-                                            ),
-                                            shape = RoundedCornerShape(8.dp)
-                                        ) {
-                                            Text(
-                                                text = "Your Accepted (Contact Author)",
-                                                color = Color.White
-                                            )
+                                        0 -> {
+                                            Button(
+                                                onClick = {
+                                                    viewModel.joinProject(projectId)
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = Color.Red
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Cancel Join Project",
+                                                    color = Color.White
+                                                )
+                                            }
                                         }
-                                    }
 
-                                    else -> {
-                                        Button(
-                                            onClick = {
+                                        1 -> {
+                                            Button(
+                                                onClick = {
 
-                                            },
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .height(50.dp),
-                                            colors = ButtonDefaults.buttonColors(
-                                                containerColor = Color.Gray
-                                            ),
-                                            shape = RoundedCornerShape(8.dp)
-                                        ) {
-                                            Text(
-                                                text = "Your Rejected",
-                                                color = Color.White
-                                            )
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = MaterialTheme.colorScheme.primary
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Your Accepted (Contact Author)",
+                                                    color = Color.White
+                                                )
+                                            }
+                                        }
+
+                                        else -> {
+                                            Button(
+                                                onClick = {
+
+                                                },
+                                                modifier = Modifier
+                                                    .fillMaxWidth()
+                                                    .height(50.dp),
+                                                colors = ButtonDefaults.buttonColors(
+                                                    containerColor = Color.Gray
+                                                ),
+                                                shape = RoundedCornerShape(8.dp)
+                                            ) {
+                                                Text(
+                                                    text = "Your Rejected",
+                                                    color = Color.White
+                                                )
+                                            }
                                         }
                                     }
                                 }

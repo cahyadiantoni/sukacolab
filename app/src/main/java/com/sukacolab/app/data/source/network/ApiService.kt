@@ -259,6 +259,13 @@ interface ApiService {
         @Path("projectId") projectId: String,
     ): Call<BaseResponse>
 
+    @POST("/api/project/review/{projectId}/{review}")
+    fun reviewProject(
+        @Header("Authorization") token: String,
+        @Path("projectId") projectId: String,
+        @Path("review") review: String,
+    ): Call<BaseResponse>
+
     @POST("/api/project/add")
     fun addProject(
         @Header("Authorization") token: String,
