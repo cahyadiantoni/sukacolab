@@ -1,6 +1,7 @@
 package com.sukacolab.app.ui.feature.user.project.project_detail
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -44,6 +45,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -71,18 +74,11 @@ import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.PrimaryButton
 import com.sukacolab.app.ui.component.StatelessTopBar
-import com.sukacolab.app.ui.component.alert.PrimaryAlert
-import com.sukacolab.app.ui.component.fields.DateField
-import com.sukacolab.app.ui.component.fields.TextField
-import com.sukacolab.app.ui.feature.user.profile.ui_state.DetailCertificationUiState
-import com.sukacolab.app.ui.feature.user.project.ProjectViewModel
 import com.sukacolab.app.ui.feature.user.project.ui_state.DetailProjectUiState
+import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.tertiaryColor
-import com.sukacolab.app.util.form.formatters.dateShort
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
-import java.text.SimpleDateFormat
-import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -94,6 +90,47 @@ fun ProjectDetailScreen(
     val viewModel: ProjectDetailViewModel = getViewModel()
     val idState = remember { mutableStateOf("") }
     val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    val context = LocalContext.current
+
+    val joinProjectResult by viewModel.joinProjectResult.observeAsState()
+    val isLoading = viewModel.isLoading.value
+
+    LaunchedEffect(key1 = joinProjectResult) {
+        when (joinProjectResult) {
+            is JoinProjectResults.Success -> {
+                val message = (joinProjectResult as JoinProjectResults.Success).message
+                Log.d("Add Project", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is JoinProjectResults.Error -> {
+                val errorMessage = (joinProjectResult as JoinProjectResults.Error).errorMessage
+                Log.d("Add Project", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {
+                // Initial state or loading state
+            }
+        }
+    }
 
 
     LaunchedEffect(key1 = Unit) {
@@ -123,6 +160,7 @@ fun ProjectDetailScreen(
                 title = "Project Detail",
                 actionIcon = {
                     IconButton(onClick = {
+
                     }) {
                         Icon(imageVector = Icons.Default.BookmarkBorder, contentDescription = "", tint = Color.White)
                     }
@@ -446,39 +484,98 @@ fun ProjectDetailScreen(
                             )
                         }
                     }
+                    Spacer(modifier = Modifier.padding(100.dp))
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.BottomStart),
+                        horizontalArrangement = Arrangement.SpaceEvenly
+                    ){
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .background(color = tertiaryColor)
+                                .padding(vertical = 15.dp, horizontal = 30.dp)
+                        ) {
+                            if (isLoading) {
+                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                            } else {
+                                when (responseDetail.data.statusApplied) {
+                                    null -> {
+                                        Button(
+                                            onClick = {
+                                                viewModel.joinProject(projectId)
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = MaterialTheme.colorScheme.primary
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Join Project", color = Color.White)
+                                        }
+                                    }
+                                    0 -> {
+                                        Button(
+                                            onClick = {
+                                                viewModel.joinProject(projectId)
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color.Red
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Cancel Join Project", color = Color.White)
+                                        }
+                                    }
+                                    1 -> {
+                                        Button(
+                                            onClick = {
+
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = MaterialTheme.colorScheme.primary
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Your Accepted (Contact Author)", color = Color.White)
+                                        }
+                                    }
+                                    else -> {
+                                        Button(
+                                            onClick = {
+
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color.Gray
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Your Rejected", color = Color.White)
+                                        }
+                                    }
+                                }
+                            }
+
+                        }
+                    }
                 }
                 is DetailProjectUiState.Failure -> {
                     Text(text = responseDetail.error.message ?: "Unknown Error")
                 }
                 DetailProjectUiState.Empty -> {
                     Text(text = "Empty Data")
-                }
-            }
-            Spacer(modifier = Modifier.padding(100.dp))
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .align(Alignment.BottomStart),
-                horizontalArrangement = Arrangement.SpaceEvenly
-            ){
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .background(color = tertiaryColor)
-                        .padding(vertical = 15.dp, horizontal = 30.dp)
-                ) {
-                    Button(
-                        onClick = {},
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(50.dp),
-                        colors = ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary
-                        ),
-                        shape = RoundedCornerShape(8.dp)
-                    ) {
-                        Text(text = "Join Project", color = Color.White)
-                    }
                 }
             }
         }

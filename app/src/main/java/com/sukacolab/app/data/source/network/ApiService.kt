@@ -236,6 +236,14 @@ interface ApiService {
         @Path("projectId") projectId: String,
     ): DetailProjectResponse
 
+    @POST("/api/project/join/{projectId}")
+    fun joinProject(
+        @Header("Authorization") token: String,
+        @Path("projectId") projectId: String,
+    ): Call<BaseResponse>
+
+    
+
     @POST("/api/project/add")
     fun addProject(
         @Header("Authorization") token: String,

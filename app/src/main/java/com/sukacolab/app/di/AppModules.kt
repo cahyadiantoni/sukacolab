@@ -100,7 +100,7 @@ val viewModelModules = module {
     viewModel { UrProjectViewModel(get()) }
     viewModel { ReviewViewModel(get()) }
     viewModel { AddProjectViewModel(get(), get(), get()) }
-    viewModel { ProjectDetailViewModel(get()) }
+    viewModel { ProjectDetailViewModel(get(), get(), get()) }
 }
 
 val useCaseModule = module {
