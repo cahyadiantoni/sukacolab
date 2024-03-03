@@ -19,6 +19,7 @@ import com.sukacolab.app.data.source.network.response.DetailProjectResponse
 import com.sukacolab.app.data.source.network.response.DetailSkillResponse
 import com.sukacolab.app.data.source.network.response.EducationResponse
 import com.sukacolab.app.data.source.network.response.ExperienceResponse
+import com.sukacolab.app.data.source.network.response.JoinedProjectResponse
 import com.sukacolab.app.data.source.network.response.LoginResponse
 import com.sukacolab.app.data.source.network.response.ProfileResponse
 import com.sukacolab.app.data.source.network.response.ProjectResponse
@@ -241,6 +242,11 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("projectId") projectId: String,
     ): Call<BaseResponse>
+
+    @GET("/api/project/join")
+    suspend fun getJoinedProject(
+        @Header("Authorization") token: String,
+    ): JoinedProjectResponse
 
     @POST("/api/project/bookmark/{projectId}")
     fun bookmarkProject(

@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.sukacolab.app.ui.feature.admin.review.ReviewScreen
 import com.sukacolab.app.ui.feature.user.application.ApplicationScreen
-import com.sukacolab.app.ui.feature.user.application.bookmark.BookmarkScreen
+import com.sukacolab.app.ui.feature.user.bookmark.BookmarkScreen
 import com.sukacolab.app.ui.feature.user.home.HomeScreen
 import com.sukacolab.app.ui.feature.user.profile.ProfileScreen
 import com.sukacolab.app.ui.feature.user.project.ProjectScreen

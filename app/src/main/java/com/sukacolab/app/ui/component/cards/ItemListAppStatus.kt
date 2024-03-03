@@ -45,10 +45,11 @@ import com.sukacolab.app.ui.theme.tertiaryColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListAppStatus(
+    navController: NavController,
     id: Int,
-    image: String,
+    type: String,
     position: String,
-    company: String,
+    project: String,
     status: Int,
 ) {
     Card(
@@ -56,7 +57,11 @@ fun ItemListAppStatus(
             .padding(bottom = 10.dp)
             .fillMaxSize()
             .clickable {
-
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        id
+                    )
+                )
             },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp
@@ -67,8 +72,18 @@ fun ItemListAppStatus(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
+            val img = if (type == "Loker") {
+                R.drawable.paid
+            } else if (type == "Portofolio"){
+                R.drawable.portofolio
+            } else if (type == "Kompetisi"){
+                R.drawable.competition
+            } else{
+                R.drawable.unknown
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.img_logo),
+                painter = painterResource(id = img),
                 contentDescription = null,
                 modifier = Modifier.size(60.dp),
                 contentScale = ContentScale.Crop
@@ -87,20 +102,22 @@ fun ItemListAppStatus(
                 )
 
                 Text(
-                    text = company,
+                    text = project,
                     fontSize = 14.sp,
                     fontWeight = FontWeight.Normal,
                     lineHeight = 14.sp
                 )
 
-                val textContent = if (status == 1) {
-                    "Menunggu"
-                } else if (status == 2){
-                    "Ditolak"
-                } else if (status == 3){
-                    "Diterima"
-                } else {
-                    "Seleksi"
+                val textContent = when (status) {
+                    0 -> {
+                        "Menunggu"
+                    }
+                    1 -> {
+                        "Diterima"
+                    }
+                    else -> {
+                        "Ditolak"
+                    }
                 }
 
                 Box(

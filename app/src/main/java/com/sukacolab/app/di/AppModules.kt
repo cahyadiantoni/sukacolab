@@ -16,6 +16,7 @@ import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.profile_edit.ProfileEditViewModel
 import com.sukacolab.app.ui.feature.register.RegisterViewModel
 import com.sukacolab.app.ui.feature.splash.SplashViewModel
+import com.sukacolab.app.ui.feature.user.application.ApplicationViewModel
 import com.sukacolab.app.ui.feature.user.home.HomeViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
@@ -101,6 +102,7 @@ val viewModelModules = module {
     viewModel { ReviewViewModel(get()) }
     viewModel { AddProjectViewModel(get(), get(), get()) }
     viewModel { ProjectDetailViewModel(get(), get(), get()) }
+    viewModel { ApplicationViewModel(get()) }
 }
 
 val useCaseModule = module {

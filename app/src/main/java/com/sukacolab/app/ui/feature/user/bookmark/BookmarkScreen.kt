@@ -1,4 +1,4 @@
-package com.sukacolab.app.ui.feature.user.application.bookmark
+package com.sukacolab.app.ui.feature.user.bookmark
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
