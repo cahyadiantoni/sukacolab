@@ -22,8 +22,10 @@ import com.sukacolab.app.data.source.network.response.ExperienceResponse
 import com.sukacolab.app.data.source.network.response.JoinedProjectResponse
 import com.sukacolab.app.data.source.network.response.LoginResponse
 import com.sukacolab.app.data.source.network.response.ProfileResponse
+import com.sukacolab.app.data.source.network.response.Project
 import com.sukacolab.app.data.source.network.response.ProjectResponse
 import com.sukacolab.app.data.source.network.response.SkillResponse
+import com.sukacolab.app.data.source.network.response.UserJoinResponse
 import com.sukacolab.app.ui.feature.register.model.RegisterRequest
 import com.sukacolab.app.ui.feature.register.model.RegisterResponse
 import okhttp3.MultipartBody
@@ -277,4 +279,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("search") search: String,
     ): ProjectResponse
+
+    @GET("/api/project/userjoin/{projectId}")
+    suspend fun getUserJoin(
+        @Header("Authorization") token: String,
+        @Path("projectId") projectId: String,
+    ): UserJoinResponse
 }

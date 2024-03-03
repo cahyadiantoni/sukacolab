@@ -70,4 +70,13 @@ class ProjectRepository(
             search = query,
         ).data)
     }.flowOn(Dispatchers.IO)
+
+    fun getUserJoin(projectId: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Search Product", "get user Join : $projectId")
+        emit(apiService.getUserJoin(
+            token = "Bearer $token",
+            projectId = projectId,
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }

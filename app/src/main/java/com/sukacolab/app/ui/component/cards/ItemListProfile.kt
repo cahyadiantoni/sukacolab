@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -31,6 +32,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.VerticalAlignmentLine
@@ -54,9 +56,11 @@ import com.sukacolab.app.ui.theme.tertiaryColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ItemListProfile(
+    navController: NavController,
     id: Int,
-    image: String,
+    image: String?,
     name: String,
+    summary: String?
 ) {
     Card(
         modifier = Modifier
@@ -76,23 +80,32 @@ fun ItemListProfile(
             verticalAlignment = Alignment.CenterVertically,
         ) {
 
-//            AsyncImage(
-//                model = ImageRequest.Builder(LocalContext.current)
-//                    .data(image)
-//                    .crossfade(true)
-//                    .build(),
-//                contentDescription = null,
-//                contentScale = ContentScale.Crop,
-//                placeholder = painterResource(id = R.drawable.img_logo),
-//                modifier = Modifier
-//                    .size(60.dp)
-//            )
-            Image(
-                painter = painterResource(id = R.drawable.img_logo),
-                contentDescription = null,
-                modifier = Modifier.size(60.dp),
-                contentScale = ContentScale.Crop
-            )
+            Box(
+                modifier = Modifier
+                    .size(60.dp)
+                    .clip(CircleShape)
+            ) {
+                if (image == null) {
+                    Image(
+                        painter = painterResource(id = R.drawable.img_logo),
+                        contentDescription = null,
+                        modifier = Modifier.size(60.dp),
+                        contentScale = ContentScale.Crop
+                    )
+                } else {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(image)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        placeholder = painterResource(id = R.drawable.img_logo),
+                        modifier = Modifier
+                            .size(60.dp)
+                    )
+                }
+            }
 
             Spacer(modifier = Modifier.size(10.dp))
 
@@ -107,25 +120,11 @@ fun ItemListProfile(
                 )
 
                 Text(
-                    text = name,
+                    text = summary?: "",
                     color = Color.Black,
                     fontWeight = FontWeight.Normal,
                 )
             }
-        }
-    }
-}
-
-@Preview
-@Composable
-fun ItemListProfilePreview() {
-    SukacolabBaseCoreTheme {
-        Column {
-            ItemListProfile(
-                id = 1,
-                image = "https://example.com/image.jpg", // Ganti dengan URL gambar sesuai kebutuhan
-                name = "John Doe"
-            )
         }
     }
 }

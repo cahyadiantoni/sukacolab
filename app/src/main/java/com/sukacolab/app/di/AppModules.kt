@@ -42,6 +42,7 @@ import com.sukacolab.app.ui.feature.user.project.project_detail.ProjectDetailVie
 import com.sukacolab.app.ui.feature.user.search.SearchViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.UrProjectViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.add_project.AddProjectViewModel
+import com.sukacolab.app.ui.feature.user.ur_project.ur_project_detail.UrProjectDetailViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -109,6 +110,7 @@ val viewModelModules = module {
     viewModel { BookmarkViewModel(get()) }
     viewModel { SearchViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
+    viewModel { UrProjectDetailViewModel(get(), get(), get()) }
 }
 
 val useCaseModule = module {

@@ -349,14 +349,19 @@ fun ProjectDetailScreen(
                                         ) {
 
                                             val img =
-                                                if (responseDetail.data.tipe == "Loker") {
-                                                    R.drawable.paid
-                                                } else if (responseDetail.data.tipe == "Portofolio") {
-                                                    R.drawable.portofolio
-                                                } else if (responseDetail.data.tipe == "Kompetisi") {
-                                                    R.drawable.competition
-                                                } else {
-                                                    R.drawable.unknown
+                                                when (responseDetail.data.tipe) {
+                                                    "Loker" -> {
+                                                        R.drawable.paid
+                                                    }
+                                                    "Portofolio" -> {
+                                                        R.drawable.portofolio
+                                                    }
+                                                    "Kompetisi" -> {
+                                                        R.drawable.competition
+                                                    }
+                                                    else -> {
+                                                        R.drawable.unknown
+                                                    }
                                                 }
 
                                             Image(
