@@ -38,6 +38,7 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddS
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillViewModel
 import com.sukacolab.app.ui.feature.user.project.ProjectViewModel
 import com.sukacolab.app.ui.feature.user.project.project_detail.ProjectDetailViewModel
+import com.sukacolab.app.ui.feature.user.search.SearchViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.UrProjectViewModel
 import com.sukacolab.app.ui.feature.user.ur_project.add_project.AddProjectViewModel
 import com.sukacolab.app.util.Constant.BASE_URL
@@ -105,6 +106,7 @@ val viewModelModules = module {
     viewModel { ProjectDetailViewModel(get(), get(), get()) }
     viewModel { ApplicationViewModel(get()) }
     viewModel { BookmarkViewModel(get()) }
+    viewModel { SearchViewModel(get()) }
 }
 
 val useCaseModule = module {

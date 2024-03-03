@@ -264,4 +264,10 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Body request: ProjectRequest
     ): Call<BaseResponse>
+
+    @GET("/api/project/search/{search}")
+    suspend fun searchProject(
+        @Header("Authorization") token: String,
+        @Path("search") search: String,
+    ): ProjectResponse
 }

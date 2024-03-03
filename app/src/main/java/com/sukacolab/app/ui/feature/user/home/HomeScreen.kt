@@ -145,7 +145,7 @@ fun HomeContent(
                             .padding(vertical = 8.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .clickable {
-
+                                navController.navigate(Screen.Search.route)
                             }
                     ) {
                         Row(

@@ -23,6 +23,7 @@ sealed class Screen(val route: String) {
     object Splash : Screen("splash")
     object Project : Screen("project")
     object Bookmark : Screen("bookmark")
+    object Search : Screen("search")
     object ProjectDetail : Screen("product_detail/{$PROJECT_ID}") {
         fun createRoute(projectId: Int) = "product_detail/$projectId"
     }

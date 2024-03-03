@@ -104,7 +104,7 @@ fun ProjectScreen(navController: NavController){
                             .height(48.dp)
                             .clip(RoundedCornerShape(16.dp))
                             .clickable {
-
+                                navController.navigate(Screen.Search.route)
                             }
                     ) {
                         Row(

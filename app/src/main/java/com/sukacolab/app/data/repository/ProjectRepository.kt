@@ -61,4 +61,13 @@ class ProjectRepository(
             projectId = projectId,
         ).data)
     }.flowOn(Dispatchers.IO)
+
+    fun searchProject(query: String) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Search Product", "get Product with query $query")
+        emit(apiService.searchProject(
+            token = "Bearer $token",
+            search = query,
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }
