@@ -248,6 +248,11 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): JoinedProjectResponse
 
+    @GET("/api/project/bookmark")
+    suspend fun getBookmarkProject(
+        @Header("Authorization") token: String,
+    ): ProjectResponse
+
     @POST("/api/project/bookmark/{projectId}")
     fun bookmarkProject(
         @Header("Authorization") token: String,

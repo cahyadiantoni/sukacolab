@@ -14,6 +14,17 @@ fun String.convertToMonthYearFormat(): String {
     return monthYearFormat.format(date)
 }
 
+fun String.convertDateBookmark(): String {
+    // Parsing tanggal ke objek Date
+    val inputFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSSSSZ", Locale.getDefault())
+    val date = inputFormat.parse(this.replace("Z", "+0000"))
+
+    // Format tanggal ke format yang diinginkan
+    val outputFormat = SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault())
+    return outputFormat.format(date)
+}
+
+
 fun String.convertToYearMonthDayFormat(): String {
     // Parsing tanggal ke objek Date
     val dateFormat = SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH)

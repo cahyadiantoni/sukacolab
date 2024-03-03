@@ -18,6 +18,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material3.CenterAlignedTopAppBar
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -40,13 +41,19 @@ import com.google.accompanist.flowlayout.SizeMode
 import com.sukacolab.app.ui.component.StatelessTopBar
 import com.sukacolab.app.ui.component.cards.ItemListAppStatus
 import com.sukacolab.app.ui.component.cards.ItemListProject
-import com.sukacolab.app.ui.component.cards.ItemListUrProject
+import com.sukacolab.app.ui.feature.user.bookmark.ui_state.BookmarkUiState
 import com.sukacolab.app.ui.navigation.Screen
+import com.sukacolab.app.util.convertDateBookmark
+import org.koin.androidx.compose.getViewModel
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookmarkScreen(navController: NavController){
+    val viewModel: BookmarkViewModel = getViewModel()
+    val responseProject = viewModel.responseProject.value
+
+    
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primary),
@@ -80,41 +87,48 @@ fun BookmarkScreen(navController: NavController){
                         .fillMaxWidth()
                 ) {
                     Column(modifier = Modifier.padding(16.dp)) {
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            position = "UI/UX Designer",
-                            project = "Universitas Singaperbangsa Karawang",
-                            date = "2024-03-01 15:30:22",
-                            type = "Loker"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            position = "Android Developer",
-                            project = "PT. Sukacode Solusi Teknologi",
-                            date = "2024-03-01 15:30:22",
-                            type = "Portofolio"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            position = "Web Developer",
-                            project = "CV. Karib Solutions",
-                            date = "2024-03-01 15:30:22",
-                            type = "Kompetisi"
-                        )
-
-                        ItemListProject(
-                            navController = navController,
-                            id = 123,
-                            position = "Project Manager",
-                            project = "PT. Maju Mundur",
-                            date = "2024-03-01 15:30:22",
-                            type = "Lain Lain"
-                        )
+                        when (responseProject) {
+                            is BookmarkUiState.Success -> {
+                                if (responseProject.data.isEmpty()) {
+                                    Box(
+                                        modifier = Modifier
+                                            .fillMaxSize()
+                                            .padding(top = 30.dp),
+                                        contentAlignment = Alignment.Center
+                                    ) {
+                                        Text(
+                                            text = "Kamu belum melamar ke project",
+                                            fontWeight = FontWeight.Light
+                                        )
+                                    }
+                                }else{
+                                    responseProject.data.forEachIndexed { index, project ->
+                                        val date = project.updatedAt.convertDateBookmark()
+                                        ItemListProject(
+                                            navController = navController,
+                                            id = project.id,
+                                            position = project.position,
+                                            project = project.name,
+                                            date = date,
+                                            type = project.tipe
+                                        )
+                                    }
+                                }
+                            }
+                            is BookmarkUiState.Failure -> {
+                                Text(text = responseProject.error.message ?: "Unknown Error")
+                            }
+                            BookmarkUiState.Loading -> {
+                                CircularProgressIndicator(
+                                    modifier = Modifier
+                                        .fillMaxSize()
+                                        .wrapContentSize(align = Alignment.Center)
+                                )
+                            }
+                            BookmarkUiState.Empty -> {
+                                Text(text = "Empty Data")
+                            }
+                        }
                     }
                 }
             }
