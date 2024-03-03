@@ -18,6 +18,7 @@ import com.sukacolab.app.ui.feature.register.RegisterViewModel
 import com.sukacolab.app.ui.feature.splash.SplashViewModel
 import com.sukacolab.app.ui.feature.user.application.ApplicationViewModel
 import com.sukacolab.app.ui.feature.user.bookmark.BookmarkViewModel
+import com.sukacolab.app.ui.feature.user.category.CategoryViewModel
 import com.sukacolab.app.ui.feature.user.home.HomeViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.about.EditAboutViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.certification.CertificationViewModel
@@ -107,6 +108,7 @@ val viewModelModules = module {
     viewModel { ApplicationViewModel(get()) }
     viewModel { BookmarkViewModel(get()) }
     viewModel { SearchViewModel(get()) }
+    viewModel { CategoryViewModel(get()) }
 }
 
 val useCaseModule = module {

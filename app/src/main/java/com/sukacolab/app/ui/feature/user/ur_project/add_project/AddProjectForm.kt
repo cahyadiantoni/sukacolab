@@ -29,7 +29,7 @@ class AddProjectForm(resourcesProvider: ResourcesProvider): Form() {
         options = mutableListOf(
             Position(name = "Project Manager"),
             Position(name = "Quality Assurance"),
-            Position(name = "UI/UX Designer"),
+            Position(name = "UI-UX Designer"),
             Position(name = "DevOps Engineer"),
             Position(name = "Android Developer"),
             Position(name = "Web Developer"),

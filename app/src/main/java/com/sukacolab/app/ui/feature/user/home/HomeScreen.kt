@@ -128,9 +128,6 @@ fun HomeContent(
     val viewModel: HomeViewModel = getViewModel()
     val responseProject = viewModel.responseProject.value
 
-    var openDialog = remember { mutableStateOf(false) }
-    var url by remember { mutableStateOf("") }
-    val ctx = LocalContext.current
     val viewModelProfile: ProfileViewModel = getViewModel()
 
     Scaffold(
@@ -238,43 +235,27 @@ fun HomeContent(
                         .padding(horizontal = 12.dp),
                     horizontalArrangement = Arrangement.SpaceEvenly
                 ) {
-                    MainMenu(title = "Project Manager", icon = R.drawable.project_manager, onClick = {
-                        openDialog.value = true
-                        url = "https://hat-deepar-wf7cinod4a-et.a.run.app"
-                    })
-                    MainMenu(title = "Quality Assurance", icon = R.drawable.quality_assurance, onClick = {
-                        openDialog.value = true
-                        url = "https://hat-deepar-wf7cinod4a-et.a.run.app"
-                    })
-                    MainMenu(title = "UI/UX Designer", icon = R.drawable.uiux_design, onClick = {
-                        openDialog.value = true
-                        url = "https://hat-deepar-wf7cinod4a-et.a.run.app"
-                    })
-                    MainMenu(title = "DevOps Engineer", icon = R.drawable.dev_ops, onClick = {
-                        openDialog.value = true
-                        url = "https://hat-deepar-wf7cinod4a-et.a.run.app"
-                    })
-                    MainMenu(title = "Android Developer", icon = R.drawable.android_dev, onClick = {
-                        openDialog.value = true
-                        url = "https://hat-deepar-wf7cinod4a-et.a.run.app"
-                    })
-                    MainMenu(title = "Web Developer", icon = R.drawable.web_dev, onClick = {
-                        openDialog.value = true
-                        url = "https://try.deepar.ai/wrist/rolex"
-                    })
-                    MainMenu(title = "Database Engineer", icon = R.drawable.database_eng, onClick = {
-                        openDialog.value = true
-                        url = "https://demo.ar.wanna.fashion/"
-                    })
-                    MainMenu(title = "IOS Developer Apatuh", icon = R.drawable.ios_dev, onClick = {
-                        openDialog.value = true
-                        url = "https://demo-bag.ar.wanna.fashion/?modelid=wanna_bag&showonboarding=3d"
-                    })
-                }
-                if(openDialog.value) {
-                    PrimaryAlert(openDialog = openDialog, ctx = ctx, url = url)
-                }
+                    val mainMenuData = listOf(
+                        MainMenuData("Project Manager", R.drawable.project_manager),
+                        MainMenuData("Quality Assurance", R.drawable.quality_assurance),
+                        MainMenuData("UI-UX Designer", R.drawable.uiux_design),
+                        MainMenuData("DevOps Engineer", R.drawable.dev_ops),
+                        MainMenuData("Android Developer", R.drawable.android_dev),
+                        MainMenuData("Web Developer", R.drawable.web_dev),
+                        MainMenuData("Database Engineer", R.drawable.database_eng),
+                        MainMenuData("IOS Developer", R.drawable.ios_dev)
+                    )
+                    mainMenuData.forEach { menu ->
+                        MainMenu(title = menu.title, icon = menu.icon, onClick = {
+                            navController.navigate(
+                                Screen.Category.createRoute(
+                                    menu.title
+                                )
+                            )
+                        })
+                    }
 
+                }
             }
 
             item {
