@@ -24,6 +24,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
+import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.BuildCircle
 import androidx.compose.material.icons.filled.CurrencyExchange
@@ -94,13 +95,14 @@ fun ProjectDetailScreen(
     val context = LocalContext.current
 
     val joinProjectResult by viewModel.joinProjectResult.observeAsState()
+    val bookmarkProjectResult by viewModel.bookmarkProjectResult.observeAsState()
     val isLoading = viewModel.isLoading.value
 
     LaunchedEffect(key1 = joinProjectResult) {
         when (joinProjectResult) {
             is JoinProjectResults.Success -> {
                 val message = (joinProjectResult as JoinProjectResults.Success).message
-                Log.d("Add Project", "Sukses: $message")
+                Log.d("Join Project", "Sukses: $message")
                 Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
                 navController.navigate(
                     Screen.ProjectDetail.createRoute(
@@ -114,7 +116,43 @@ fun ProjectDetailScreen(
             }
             is JoinProjectResults.Error -> {
                 val errorMessage = (joinProjectResult as JoinProjectResults.Error).errorMessage
-                Log.d("Add Project", "Gagal: $errorMessage")
+                Log.d("Join Project", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {
+                // Initial state or loading state
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = bookmarkProjectResult) {
+        when (bookmarkProjectResult) {
+            is BookmarkProjectResults.Success -> {
+                val message = (bookmarkProjectResult as BookmarkProjectResults.Success).message
+                Log.d("Add Bookmark", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProjectDetail.createRoute(
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProjectDetail.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is BookmarkProjectResults.Error -> {
+                val errorMessage = (bookmarkProjectResult as BookmarkProjectResults.Error).errorMessage
+                Log.d("Add Bookmark", "Gagal: $errorMessage")
                 Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
                 navController.navigate(
                     Screen.ProjectDetail.createRoute(
@@ -141,45 +179,52 @@ fun ProjectDetailScreen(
             }
         }
     }
-
-    Scaffold(
-        modifier = Modifier,
-        topBar = {
-            StatelessTopBar(
-                navigationIcon = {
-                    IconButton(onClick = {
-                        navController.navigateUp()
-                    }) {
-                        Icon(
-                            imageVector = Icons.Default.ArrowBack,
-                            contentDescription = "back",
-                            tint = Color.White
-                        )
-                    }
-                },
-                title = "Project Detail",
-                actionIcon = {
-                    IconButton(onClick = {
-
-                    }) {
-                        Icon(imageVector = Icons.Default.BookmarkBorder, contentDescription = "", tint = Color.White)
-                    }
-                }
+    val responseDetail = viewModel.responseDetail.value
+    Log.d("Response Isi", "$responseDetail")
+    when (responseDetail) {
+        is DetailProjectUiState.Loading -> {
+            CircularProgressIndicator(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .wrapContentSize(align = Alignment.Center)
             )
         }
-    ){
-        Box(modifier = Modifier.fillMaxSize()){
-            val responseDetail = viewModel.responseDetail.value
-            Log.d("Response Isi", "$responseDetail")
-            when (responseDetail) {
-                is DetailProjectUiState.Loading -> {
-                    CircularProgressIndicator(
-                        modifier = Modifier
-                            .fillMaxSize()
-                            .wrapContentSize(align = Alignment.Center)
+        is DetailProjectUiState.Success -> {
+            Scaffold(
+                modifier = Modifier,
+                topBar = {
+                    StatelessTopBar(
+                        navigationIcon = {
+                            IconButton(onClick = {
+                                navController.navigateUp()
+                            }) {
+                                Icon(
+                                    imageVector = Icons.Default.ArrowBack,
+                                    contentDescription = "back",
+                                    tint = Color.White
+                                )
+                            }
+                        },
+                        title = "Project Detail",
+                        actionIcon = {
+                            if (responseDetail.data.isBookmarked == 0){
+                                IconButton(onClick = {
+                                    viewModel.bookmarkProject(projectId)
+                                }) {
+                                    Icon(imageVector = Icons.Default.BookmarkBorder, contentDescription = "", tint = Color.White)
+                                }
+                            }else{
+                                IconButton(onClick = {
+                                    viewModel.bookmarkProject(projectId)
+                                }) {
+                                    Icon(imageVector = Icons.Default.Bookmark, contentDescription = "", tint = Color.White)
+                                }
+                            }
+                        }
                     )
                 }
-                is DetailProjectUiState.Success -> {
+            ) {
+                Box(modifier = Modifier.fillMaxSize()) {
                     LazyColumn(
                         modifier = Modifier
                             .fillMaxSize()
@@ -216,7 +261,7 @@ fun ProjectDetailScreen(
                                         modifier = Modifier
                                             .fillMaxWidth(),
                                         contentAlignment = Alignment.Center
-                                    ){
+                                    ) {
                                         Box(
                                             modifier = Modifier
                                                 .size(150.dp)
@@ -225,22 +270,27 @@ fun ProjectDetailScreen(
                                                 .background(Color.White)
                                         ) {
 
-                                            val img = if (responseDetail.data.tipe == "Loker") {
-                                                R.drawable.paid
-                                            } else if (responseDetail.data.tipe == "Portofolio"){
-                                                R.drawable.portofolio
-                                            } else if (responseDetail.data.tipe == "Kompetisi"){
-                                                R.drawable.competition
-                                            } else{
-                                                R.drawable.unknown
-                                            }
-                                            
+                                            val img =
+                                                if (responseDetail.data.tipe == "Loker") {
+                                                    R.drawable.paid
+                                                } else if (responseDetail.data.tipe == "Portofolio") {
+                                                    R.drawable.portofolio
+                                                } else if (responseDetail.data.tipe == "Kompetisi") {
+                                                    R.drawable.competition
+                                                } else {
+                                                    R.drawable.unknown
+                                                }
+
                                             Image(
                                                 painter = painterResource(id = img),
                                                 contentDescription = null,
                                                 contentScale = ContentScale.Crop,
                                                 modifier = Modifier
-                                                    .border(2.dp, Color.LightGray, shape = CircleShape)
+                                                    .border(
+                                                        2.dp,
+                                                        Color.LightGray,
+                                                        shape = CircleShape
+                                                    )
                                                     .padding(5.dp)
                                                     .clip(CircleShape)
                                             )
@@ -268,7 +318,11 @@ fun ProjectDetailScreen(
                                     color = Color.DarkGray,
                                     fontSize = 18.sp,
                                     textAlign = TextAlign.Center,
-                                    modifier = Modifier.padding(top= 8.dp, start = 20.dp, end = 20.dp)
+                                    modifier = Modifier.padding(
+                                        top = 8.dp,
+                                        start = 20.dp,
+                                        end = 20.dp
+                                    )
                                 )
                             }
 
@@ -283,7 +337,7 @@ fun ProjectDetailScreen(
                                         .width(60.dp)
                                         .height(70.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
-                                ){
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
                                         contentDescription = "",
@@ -305,7 +359,7 @@ fun ProjectDetailScreen(
                                         .width(60.dp)
                                         .height(70.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
-                                ){
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.BuildCircle,
                                         contentDescription = "",
@@ -327,7 +381,7 @@ fun ProjectDetailScreen(
                                         .width(60.dp)
                                         .height(70.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
-                                ){
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.Paid,
                                         contentDescription = "",
@@ -335,9 +389,9 @@ fun ProjectDetailScreen(
                                         modifier = Modifier.size(36.dp)
                                     )
 
-                                    val isPaid= if(responseDetail.data.isPaid == 1){
+                                    val isPaid = if (responseDetail.data.isPaid == 1) {
                                         "Paid"
-                                    }else{
+                                    } else {
                                         "Unpaid"
                                     }
 
@@ -355,7 +409,7 @@ fun ProjectDetailScreen(
                                         .width(60.dp)
                                         .height(70.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally
-                                ){
+                                ) {
                                     Icon(
                                         imageVector = Icons.Default.Timer,
                                         contentDescription = "",
@@ -378,9 +432,17 @@ fun ProjectDetailScreen(
                                     .fillMaxWidth()
                                     .padding(start = 20.dp, end = 20.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly
-                            ){
-                                val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
-                                val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
+                            ) {
+                                val colorButton1 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.tertiary
+                                } else {
+                                    MaterialTheme.colorScheme.primary
+                                }
+                                val colorText1 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    Color.White
+                                }
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
@@ -395,8 +457,16 @@ fun ProjectDetailScreen(
 
                                 }
 
-                                val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
-                                val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
+                                val colorButton2 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.tertiary
+                                }
+                                val colorText2 = if (openPage.value) {
+                                    Color.White
+                                } else {
+                                    MaterialTheme.colorScheme.primary
+                                }
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
@@ -411,18 +481,24 @@ fun ProjectDetailScreen(
 
                                 }
                             }
-                            if(openPage.value) {
+                            if (openPage.value) {
                                 Text(
                                     text = responseDetail.data.requirements,
                                     color = Color.DarkGray,
-                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 5.dp
+                                    ).fillMaxWidth(),
                                     textAlign = TextAlign.Justify,
                                     fontWeight = FontWeight.Normal,
                                 )
-                            }else{
+                            } else {
                                 Row(
-                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
-                                ){
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 5.dp
+                                    ).fillMaxWidth(),
+                                ) {
                                     Text(
                                         text = "Author : ",
                                         color = Color.DarkGray,
@@ -471,7 +547,10 @@ fun ProjectDetailScreen(
                                 Text(
                                     text = responseDetail.data.description,
                                     color = Color.DarkGray,
-                                    modifier = Modifier.padding(horizontal = 20.dp, vertical = 5.dp).fillMaxWidth(),
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 5.dp
+                                    ).fillMaxWidth(),
                                     textAlign = TextAlign.Justify,
                                     fontWeight = FontWeight.Normal,
                                 )
@@ -490,7 +569,7 @@ fun ProjectDetailScreen(
                             .fillMaxWidth()
                             .align(Alignment.BottomStart),
                         horizontalArrangement = Arrangement.SpaceEvenly
-                    ){
+                    ) {
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
@@ -498,7 +577,11 @@ fun ProjectDetailScreen(
                                 .padding(vertical = 15.dp, horizontal = 30.dp)
                         ) {
                             if (isLoading) {
-                                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                                CircularProgressIndicator(
+                                    modifier = Modifier.align(
+                                        Alignment.Center
+                                    )
+                                )
                             } else {
                                 when (responseDetail.data.statusApplied) {
                                     null -> {
@@ -517,6 +600,7 @@ fun ProjectDetailScreen(
                                             Text(text = "Join Project", color = Color.White)
                                         }
                                     }
+
                                     0 -> {
                                         Button(
                                             onClick = {
@@ -530,9 +614,13 @@ fun ProjectDetailScreen(
                                             ),
                                             shape = RoundedCornerShape(8.dp)
                                         ) {
-                                            Text(text = "Cancel Join Project", color = Color.White)
+                                            Text(
+                                                text = "Cancel Join Project",
+                                                color = Color.White
+                                            )
                                         }
                                     }
+
                                     1 -> {
                                         Button(
                                             onClick = {
@@ -546,9 +634,13 @@ fun ProjectDetailScreen(
                                             ),
                                             shape = RoundedCornerShape(8.dp)
                                         ) {
-                                            Text(text = "Your Accepted (Contact Author)", color = Color.White)
+                                            Text(
+                                                text = "Your Accepted (Contact Author)",
+                                                color = Color.White
+                                            )
                                         }
                                     }
+
                                     else -> {
                                         Button(
                                             onClick = {
@@ -562,7 +654,10 @@ fun ProjectDetailScreen(
                                             ),
                                             shape = RoundedCornerShape(8.dp)
                                         ) {
-                                            Text(text = "Your Rejected", color = Color.White)
+                                            Text(
+                                                text = "Your Rejected",
+                                                color = Color.White
+                                            )
                                         }
                                     }
                                 }
@@ -571,13 +666,13 @@ fun ProjectDetailScreen(
                         }
                     }
                 }
-                is DetailProjectUiState.Failure -> {
-                    Text(text = responseDetail.error.message ?: "Unknown Error")
-                }
-                DetailProjectUiState.Empty -> {
-                    Text(text = "Empty Data")
-                }
             }
+        }
+        is DetailProjectUiState.Failure -> {
+            Text(text = responseDetail.error.message ?: "Unknown Error")
+        }
+        DetailProjectUiState.Empty -> {
+            Text(text = "Empty Data")
         }
     }
 }

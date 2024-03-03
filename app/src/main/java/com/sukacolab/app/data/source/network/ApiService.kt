@@ -242,7 +242,11 @@ interface ApiService {
         @Path("projectId") projectId: String,
     ): Call<BaseResponse>
 
-    
+    @POST("/api/project/bookmark/{projectId}")
+    fun bookmarkProject(
+        @Header("Authorization") token: String,
+        @Path("projectId") projectId: String,
+    ): Call<BaseResponse>
 
     @POST("/api/project/add")
     fun addProject(
