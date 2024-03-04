@@ -37,6 +37,11 @@ import com.sukacolab.app.ui.feature.user.profile.sub_screen.setting.password.Set
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.SkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.add_skill.AddSkillViewModel
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.skill.edit_skill.EditSkillViewModel
+import com.sukacolab.app.ui.feature.user.profile_other.ProfileOtherViewModel
+import com.sukacolab.app.ui.feature.user.profile_other.sub_screen.certification.CertificationOtherViewModel
+import com.sukacolab.app.ui.feature.user.profile_other.sub_screen.education.EducationOtherViewModel
+import com.sukacolab.app.ui.feature.user.profile_other.sub_screen.experience.ExperienceOtherViewModel
+import com.sukacolab.app.ui.feature.user.profile_other.sub_screen.skill.SkillOtherViewModel
 import com.sukacolab.app.ui.feature.user.project.ProjectViewModel
 import com.sukacolab.app.ui.feature.user.project.project_detail.ProjectDetailViewModel
 import com.sukacolab.app.ui.feature.user.search.SearchViewModel
@@ -111,6 +116,11 @@ val viewModelModules = module {
     viewModel { SearchViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
     viewModel { UrProjectDetailViewModel(get(), get(), get()) }
+    viewModel { ProfileOtherViewModel(get()) }
+    viewModel { ExperienceOtherViewModel(get()) }
+    viewModel { CertificationOtherViewModel(get()) }
+    viewModel { SkillOtherViewModel(get()) }
+    viewModel { EducationOtherViewModel(get()) }
 }
 
 val useCaseModule = module {

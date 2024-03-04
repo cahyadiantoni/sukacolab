@@ -510,7 +510,8 @@ fun UrProjectDetailScreen(
                                                                 ) {
                                                                     ItemListProfile(
                                                                         navController = navController,
-                                                                        id = project.id,
+                                                                        userId = project.id,
+                                                                        projectId = projectId.toInt(),
                                                                         image = project.photo,
                                                                         name = project.name,
                                                                         summary = project.summary
@@ -543,7 +544,8 @@ fun UrProjectDetailScreen(
                                                                 ) {
                                                                     ItemListProfile(
                                                                         navController = navController,
-                                                                        id = project.id,
+                                                                        userId = project.id,
+                                                                        projectId = projectId.toInt(),
                                                                         image = project.photo,
                                                                         name = project.name,
                                                                         summary = project.summary

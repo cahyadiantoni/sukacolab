@@ -79,4 +79,56 @@ class ProjectRepository(
             projectId = projectId,
         ).data)
     }.flowOn(Dispatchers.IO)
+
+    fun getProfileUserJoin(userId: String, projectId: String) = flow{
+        val token = authPreferences.getAuthToken()
+        Log.d("neo-tag", "profileDetails: ${token.toString()}")
+        emit(
+            apiService.getProfileUserJoin(
+                token = "bearer $token",
+                userId = userId,
+                projectId = projectId
+            ).data
+        )
+    }.flowOn(Dispatchers.IO)
+
+    fun getOtherExperience(take: Int, userId: Int) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Experience", "get Experience")
+        emit(apiService.getExperience(
+            token = "Bearer $token",
+            take = take,
+            userId = userId
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getOtherCertification(take: Int, userId: Int) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Certification", "get Certification")
+        emit(apiService.getCertification(
+            token = "Bearer $token",
+            take = take,
+            userId = userId
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getOtherSkill(take: Int, userId: Int) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Skill", "get Skill")
+        emit(apiService.getSkill(
+            token = "Bearer $token",
+            take = take,
+            userId = userId
+        ).data)
+    }.flowOn(Dispatchers.IO)
+
+    fun getOtherEducation(take: Int, userId: Int) = flow {
+        val token = authPreferences.getAuthToken()
+        Log.d("Hit API Education", "get Education")
+        emit(apiService.getEducation(
+            token = "Bearer $token",
+            take = take,
+            userId = userId
+        ).data)
+    }.flowOn(Dispatchers.IO)
 }

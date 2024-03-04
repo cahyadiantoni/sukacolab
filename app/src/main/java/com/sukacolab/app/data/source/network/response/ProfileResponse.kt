@@ -17,21 +17,21 @@ data class ProfileItem(
     @SerializedName("email")
     val email: String,
     @SerializedName("photo")
-    val photo: String,
+    val photo: String?,
     @SerializedName("summary")
-    val summary: String,
+    val summary: String?,
     @SerializedName("linkedin")
-    val linkedin: String,
+    val linkedin: String?,
     @SerializedName("github")
-    val github: String,
+    val github: String?,
     @SerializedName("whatsapp")
-    val whatsapp: String,
+    val whatsapp: String?,
     @SerializedName("instagram")
-    val instagram: String,
+    val instagram: String?,
     @SerializedName("resume")
-    val resume: String,
+    val resume: String?,
     @SerializedName("about")
-    val about: String,
+    val about: String?,
     @SerializedName("is_complete")
     val isComplete: Boolean,
 )

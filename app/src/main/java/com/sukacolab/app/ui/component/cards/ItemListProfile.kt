@@ -57,7 +57,8 @@ import com.sukacolab.app.ui.theme.tertiaryColor
 @Composable
 fun ItemListProfile(
     navController: NavController,
-    id: Int,
+    userId: Int,
+    projectId: Int,
     image: String?,
     name: String,
     summary: String?
@@ -67,7 +68,11 @@ fun ItemListProfile(
             .padding(horizontal = 16.dp, vertical = 4.dp)
             .fillMaxSize()
             .clickable {
-
+                navController.navigate(
+                    Screen.ProfileOther.createRoute(
+                        userId, projectId
+                    )
+                )
             },
         elevation = CardDefaults.cardElevation(
             defaultElevation = 2.dp

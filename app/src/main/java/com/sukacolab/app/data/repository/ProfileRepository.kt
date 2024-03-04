@@ -31,7 +31,8 @@ class ProfileRepository(
         Log.d("Hit API Experience", "get Experience")
         emit(apiService.getExperience(
             token = "Bearer $token",
-            take = take
+            take = take,
+            userId = 0
         ).data)
     }.flowOn(Dispatchers.IO)
 
@@ -40,7 +41,8 @@ class ProfileRepository(
         Log.d("Hit API Certification", "get Certification")
         emit(apiService.getCertification(
             token = "Bearer $token",
-            take = take
+            take = take,
+            userId = 0
         ).data)
     }.flowOn(Dispatchers.IO)
 
@@ -49,7 +51,8 @@ class ProfileRepository(
         Log.d("Hit API Skill", "get Skill")
         emit(apiService.getSkill(
             token = "Bearer $token",
-            take = take
+            take = take,
+            userId = 0
         ).data)
     }.flowOn(Dispatchers.IO)
 
@@ -58,7 +61,8 @@ class ProfileRepository(
         Log.d("Hit API Education", "get Education")
         emit(apiService.getEducation(
             token = "Bearer $token",
-            take = take
+            take = take,
+            userId = 0
         ).data)
     }.flowOn(Dispatchers.IO)
 

@@ -21,6 +21,7 @@ import com.sukacolab.app.data.source.network.response.EducationResponse
 import com.sukacolab.app.data.source.network.response.ExperienceResponse
 import com.sukacolab.app.data.source.network.response.JoinedProjectResponse
 import com.sukacolab.app.data.source.network.response.LoginResponse
+import com.sukacolab.app.data.source.network.response.ProfileOtherResponse
 import com.sukacolab.app.data.source.network.response.ProfileResponse
 import com.sukacolab.app.data.source.network.response.Project
 import com.sukacolab.app.data.source.network.response.ProjectResponse
@@ -48,28 +49,32 @@ interface ApiService {
         @Header("Authorization") token: String
     ): ProfileResponse
 
-    @GET("/api/profile/experience/{take}")
+    @GET("/api/profile/experience/{take}/{userId}")
     suspend fun getExperience(
         @Header("Authorization") token: String,
         @Path("take") take: Int,
+        @Path("userId") userId: Int,
     ): ExperienceResponse
 
-    @GET("/api/profile/certification/{take}")
+    @GET("/api/profile/certification/{take}/{userId}")
     suspend fun getCertification(
         @Header("Authorization") token: String,
         @Path("take") take: Int,
+        @Path("userId") userId: Int,
     ): CertificationResponse
 
-    @GET("/api/profile/skill/{take}")
+    @GET("/api/profile/skill/{take}/{userId}")
     suspend fun getSkill(
         @Header("Authorization") token: String,
         @Path("take") take: Int,
+        @Path("userId") userId: Int,
     ): SkillResponse
 
-    @GET("/api/profile/education/{take}")
+    @GET("/api/profile/education/{take}/{userId}")
     suspend fun getEducation(
         @Header("Authorization") token: String,
         @Path("take") take: Int,
+        @Path("userId") userId: Int,
     ): EducationResponse
 
     @GET("/api/profile/experience/detail/{id}")
@@ -285,4 +290,19 @@ interface ApiService {
         @Header("Authorization") token: String,
         @Path("projectId") projectId: String,
     ): UserJoinResponse
+
+    @GET("/api/project/user/{userId}/{projectId}")
+    suspend fun getProfileUserJoin(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String,
+        @Path("projectId") projectId: String,
+    ): ProfileOtherResponse
+
+    @POST("/api/project/userjoin/review/{userId}/{projectId}/{review}")
+    fun userJoinReview(
+        @Header("Authorization") token: String,
+        @Path("userId") userId: String,
+        @Path("projectId") projectId: String,
+        @Path("review") review: String,
+    ): Call<BaseResponse>
 }
