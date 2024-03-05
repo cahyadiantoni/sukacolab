@@ -697,7 +697,7 @@ fun ProjectDetailScreen(
                                         2 -> {
                                             Button(
                                                 onClick = {
-
+                                                    navController.navigateUp()
                                                 },
                                                 modifier = Modifier
                                                     .fillMaxWidth()
@@ -754,7 +754,11 @@ fun ProjectDetailScreen(
                                         1 -> {
                                             Button(
                                                 onClick = {
-
+                                                    navController.navigate(
+                                                        Screen.ProfileOther.createRoute(
+                                                            responseDetail.data.userId, 0
+                                                        )
+                                                    )
                                                 },
                                                 modifier = Modifier
                                                     .fillMaxWidth()
@@ -774,7 +778,7 @@ fun ProjectDetailScreen(
                                         else -> {
                                             Button(
                                                 onClick = {
-
+                                                    navController.navigateUp()
                                                 },
                                                 modifier = Modifier
                                                     .fillMaxWidth()
