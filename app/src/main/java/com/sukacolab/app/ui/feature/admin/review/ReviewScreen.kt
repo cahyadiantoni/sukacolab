@@ -21,15 +21,21 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
+import com.sukacolab.app.ui.component.cards.ItemListReviewProject
 import com.sukacolab.app.ui.component.cards.ItemListUrProject
 import com.sukacolab.app.ui.feature.admin.review.ui_state.ReviewUiState
 import com.sukacolab.app.ui.navigation.Screen
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 
@@ -40,6 +46,17 @@ fun ReviewScreen(
 ) {
     val viewModel: ReviewViewModel = getViewModel()
     val responseReview = viewModel.responseReview.value
+
+    val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.getReview()
+            }
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primary),
@@ -75,13 +92,13 @@ fun ReviewScreen(
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
-                                            text = "Kamu belum membuat project",
+                                            text = "Tidak ada project yang perlu direview",
                                             fontWeight = FontWeight.Light
                                         )
                                     }
                                 }else{
                                     responseReview.data.forEachIndexed { index, project ->
-                                        ItemListUrProject(
+                                        ItemListReviewProject(
                                             navController = navController,
                                             id = project.id,
                                             position = project.position,

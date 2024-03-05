@@ -15,11 +15,7 @@ class BookmarkViewModel(
 ) : ViewModel() {
     val responseProject: MutableState<BookmarkUiState> = mutableStateOf(BookmarkUiState.Empty)
 
-    init {
-        getProject()
-    }
-
-    private fun getProject() = viewModelScope.launch {
+    fun getProject() = viewModelScope.launch {
         projectRepo.getBookmarkProject()
             .onStart {
                 responseProject.value = BookmarkUiState.Loading

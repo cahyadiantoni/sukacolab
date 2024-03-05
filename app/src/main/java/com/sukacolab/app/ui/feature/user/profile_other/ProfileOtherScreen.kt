@@ -610,6 +610,21 @@ fun ProfileOtherScreen(
                                             }
                                         }
                                     }
+                                }else{
+                                    Button(
+                                        onClick = {
+                                            navController.navigateUp()
+                                        },
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .height(50.dp),
+                                        colors = ButtonDefaults.buttonColors(
+                                            containerColor = MaterialTheme.colorScheme.primary
+                                        ),
+                                        shape = RoundedCornerShape(8.dp)
+                                    ) {
+                                        Text(text = "Kembali", color = Color.White)
+                                    }
                                 }
                             }
 

@@ -27,14 +27,18 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import com.google.accompanist.flowlayout.FlowMainAxisAlignment
 import com.google.accompanist.flowlayout.SizeMode
@@ -44,6 +48,7 @@ import com.sukacolab.app.ui.component.cards.ItemListProject
 import com.sukacolab.app.ui.feature.user.bookmark.ui_state.BookmarkUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertDateBookmark
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 
@@ -53,6 +58,15 @@ fun BookmarkScreen(navController: NavController){
     val viewModel: BookmarkViewModel = getViewModel()
     val responseProject = viewModel.responseProject.value
 
+    val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.getProject()
+            }
+        }
+    }
     
     Scaffold(
         modifier = Modifier

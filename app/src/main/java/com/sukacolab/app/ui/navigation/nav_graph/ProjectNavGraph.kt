@@ -6,6 +6,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.sukacolab.app.ui.feature.admin.review.detail_review.DetailReviewScreen
 import com.sukacolab.app.ui.feature.user.profile.ProfileScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.experience.ExperienceScreen
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.resume.ResumeScreen
@@ -54,6 +55,19 @@ fun NavGraphBuilder.projectNavGraph(
         Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
         val projectId = it.arguments?.getInt(PROJECT_ID).toString()
         UrProjectDetailScreen(navController = navController, projectId = projectId)
+    }
+
+    composable(
+        route = Screen.DetailReview.route,
+        arguments = listOf(
+            navArgument(PROJECT_ID) {
+                type = NavType.IntType
+            }
+        )
+    ) {
+        Log.d("Args", it.arguments?.getInt(PROJECT_ID).toString())
+        val projectId = it.arguments?.getInt(PROJECT_ID).toString()
+        DetailReviewScreen(navController = navController, projectId = projectId)
     }
 
     composable(

@@ -5,6 +5,7 @@ import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -255,6 +256,7 @@ fun ProjectDetailScreen(
             }
         }
     }
+
     val responseDetail = viewModel.responseDetail.value
     Log.d("Response Isi", "$responseDetail")
     when (responseDetail) {
@@ -580,7 +582,14 @@ fun ProjectDetailScreen(
                                     modifier = Modifier.padding(
                                         horizontal = 20.dp,
                                         vertical = 5.dp
-                                    ).fillMaxWidth(),
+                                    ).fillMaxWidth()
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.ProfileOther.createRoute(
+                                                    responseDetail.data.userId, 0
+                                                )
+                                            )
+                                        },
                                 ) {
                                     Text(
                                         text = "Author : ",

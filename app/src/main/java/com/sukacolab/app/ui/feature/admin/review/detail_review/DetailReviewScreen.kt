@@ -1,10 +1,11 @@
-package com.sukacolab.app.ui.feature.user.ur_project.ur_project_detail
+package com.sukacolab.app.ui.feature.admin.review.detail_review
 
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -22,17 +23,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.BookmarkBorder
 import androidx.compose.material.icons.filled.BuildCircle
-import androidx.compose.material.icons.filled.CurrencyExchange
 import androidx.compose.material.icons.filled.LocationOn
-import androidx.compose.material.icons.filled.LockClock
 import androidx.compose.material.icons.filled.Paid
 import androidx.compose.material.icons.filled.Preview
-import androidx.compose.material.icons.filled.RemoveRedEye
 import androidx.compose.material.icons.filled.Timer
-import androidx.compose.material.icons.filled.Work
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -61,7 +56,6 @@ import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -86,12 +80,12 @@ import org.koin.androidx.compose.getViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UrProjectDetailScreen(
+fun DetailReviewScreen(
     navController: NavController,
     projectId: String,
 ){
     var openPage = remember { mutableStateOf(false) }
-    val viewModel: UrProjectDetailViewModel = getViewModel()
+    val viewModel: DetailReviewViewModel = getViewModel()
 
     val context = LocalContext.current
     val idState = remember { mutableStateOf("") }
@@ -141,11 +135,11 @@ fun UrProjectDetailScreen(
                 Log.d("Add Bookmark", "Sukses: $message")
                 Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
                 navController.navigate(
-                    Screen.UrProjectDetail.createRoute(
+                    Screen.DetailReview.createRoute(
                         projectId.toInt()
                     )
                 ){
-                    popUpTo(Screen.UrProjectDetail.route) {
+                    popUpTo(Screen.DetailReview.route) {
                         inclusive = true
                     }
                 }
@@ -155,11 +149,11 @@ fun UrProjectDetailScreen(
                 Log.d("Add Bookmark", "Gagal: $errorMessage")
                 Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
                 navController.navigate(
-                    Screen.UrProjectDetail.createRoute(
+                    Screen.DetailReview.createRoute(
                         projectId.toInt()
                     )
                 ){
-                    popUpTo(Screen.UrProjectDetail.route) {
+                    popUpTo(Screen.DetailReview.route) {
                         inclusive = true
                     }
                 }
@@ -175,15 +169,6 @@ fun UrProjectDetailScreen(
             launch {
                 idState.value = projectId
                 viewModel.getDetailProject(projectId = projectId)
-            }
-        }
-    }
-
-    LaunchedEffect(key1 = Unit) {
-        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
-            launch {
-                idState.value = projectId
-                viewModel.getUserJoin(projectId = projectId)
             }
         }
     }
@@ -214,7 +199,7 @@ fun UrProjectDetailScreen(
                                 )
                             }
                         },
-                        title = "Your Project Detail",
+                        title = "Review Project Detail",
                         actionIcon = {
                             IconButton(onClick = {
                                 navController.navigate(
@@ -442,9 +427,17 @@ fun UrProjectDetailScreen(
                                     .fillMaxWidth()
                                     .padding(start = 20.dp, end = 20.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly
-                            ){
-                                val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
-                                val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
+                            ) {
+                                val colorButton1 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.tertiary
+                                } else {
+                                    MaterialTheme.colorScheme.primary
+                                }
+                                val colorText1 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    Color.White
+                                }
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
@@ -455,12 +448,20 @@ fun UrProjectDetailScreen(
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
 
-                                    Text(text = "Selection", color = colorText1)
+                                    Text(text = "About", color = colorText1)
 
                                 }
 
-                                val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
-                                val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
+                                val colorButton2 = if (openPage.value) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
+                                    MaterialTheme.colorScheme.tertiary
+                                }
+                                val colorText2 = if (openPage.value) {
+                                    Color.White
+                                } else {
+                                    MaterialTheme.colorScheme.primary
+                                }
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
@@ -471,122 +472,80 @@ fun UrProjectDetailScreen(
                                     shape = RoundedCornerShape(8.dp)
                                 ) {
 
-                                    Text(text = "Accepted", color = colorText2)
+                                    Text(text = "Requirements", color = colorText2)
 
                                 }
                             }
-                        }
-                        item {
-                                    when (val responseUserJoin = viewModel.responseUserJoin.value) {
-                                        is UserJoinUiState.Success -> {
-                                            if (responseUserJoin.data.isEmpty()) {
-                                                Box(
-                                                    modifier = Modifier
-                                                        .fillMaxSize()
-                                                        .padding(top = 30.dp),
-                                                    contentAlignment = Alignment.Center
-                                                ) {
-                                                    Text(
-                                                        text = "Belum ada user join diterima",
-                                                        fontWeight = FontWeight.Light
-                                                    )
-                                                }
-                                            }else{
-                                                val itemSize: Dp =
-                                                    (LocalConfiguration.current.screenWidthDp.dp)
-                                                com.google.accompanist.flowlayout.FlowRow(
-                                                    mainAxisSize = SizeMode.Expand,
-                                                    mainAxisAlignment = FlowMainAxisAlignment.SpaceBetween,
-                                                    modifier = Modifier
-                                                        .padding(horizontal = 4.dp),
-                                                ) {
-                                                    if(openPage.value) {
-                                                        var count = 0
-                                                        responseUserJoin.data.forEachIndexed { index, project ->
-                                                            if (project.status == 1) {
-                                                                Box(
-                                                                    modifier = Modifier
-                                                                        .width(itemSize),
-                                                                    contentAlignment = Alignment.Center
-                                                                ) {
-                                                                    ItemListProfile(
-                                                                        navController = navController,
-                                                                        userId = project.id,
-                                                                        projectId = projectId.toInt(),
-                                                                        image = project.photo,
-                                                                        name = project.name,
-                                                                        summary = project.summary
-                                                                    )
-                                                                }
-                                                                count++
-                                                            }
-                                                        }
-                                                        if (count == 0) {
-                                                            Box(
-                                                                modifier = Modifier
-                                                                    .fillMaxSize()
-                                                                    .padding(top = 30.dp),
-                                                                contentAlignment = Alignment.Center
-                                                            ) {
-                                                                Text(
-                                                                    text = "Belum ada user yang perlu diseleksi",
-                                                                    fontWeight = FontWeight.Light
-                                                                )
-                                                            }
-                                                        }
-                                                    }else{
-                                                        var countTwo = 0
-                                                        responseUserJoin.data.forEachIndexed { index, project ->
-                                                            if (project.status == 0) {
-                                                                Box(
-                                                                    modifier = Modifier
-                                                                        .width(itemSize),
-                                                                    contentAlignment = Alignment.Center
-                                                                ) {
-                                                                    ItemListProfile(
-                                                                        navController = navController,
-                                                                        userId = project.id,
-                                                                        projectId = projectId.toInt(),
-                                                                        image = project.photo,
-                                                                        name = project.name,
-                                                                        summary = project.summary
-                                                                    )
-                                                                }
-                                                                countTwo++
-                                                            }
-                                                        }
-                                                        if (countTwo == 0) {
-                                                            Box(
-                                                                modifier = Modifier
-                                                                    .fillMaxSize()
-                                                                    .padding(top = 30.dp),
-                                                                contentAlignment = Alignment.Center
-                                                            ) {
-                                                                Text(
-                                                                    text = "Belum ada user join di project ini",
-                                                                    fontWeight = FontWeight.Light
-                                                                )
-                                                            }
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        is UserJoinUiState.Failure -> {
-                                            Text(text = responseUserJoin.error.message ?: "Unknown Error")
-                                        }
-                                        UserJoinUiState.Loading -> {
-                                            CircularProgressIndicator(
-                                                modifier = Modifier
-                                                    .fillMaxSize()
-                                                    .wrapContentSize(align = Alignment.Center)
+                            if (openPage.value) {
+                                Text(
+                                    text = responseDetail.data.requirements,
+                                    color = Color.DarkGray,
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 5.dp
+                                    ).fillMaxWidth(),
+                                    textAlign = TextAlign.Justify,
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            } else {
+                                Row(
+                                    modifier = Modifier
+                                        .padding( horizontal = 20.dp, vertical = 5.dp)
+                                        .fillMaxWidth()
+                                        .clickable {
+                                            navController.navigate(
+                                                Screen.ProfileOther.createRoute(
+                                                    responseDetail.data.userId, 0
+                                                )
                                             )
-                                        }
-                                        UserJoinUiState.Empty -> {
-                                            Text(text = "Empty Data")
-                                        }
+                                        },
+                                ) {
+                                    Text(
+                                        text = "Author : ",
+                                        color = Color.DarkGray,
+                                        textAlign = TextAlign.Justify,
+                                        fontWeight = FontWeight.Normal,
+                                    )
+
+                                    Box(
+                                        modifier = Modifier
+                                            .size(20.dp)
+                                            .clip(CircleShape)
+                                            .background(Color.White)
+                                    ) {
+                                        AsyncImage(
+                                            model = ImageRequest.Builder(LocalContext.current)
+                                                .data(responseDetail.data.userPhoto)
+                                                .crossfade(true)
+                                                .build(),
+                                            contentDescription = null,
+                                            contentScale = ContentScale.Crop,
+                                            modifier = Modifier
+                                                .clip(CircleShape)
+                                        )
                                     }
-                            Box(modifier = Modifier.size(100.dp))
+
+                                    Text(
+                                        modifier = Modifier
+                                            .padding(start = 4.dp),
+                                        text = responseDetail.data.userName,
+                                        color = Color.DarkGray,
+                                        textAlign = TextAlign.Justify,
+                                        fontWeight = FontWeight.SemiBold,
+                                    )
+                                }
+
+                                Text(
+                                    text = responseDetail.data.description,
+                                    color = Color.DarkGray,
+                                    modifier = Modifier.padding(
+                                        horizontal = 20.dp,
+                                        vertical = 5.dp
+                                    ).fillMaxWidth(),
+                                    textAlign = TextAlign.Justify,
+                                    fontWeight = FontWeight.Normal,
+                                )
+                            }
                         }
                     }
                     Row(
@@ -601,21 +560,83 @@ fun UrProjectDetailScreen(
                                 .background(color = tertiaryColor)
                                 .padding(vertical = 15.dp, horizontal = 30.dp)
                         ) {
+                            var showDialogAdmin by remember { mutableStateOf(false) }
+                            var review by remember { mutableStateOf("") }
+
+                            if (showDialogAdmin) {
+                                val txt = if (review == "1"){
+                                    "Yakin untuk menerima project ini?"
+                                }else{
+                                    "Yakin untuk menolak project ini?"
+                                }
+                                AlertDialog(
+                                    onDismissRequest = {
+                                        showDialog = false
+                                    },
+                                    title = {
+                                        Text(text = "Konfirmasi")
+                                    },
+                                    text = {
+                                        Text(text = txt)
+                                    },
+                                    confirmButton = {
+                                        Button(
+                                            onClick = {
+                                                showDialog = false
+                                                viewModel.reviewProject(projectId, review)
+                                            }
+                                        ) {
+                                            Text(text = "Ya")
+                                        }
+                                    },
+                                    dismissButton = {
+                                        Button(
+                                            onClick = {
+                                                showDialog = false
+                                            }
+                                        ) {
+                                            Text(text = "Tidak")
+                                        }
+                                    }
+                                )
+                            }
                             when (responseDetail.data.isActive) {
                                 0 -> {
-                                    Button(
-                                        onClick = {
-                                            context.openUri("https://wa.me/6281919480565")
-                                        },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(50.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = Color.Gray
-                                        ),
-                                        shape = RoundedCornerShape(8.dp)
+                                    Row(
+                                        modifier = Modifier.fillMaxWidth(),
+                                        horizontalArrangement = Arrangement.SpaceBetween
                                     ) {
-                                        Text(text = "Menunggu review Admin", color = Color.White)
+                                        Button(
+                                            onClick = {
+                                                showDialogAdmin = true
+                                                review = "1"
+                                            },
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = MaterialTheme.colorScheme.primary
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Terima", color = Color.White)
+                                        }
+                                        Spacer(modifier = Modifier.size(15.dp))
+                                        Button(
+                                            onClick = {
+                                                showDialogAdmin = true
+                                                review = "2"
+                                            },
+                                            modifier = Modifier
+                                                .weight(1f)
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = Color.Red
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Tolak", color = Color.White)
+                                        }
                                     }
                                 }
                                 1 -> {

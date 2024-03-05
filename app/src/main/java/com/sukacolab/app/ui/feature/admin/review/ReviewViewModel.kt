@@ -25,11 +25,7 @@ class ReviewViewModel(
 ) : ViewModel() {
     val responseReview: MutableState<ReviewUiState> = mutableStateOf(ReviewUiState.Empty)
 
-    init {
-        getReview()
-    }
-
-    private fun getReview() = viewModelScope.launch {
+    fun getReview() = viewModelScope.launch {
         projectRepo.getReviewProject()
             .onStart {
                 responseReview.value = ReviewUiState.Loading
