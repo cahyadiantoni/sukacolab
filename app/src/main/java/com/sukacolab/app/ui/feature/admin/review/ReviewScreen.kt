@@ -87,7 +87,8 @@ fun ReviewScreen(
                                             position = project.position,
                                             project = project.name,
                                             date = project.updatedAt,
-                                            isActive = project.isActive
+                                            isActive = project.isActive,
+                                            type = project.tipe
                                         )
                                     }
                                 }

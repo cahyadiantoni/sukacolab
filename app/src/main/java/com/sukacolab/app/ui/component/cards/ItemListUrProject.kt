@@ -39,6 +39,7 @@ fun ItemListUrProject(
     position: String,
     project: String,
     date: String,
+    type: String,
     isActive: Int,
     ) {
     Card(
@@ -61,8 +62,18 @@ fun ItemListUrProject(
                 .fillMaxWidth()
                 .padding(8.dp)
         ) {
+            val img = if (type == "Loker") {
+                R.drawable.paid
+            } else if (type == "Portofolio"){
+                R.drawable.portofolio
+            } else if (type == "Kompetisi"){
+                R.drawable.competition
+            } else{
+                R.drawable.unknown
+            }
+
             Image(
-                painter = painterResource(id = R.drawable.img_logo),
+                painter = painterResource(id = img),
                 contentDescription = null,
                 modifier = Modifier.size(60.dp),
                 contentScale = ContentScale.Crop
