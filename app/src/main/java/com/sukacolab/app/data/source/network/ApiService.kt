@@ -226,7 +226,7 @@ interface ApiService {
         @Header("Authorization") token: String,
     ): ProjectResponse
 
-    @GET("/api/project/review")
+    @GET("/api/project/0/0")
     suspend fun getReviewProject(
         @Header("Authorization") token: String,
     ): ProjectResponse
