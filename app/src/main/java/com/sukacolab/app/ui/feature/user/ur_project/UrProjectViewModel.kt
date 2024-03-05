@@ -25,11 +25,7 @@ class UrProjectViewModel(
 ) : ViewModel() {
     val responseUrProject: MutableState<UrProjectUiState> = mutableStateOf(UrProjectUiState.Empty)
 
-    init {
-        getUrProject()
-    }
-
-    private fun getUrProject() = viewModelScope.launch {
+    fun getUrProject() = viewModelScope.launch {
         projectRepo.getUrProject()
             .onStart {
                 responseUrProject.value = UrProjectUiState.Loading

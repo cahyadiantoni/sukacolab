@@ -3,9 +3,14 @@ package com.sukacolab.app.ui.feature.user.profile_other
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sukacolab.app.data.repository.ProjectRepository
+import com.sukacolab.app.data.source.local.AuthPreferences
+import com.sukacolab.app.data.source.network.ApiService
+import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.CertificationUiState
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.EducationUiState
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.ExperienceUiState
@@ -14,9 +19,14 @@ import com.sukacolab.app.ui.feature.user.profile_other.ui_state.SkillUiState
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 class ProfileOtherViewModel(
     private val projectRepo: ProjectRepository,
+    private val apiService: ApiService,
+    private val authPreferences: AuthPreferences,
 ) : ViewModel() {
     val response: MutableState<ProfileUiState> = mutableStateOf(ProfileUiState.Empty)
     val responseExperience: MutableState<ExperienceUiState> = mutableStateOf(ExperienceUiState.Empty)
@@ -24,6 +34,9 @@ class ProfileOtherViewModel(
         CertificationUiState.Empty)
     val responseSkill: MutableState<SkillUiState> = mutableStateOf(SkillUiState.Empty)
     val responseEducation: MutableState<EducationUiState> = mutableStateOf(EducationUiState.Empty)
+
+    private val _reviewUserJoinResult = MutableLiveData<ReviewUserJoinResults>()
+    val reviewUserJoinResult: LiveData<ReviewUserJoinResults> = _reviewUserJoinResult
 
     private val _isLoading = mutableStateOf(false)
     val isLoading: State<Boolean> = _isLoading
@@ -82,4 +95,52 @@ class ProfileOtherViewModel(
                 responseEducation.value = EducationUiState.Success(it)
             }
     }
+
+    fun reviewUserJoin(userId: String, projectId: String, review: String){
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val token = authPreferences.getAuthToken()
+                apiService.userJoinReview(
+                    token = "Bearer $token",
+                    userId = userId,
+                    projectId = projectId,
+                    review = review
+                ).enqueue(object: Callback<BaseResponse> {
+                    override fun onResponse(
+                        call: Call<BaseResponse>,
+                        response: Response<BaseResponse>,
+                    ) {
+                        if (response.isSuccessful) {
+                            _isLoading.value = false
+                            val success = response.body()!!.success
+                            val message = response.body()!!.message
+
+                            if(success) {
+                                _reviewUserJoinResult.value = ReviewUserJoinResults.Success(message)
+                            } else {
+                                _reviewUserJoinResult.value = ReviewUserJoinResults.Error(message)
+                            }
+                        } else {
+                            _isLoading.value = false
+                            _reviewUserJoinResult.value = ReviewUserJoinResults.Error(response.message())
+                        }
+                    }
+
+                    override fun onFailure(call: Call<BaseResponse>, t: Throwable) {
+                        _isLoading.value = false
+                        _reviewUserJoinResult.value = ReviewUserJoinResults.Error(t.localizedMessage ?: "Unknown error occurred")
+                    }
+
+                })
+            } catch (e: Exception) {
+                _reviewUserJoinResult.value = ReviewUserJoinResults.Error(e.localizedMessage ?: "Unknown error occurred")
+            }
+        }
+    }
+}
+
+sealed class ReviewUserJoinResults {
+    data class Success(val message: String) : ReviewUserJoinResults()
+    data class Error(val errorMessage: String) : ReviewUserJoinResults()
 }

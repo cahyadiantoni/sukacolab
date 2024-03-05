@@ -30,16 +30,20 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import com.sukacolab.app.R
 import com.sukacolab.app.ui.component.alert.AlertDelete
@@ -47,6 +51,7 @@ import com.sukacolab.app.ui.component.cards.ItemListUrProject
 import com.sukacolab.app.ui.feature.user.ur_project.ui_state.UrProjectUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
 
@@ -57,6 +62,18 @@ fun UrProjectScreen(
 ) {
     val viewModel: UrProjectViewModel = getViewModel()
     val responseUrProject = viewModel.responseUrProject.value
+
+    val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.getUrProject()
+            }
+        }
+    }
+
     Scaffold(
         modifier = Modifier
             .background(MaterialTheme.colorScheme.primary),

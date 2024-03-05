@@ -116,7 +116,7 @@ val viewModelModules = module {
     viewModel { SearchViewModel(get()) }
     viewModel { CategoryViewModel(get()) }
     viewModel { UrProjectDetailViewModel(get(), get(), get()) }
-    viewModel { ProfileOtherViewModel(get()) }
+    viewModel { ProfileOtherViewModel(get(), get(), get()) }
     viewModel { ExperienceOtherViewModel(get()) }
     viewModel { CertificationOtherViewModel(get()) }
     viewModel { SkillOtherViewModel(get()) }

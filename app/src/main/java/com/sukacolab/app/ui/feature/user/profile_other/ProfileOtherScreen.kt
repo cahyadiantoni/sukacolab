@@ -93,7 +93,6 @@ import com.sukacolab.app.ui.feature.user.profile_other.ui_state.EducationUiState
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.ExperienceUiState
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.ProfileUiState
 import com.sukacolab.app.ui.feature.user.profile_other.ui_state.SkillUiState
-import com.sukacolab.app.ui.feature.user.project.ui_state.DetailProjectUiState
 import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.ui.theme.tertiaryColor
 import com.sukacolab.app.util.convertToMonthYearFormat
@@ -120,12 +119,52 @@ fun ProfileOtherScreen(
     val idProject = remember { mutableStateOf("") }
     val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
 
+    val reviewUserJoinResult by viewModel.reviewUserJoinResult.observeAsState()
+
     LaunchedEffect(key1 = Unit) {
         lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
             launch {
                 idUser.value = userId
                 idProject.value = projectId
                 viewModel.getProfileOther(userId= userId, projectId = projectId)
+            }
+        }
+    }
+
+    LaunchedEffect(key1 = reviewUserJoinResult) {
+        when (reviewUserJoinResult) {
+            is ReviewUserJoinResults.Success -> {
+                val message = (reviewUserJoinResult as ReviewUserJoinResults.Success).message
+                Log.d("Add Bookmark", "Sukses: $message")
+                Toast.makeText(context, "Success : $message", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProfileOther.createRoute(
+                        userId.toInt(),
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProfileOther.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            is ReviewUserJoinResults.Error -> {
+                val errorMessage = (reviewUserJoinResult as ReviewUserJoinResults.Error).errorMessage
+                Log.d("Add Bookmark", "Gagal: $errorMessage")
+                Toast.makeText(context, "Failed : $errorMessage", Toast.LENGTH_SHORT).show()
+                navController.navigate(
+                    Screen.ProfileOther.createRoute(
+                        userId.toInt(),
+                        projectId.toInt()
+                    )
+                ){
+                    popUpTo(Screen.ProfileOther.route) {
+                        inclusive = true
+                    }
+                }
+            }
+            else -> {
+                // Initial state or loading state
             }
         }
     }
@@ -415,108 +454,159 @@ fun ProfileOtherScreen(
                                     )
                                 )
                             } else {
-                                if (userId == "1") {
-                                    Button(
-                                        onClick = {
-                                            context.openUri("https://wa.me/6281919480565")
-                                        },
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .height(50.dp),
-                                        colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.primary
-                                        ),
-                                        shape = RoundedCornerShape(8.dp)
-                                    ) {
-                                        Text(text = "Hubungi Admin", color = Color.White)
-                                    }
-                                } else {
-                                    when (responseUser.data.status) {
-                                        null -> {
-                                            Button(
-                                                onClick = {
-                                                    navController.navigateUp()
-                                                },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(50.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = MaterialTheme.colorScheme.primary
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(text = "Kembali", color = Color.White)
-                                            }
+                                if (projectId != "0"){
+                                    if (userId == "1") {
+                                        Button(
+                                            onClick = {
+                                                context.openUri("https://wa.me/6281919480565")
+                                            },
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .height(50.dp),
+                                            colors = ButtonDefaults.buttonColors(
+                                                containerColor = MaterialTheme.colorScheme.primary
+                                            ),
+                                            shape = RoundedCornerShape(8.dp)
+                                        ) {
+                                            Text(text = "Hubungi Admin", color = Color.White)
                                         }
+                                    } else {
+                                        var showDialog by remember { mutableStateOf(false) }
+                                        var review by remember { mutableStateOf("") }
 
-                                        0 -> {
-                                            Button(
-                                                onClick = {
-                                                    navController.navigateUp()
-                                                },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(50.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = MaterialTheme.colorScheme.primary
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(text = "Terima", color = Color.White)
+                                        if (showDialog) {
+                                            val txt = if (review == "1"){
+                                                "Yakin untuk menerima ${responseUser.data.name} pada project ini?"
+                                            }else{
+                                                "Yakin untuk menolak ${responseUser.data.name} pada project ini?"
                                             }
-                                            Button(
-                                                onClick = {
-                                                    navController.navigateUp()
+                                            AlertDialog(
+                                                onDismissRequest = {
+                                                    showDialog = false
                                                 },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(50.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = Color.Red
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(text = "Tolak", color = Color.White)
-                                            }
+                                                title = {
+                                                    Text(text = "Konfirmasi")
+                                                },
+                                                text = {
+                                                    Text(text = txt)
+                                                },
+                                                confirmButton = {
+                                                    Button(
+                                                        onClick = {
+                                                            showDialog = false
+                                                            viewModel.reviewUserJoin(userId, projectId, review)
+                                                        }
+                                                    ) {
+                                                        Text(text = "Ya")
+                                                    }
+                                                },
+                                                dismissButton = {
+                                                    Button(
+                                                        onClick = {
+                                                            showDialog = false
+                                                        }
+                                                    ) {
+                                                        Text(text = "Tidak")
+                                                    }
+                                                }
+                                            )
                                         }
-
-                                        1 -> {
-                                            Button(
-                                                onClick = {
-
-                                                },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(50.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = MaterialTheme.colorScheme.primary
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(
-                                                    text = "User Telah Diterima",
-                                                    color = Color.White
-                                                )
+                                        when (responseUser.data.status) {
+                                            null -> {
+                                                Button(
+                                                    onClick = {
+                                                        navController.navigateUp()
+                                                    },
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(50.dp),
+                                                    colors = ButtonDefaults.buttonColors(
+                                                        containerColor = MaterialTheme.colorScheme.primary
+                                                    ),
+                                                    shape = RoundedCornerShape(8.dp)
+                                                ) {
+                                                    Text(text = "Kembali", color = Color.White)
+                                                }
                                             }
-                                        }
 
-                                        else -> {
-                                            Button(
-                                                onClick = {
+                                            0 -> {
+                                                Row(
+                                                    modifier = Modifier.fillMaxWidth(),
+                                                    horizontalArrangement = Arrangement.SpaceBetween
+                                                ) {
+                                                    Button(
+                                                        onClick = {
+                                                            showDialog = true
+                                                            review = "1"
+                                                        },
+                                                        modifier = Modifier
+                                                            .weight(1f)
+                                                            .height(50.dp),
+                                                        colors = ButtonDefaults.buttonColors(
+                                                            containerColor = MaterialTheme.colorScheme.primary
+                                                        ),
+                                                        shape = RoundedCornerShape(8.dp)
+                                                    ) {
+                                                        Text(text = "Terima", color = Color.White)
+                                                    }
+                                                    Spacer(modifier = Modifier.size(15.dp))
+                                                    Button(
+                                                        onClick = {
+                                                            showDialog = true
+                                                            review = "2"
+                                                        },
+                                                        modifier = Modifier
+                                                            .weight(1f)
+                                                            .height(50.dp),
+                                                        colors = ButtonDefaults.buttonColors(
+                                                            containerColor = Color.Red
+                                                        ),
+                                                        shape = RoundedCornerShape(8.dp)
+                                                    ) {
+                                                        Text(text = "Tolak", color = Color.White)
+                                                    }
+                                                }
 
-                                                },
-                                                modifier = Modifier
-                                                    .fillMaxWidth()
-                                                    .height(50.dp),
-                                                colors = ButtonDefaults.buttonColors(
-                                                    containerColor = Color.Gray
-                                                ),
-                                                shape = RoundedCornerShape(8.dp)
-                                            ) {
-                                                Text(
-                                                    text = "User Telah Ditolak",
-                                                    color = Color.White
-                                                )
+                                            }
+
+                                            1 -> {
+                                                Button(
+                                                    onClick = {
+                                                        navController.navigateUp()
+                                                    },
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(50.dp),
+                                                    colors = ButtonDefaults.buttonColors(
+                                                        containerColor = MaterialTheme.colorScheme.primary
+                                                    ),
+                                                    shape = RoundedCornerShape(8.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Telah Diterima pada Project ini",
+                                                        color = Color.White
+                                                    )
+                                                }
+                                            }
+
+                                            else -> {
+                                                Button(
+                                                    onClick = {
+                                                        navController.navigateUp()
+                                                    },
+                                                    modifier = Modifier
+                                                        .fillMaxWidth()
+                                                        .height(50.dp),
+                                                    colors = ButtonDefaults.buttonColors(
+                                                        containerColor = Color.Gray
+                                                    ),
+                                                    shape = RoundedCornerShape(8.dp)
+                                                ) {
+                                                    Text(
+                                                        text = "Telah Ditolak pada Project ini",
+                                                        color = Color.White
+                                                    )
+                                                }
                                             }
                                         }
                                     }
