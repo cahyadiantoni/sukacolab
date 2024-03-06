@@ -65,18 +65,22 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.sukacolab.app.R
 import com.sukacolab.app.data.source.local.AuthPreferences
 import com.sukacolab.app.ui.component.PrimaryButton
+import com.sukacolab.app.ui.component.alert.AlertAbout
 import com.sukacolab.app.ui.component.alert.AlertLogout
 import com.sukacolab.app.ui.feature.user.profile.sub_screen.edit_photo.EditPhotoResults
 import com.sukacolab.app.ui.feature.user.profile.ui_state.CertificationUiState
@@ -87,6 +91,7 @@ import com.sukacolab.app.ui.navigation.Screen
 import com.sukacolab.app.util.convertToMonthYearFormat
 import com.sukacolab.app.util.saveUriToFile
 import com.sukacolab.app.util.saveUriToFilePdf
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 import java.io.File
 import java.net.URLEncoder
@@ -98,6 +103,21 @@ fun ProfileScreen(
     navController: NavController,
 ){
     val viewModel: ProfileViewModel = getViewModel()
+
+    val lifecycle: Lifecycle = LocalLifecycleOwner.current.lifecycle
+
+
+    LaunchedEffect(key1 = Unit) {
+        lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+            launch {
+                viewModel.profileDetails()
+                viewModel.getCertification()
+                viewModel.getEducation()
+                viewModel.getSkill()
+                viewModel.getExperience()
+            }
+        }
+    }
 
     Scaffold(
         modifier = Modifier
@@ -1213,6 +1233,8 @@ fun MenuCompose(
     viewModel: ProfileViewModel
 ){
     val openDialog = remember { mutableStateOf(false) }
+    val aboutDialog = remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -1248,7 +1270,7 @@ fun MenuCompose(
 
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 30.dp, end = 30.dp)
+                modifier = Modifier.padding(top = 10.dp, bottom = 10.dp, start = 30.dp, end = 30.dp).clickable { aboutDialog.value = true }
             ) {
                 Text(
                     text = "About App",
@@ -1264,6 +1286,10 @@ fun MenuCompose(
                     modifier = Modifier.size(24.dp)
                 )
 
+            }
+
+            if (aboutDialog.value) {
+                AlertAbout(openDialog = aboutDialog)
             }
 
             Divider(

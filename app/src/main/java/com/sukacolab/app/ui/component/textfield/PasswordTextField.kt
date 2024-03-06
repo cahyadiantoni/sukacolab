@@ -28,12 +28,12 @@ fun PasswordTextField(
 ) {
     var showError by remember { mutableStateOf(false) }
     var errorText by remember { mutableStateOf("") }
-    val isPasswordValid = value.length >= 6 // Minimum password length requirement
+    val isPasswordValid = value.length >= 8 // Minimum password length requirement
     var passwordVisible by remember { mutableStateOf(false) }
 
     if (!isPasswordValid && value.isNotEmpty()) {
         showError = true
-        errorText = "Password must be at least 6 characters long"
+        errorText = "Password must be at least 8 characters long"
     } else {
         showError = false
         errorText = ""
@@ -71,7 +71,7 @@ fun PasswordTextField(
 
     if (showError) {
         Text(
-            text = "Password harus memiliki panjang diatas 6 karakter.",
+            text = "Password harus memiliki panjang diatas 8 karakter.",
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.error,
             modifier = Modifier.padding(start = 16.dp, top = 4.dp)
@@ -81,8 +81,35 @@ fun PasswordTextField(
 
 @Composable
 fun RePasswordTextField(
-    value: String,
-    onValueChange: (String) -> Unit
+    password: String,
+    rePassword: String,
+    onRePasswordChange: (String) -> Unit
 ) {
-    PasswordTextField(value = value, onValueChange = onValueChange, placeHolder = "Tulis kembali password anda.")
+    var showError by remember { mutableStateOf(false) }
+    var errorText by remember { mutableStateOf("") }
+
+    val isPasswordMatching = password == rePassword
+
+    if (!isPasswordMatching && rePassword.isNotEmpty()) {
+        showError = true
+        errorText = "Password dan re-password harus sama"
+    } else {
+        showError = false
+        errorText = ""
+    }
+
+    PasswordTextField(
+        value = rePassword,
+        onValueChange = onRePasswordChange,
+        placeHolder = "Tulis kembali password anda."
+    )
+
+    if (showError) {
+        Text(
+            text = errorText,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.error,
+            modifier = Modifier.padding(top = 4.dp)
+        )
+    }
 }

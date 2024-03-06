@@ -448,7 +448,8 @@ fun UrProjectDetailScreen(
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton1
                                     ),
@@ -464,7 +465,8 @@ fun UrProjectDetailScreen(
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton2
                                     ),
@@ -487,7 +489,7 @@ fun UrProjectDetailScreen(
                                                     contentAlignment = Alignment.Center
                                                 ) {
                                                     Text(
-                                                        text = "Belum ada user join diterima",
+                                                        text = "Belum ada user join pada project ini",
                                                         fontWeight = FontWeight.Light
                                                     )
                                                 }

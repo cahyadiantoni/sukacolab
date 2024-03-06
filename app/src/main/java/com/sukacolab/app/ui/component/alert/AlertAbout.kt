@@ -11,11 +11,7 @@ import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import com.sukacolab.app.util.Constant.ABOUT_APP
-import com.sukacolab.app.util.Constant.ABOUT_FIVE
-import com.sukacolab.app.util.Constant.ABOUT_FOUR
 import com.sukacolab.app.util.Constant.ABOUT_ONE
-import com.sukacolab.app.util.Constant.ABOUT_SIX
-import com.sukacolab.app.util.Constant.ABOUT_THREE
 import com.sukacolab.app.util.Constant.ABOUT_TWO
 
 @Composable
@@ -34,14 +30,6 @@ fun AlertAbout(
                     Text(text = ABOUT_ONE)
                     Divider(color = colorDivider)
                     Text(text = ABOUT_TWO)
-                    Divider(color = colorDivider)
-                    Text(text = ABOUT_THREE)
-                    Divider(color = colorDivider)
-                    Text(text = ABOUT_FOUR)
-                    Divider(color = colorDivider)
-                    Text(text = ABOUT_FIVE)
-                    Divider(color = colorDivider)
-                    Text(text = ABOUT_SIX)
                     Divider(color = colorDivider)
                 }
             }

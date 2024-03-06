@@ -101,8 +101,9 @@ fun RegisterScreenContent(
                 )
                 Spacer(modifier = Modifier.padding(16.dp))
                 RePasswordTextField(
-                    value = confirmPasswordState,
-                    onValueChange = { confirmPasswordState = it }
+                    password = passwordState,
+                    rePassword = confirmPasswordState,
+                    onRePasswordChange = { confirmPasswordState = it }
                 )
             }
             if (isLoading) {
@@ -123,7 +124,7 @@ fun RegisterScreenContent(
                         val fullName = fullNameState
 
                         val registerRequest =
-                            RegisterRequest(email, password, confirmPassword, fullName)
+                            RegisterRequest(fullName, email, confirmPassword)
                         viewModel.register(registerRequest)
                     },
                     modifier = Modifier

@@ -95,7 +95,7 @@ fun SettingScreen(
                                     },
                             ) {
                                 Text(
-                                    text = "Setting Email",
+                                    text = "Change Email",
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Normal,
                                     modifier = Modifier.weight(1f)
@@ -125,7 +125,7 @@ fun SettingScreen(
                                     },
                             ) {
                                 Text(
-                                    text = "Setting Password",
+                                    text = "Change Password",
                                     color = MaterialTheme.colorScheme.primary,
                                     fontWeight = FontWeight.Normal,
                                     modifier = Modifier.weight(1f)

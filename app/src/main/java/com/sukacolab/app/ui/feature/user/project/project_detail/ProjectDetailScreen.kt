@@ -531,7 +531,8 @@ fun ProjectDetailScreen(
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton1
                                     ),
@@ -555,7 +556,8 @@ fun ProjectDetailScreen(
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton2
                                     ),
@@ -769,7 +771,7 @@ fun ProjectDetailScreen(
                                                 shape = RoundedCornerShape(8.dp)
                                             ) {
                                                 Text(
-                                                    text = "Your Accepted (Contact Author)",
+                                                    text = "You are Accepted (Contact Author)",
                                                     color = Color.White
                                                 )
                                             }

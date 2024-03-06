@@ -103,7 +103,7 @@ fun BookmarkScreen(navController: NavController){
                     Column(modifier = Modifier.padding(16.dp)) {
                         when (responseProject) {
                             is BookmarkUiState.Success -> {
-                                if (responseProject.data.isEmpty()) {
+                                if (responseProject.data.isNullOrEmpty()) {
                                     Box(
                                         modifier = Modifier
                                             .fillMaxSize()
@@ -111,7 +111,7 @@ fun BookmarkScreen(navController: NavController){
                                         contentAlignment = Alignment.Center
                                     ) {
                                         Text(
-                                            text = "Kamu belum melamar ke project",
+                                            text = "Kamu belum menandai project",
                                             fontWeight = FontWeight.Light
                                         )
                                     }

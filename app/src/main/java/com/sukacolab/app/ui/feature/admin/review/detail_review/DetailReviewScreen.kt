@@ -441,7 +441,8 @@ fun DetailReviewScreen(
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton1
                                     ),
@@ -465,7 +466,8 @@ fun DetailReviewScreen(
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
-                                        .weight(0.2f),
+                                        .weight(0.2f)
+                                        .padding(horizontal = 5.dp),
                                     colors = ButtonDefaults.buttonColors(
                                         containerColor = colorButton2
                                     ),
