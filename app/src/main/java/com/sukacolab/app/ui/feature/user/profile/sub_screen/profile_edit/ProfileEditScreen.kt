@@ -162,6 +162,17 @@ fun ProfileEditScreen(
                                 keyboardType = KeyboardType.Text
                             ).Field()
 
+                            if(profileViewModel.whatsapp != null){
+                                viewModel.form.whatsapp.state.value = profileViewModel.whatsapp.toString().substringAfterLast("/")
+                            }
+                            TextField(
+                                modifier = Modifier.padding(bottom = 8.dp),
+                                label = "Nomor Whatsapp",
+                                form = viewModel.form,
+                                fieldState = viewModel.form.whatsapp,
+                                keyboardType = KeyboardType.Number
+                            ).Field()
+
                             if(profileViewModel.linkedin != null) {
                                 viewModel.form.linkedin.state.value = profileViewModel.linkedin.toString().substringAfterLast("/")
                             }
@@ -182,17 +193,6 @@ fun ProfileEditScreen(
                                 form = viewModel.form,
                                 fieldState = viewModel.form.github,
                                 keyboardType = KeyboardType.Text
-                            ).Field()
-
-                            if(profileViewModel.whatsapp != null){
-                                viewModel.form.whatsapp.state.value = profileViewModel.whatsapp.toString().substringAfterLast("/")
-                            }
-                            TextField(
-                                modifier = Modifier.padding(bottom = 8.dp),
-                                label = "Nomor Whatsapp",
-                                form = viewModel.form,
-                                fieldState = viewModel.form.whatsapp,
-                                keyboardType = KeyboardType.Number
                             ).Field()
 
                             if(profileViewModel.instagram != null) {

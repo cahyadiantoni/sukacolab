@@ -36,27 +36,27 @@ class AddProjectViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
-        val position = if (form.otherPosition.state.value == null) {
-            form.position.state.value!!.name
-        } else {
-            form.otherPosition.state.value
-        }
-
-        val location = if (form.isRemote.state.value!!) {
-            "Remote"
-        } else {
-            form.location.state.value
-        }
-
-        val tipe = if (form.otherTipe.state.value == null) {
-            form.tipe.state.value!!.name
-        } else {
-            form.otherTipe.state.value
-        }
-
-        val isPaid = form.tipe.state.value!!.name == "Loker"
 
         if(form.isValid){
+            val position = if (form.otherPosition.state.value == null) {
+                form.position.state.value!!.name
+            } else {
+                form.otherPosition.state.value
+            }
+
+            val location = if (form.isRemote.state.value!!) {
+                "Remote"
+            } else {
+                form.location.state.value
+            }
+
+            val tipe = if (form.otherTipe.state.value == null) {
+                form.tipe.state.value!!.name
+            } else {
+                form.otherTipe.state.value
+            }
+
+            val isPaid = form.tipe.state.value!!.name == "Loker"
             addProject(
                 name = form.name.state.value.toString(),
                 position = position.toString(),

@@ -12,6 +12,7 @@ import com.sukacolab.app.data.source.network.ApiService
 import com.sukacolab.app.data.source.network.request.EditMeRequest
 import com.sukacolab.app.data.source.network.response.BaseResponse
 import com.sukacolab.app.di.ResourcesProvider
+import com.sukacolab.app.util.convertToYearMonthDayFormat
 import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
@@ -35,17 +36,53 @@ class ProfileEditViewModel(
         form.validate(true)
         form.logRawValue()
         Log.d("MainViewModel", "Submit (form is valid: ${form.isValid})")
+        val name = if (form.name.state.value != null) {
+            form.name.state.value.toString()
+        } else {
+            ""
+        }
+        
+        val summary = if (form.summary.state.value != null) {
+            form.summary.state.value.toString()
+        } else {
+            ""
+        }
 
-        if(form.isValid){
+        val linkedin = if (form.linkedin.state.value != null) {
+            form.linkedin.state.value.toString()
+        } else {
+            ""
+        }
+
+        val github = if (form.github.state.value != null) {
+            form.github.state.value.toString()
+        } else {
+            ""
+        }
+
+        val whatsapp = if (form.whatsapp.state.value != null) {
+            form.whatsapp.state.value.toString()
+        } else {
+            ""
+        }
+
+        val instagram = if (form.instagram.state.value != null) {
+            form.instagram.state.value.toString()
+        } else {
+            ""
+        }
+
+        if (form.isValid) {
             editProfile(
-                name = form.name.state.value.toString(),
-                summary = form.summary.state.value.toString(),
-                linkedin = form.linkedin.state.value.toString(),
-                github = form.github.state.value.toString(),
-                whatsapp = form.whatsapp.state.value.toString(),
-                instagram = form.instagram.state.value.toString(),
+                name = name,
+                summary = summary,
+                linkedin = linkedin,
+                github = github,
+                whatsapp = whatsapp,
+                instagram = instagram
             )
         }
+
     }
 
     private fun editProfile(name: String, summary: String, linkedin: String, github: String, whatsapp: String, instagram: String){
