@@ -67,11 +67,13 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.NavController
@@ -1241,14 +1243,22 @@ fun MenuCompose(
     ) {
         Column(modifier = Modifier.fillMaxWidth()) {
 
+            val url = "https://sukacolab.com/privacy/"
+            val context = LocalContext.current
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier.padding(top = 20.dp, bottom = 10.dp, start = 30.dp, end = 30.dp)
+                modifier = Modifier
+                    .padding(top = 20.dp, bottom = 10.dp, start = 30.dp, end = 30.dp)
+                    .clickable {
+                        // Ketika diklik, buka tautan URL
+                        context.openUri(url)
+                    }
             ) {
                 Text(
                     text = "Privacy Policy",
                     color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.ExtraBold,
+                    fontSize = 16.sp,
                     modifier = Modifier.weight(1f)
                 )
 
@@ -1258,7 +1268,6 @@ fun MenuCompose(
                     tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(24.dp)
                 )
-
             }
 
             Divider(

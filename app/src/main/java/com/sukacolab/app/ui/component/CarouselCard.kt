@@ -1,6 +1,7 @@
 package com.sukacolab.app.ui.component
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,6 +18,8 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -34,6 +37,7 @@ import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.calculateCurrentOffsetForPage
 import com.google.accompanist.pager.rememberPagerState
 import com.sukacolab.app.R
+import com.sukacolab.app.ui.component.alert.PrimaryAlert
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlin.math.absoluteValue
@@ -50,6 +54,7 @@ fun CarouselCard() {
         "https://raw.githubusercontent.com/cahyadiantoni/backend-sukacolab/main/carousel3.png",
         "https://raw.githubusercontent.com/cahyadiantoni/backend-sukacolab/main/carousel4.png",
     )
+    var openDialog = remember { mutableStateOf(false) }
     Column(
         modifier = Modifier
             .fillMaxWidth()
@@ -65,6 +70,7 @@ fun CarouselCard() {
             Card(
                 shape = RoundedCornerShape(16.dp),
                 modifier = Modifier
+                    .clickable { openDialog.value = true }
                     .fillMaxWidth()
                     .graphicsLayer {
                         val pageOffset = calculateCurrentOffsetForPage(page).absoluteValue
@@ -94,6 +100,9 @@ fun CarouselCard() {
                     modifier = Modifier
                         .fillMaxWidth()
                 )
+            }
+            if(openDialog.value) {
+                PrimaryAlert(openDialog = openDialog)
             }
         }
     }

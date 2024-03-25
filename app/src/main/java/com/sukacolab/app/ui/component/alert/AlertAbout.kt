@@ -26,11 +26,9 @@ fun AlertAbout(
             LazyColumn {
                 item {
                     Text(text = ABOUT_APP)
-                    Spacer(modifier = Modifier.padding(4.dp))
+                    Spacer(modifier = Modifier.padding(6.dp))
                     Text(text = ABOUT_ONE)
-                    Divider(color = colorDivider)
                     Text(text = ABOUT_TWO)
-                    Divider(color = colorDivider)
                 }
             }
         },

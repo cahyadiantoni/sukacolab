@@ -11,9 +11,9 @@ object Constant {
     val AUTH_ID = stringSetPreferencesKey("auth_id")
 
     //Alert
-    const val ALERT_HOMESCREEN = "Mohon maaf untuk saat ini fitur yang anda pilih masih dalam tahap pengembangan. Namun anda dapat mencoba fitur ini dengan dengan browser anda."
+    const val ALERT_HOMESCREEN = "Mohon maaf untuk saat ini fitur yang anda pilih masih dalam tahap pengembangan. Nantikan update yang akan datang!"
     const val ALERT_PROJECT_REVIEW = "Untuk project paid (digaji), akan ada review oleh admin. Hubungi admin jika memerlukan bantuan!"
-    const val ABOUT_APP = "Sukacolab merupakan kepanjangan dari Sukacode Collaboration yang merupakan apilkasi untuk kolaborasi project"
+    const val ABOUT_APP = "Sukacolab merupakan kepanjangan dari Sukacode Collaboration yang merupakan apilkasi untuk kolaborasi proyek. Pada aplikasi ini anda dapat bergabung ke proyek dan mencari rekan."
     const val ABOUT_ONE = "Dibuat oleh Cahya Diantoni"
     const val ABOUT_TWO = "PT. Sukacode Solusi Teknologi"
 }

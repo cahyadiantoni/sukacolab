@@ -127,6 +127,7 @@ fun HomeContent(
 ) {
     val viewModel: HomeViewModel = getViewModel()
     val responseProject = viewModel.responseProject.value
+    var openDialog = remember { mutableStateOf(false) }
 
     val viewModelProfile: ProfileViewModel = getViewModel()
 
@@ -160,7 +161,7 @@ fun HomeContent(
                 colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colorScheme.primary),
                 actions = {
                     IconButton(onClick = {
-
+                        openDialog.value = true
                     }) {
                         Icon(
                             imageVector = Icons.Outlined.Notifications,
@@ -172,6 +173,9 @@ fun HomeContent(
             )
         }
     ) {
+        if(openDialog.value) {
+            PrimaryAlert(openDialog = openDialog)
+        }
         LazyColumn(
             modifier = Modifier
                 .padding(it)
