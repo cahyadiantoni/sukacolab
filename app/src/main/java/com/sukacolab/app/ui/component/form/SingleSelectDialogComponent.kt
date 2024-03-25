@@ -94,7 +94,7 @@ fun <T> SingleSelectDialogComponent(
                                 onDismissRequest.invoke()
                             },
                             shape = MaterialTheme.shapes.medium,
-                            colors = ButtonDefaults.textButtonColors(contentColor = androidx.compose.material3.MaterialTheme.colorScheme.primary)
+                            colors = ButtonDefaults.textButtonColors(contentColor = androidx.compose.material3.MaterialTheme.colorScheme.secondary)
                         ) {
                             Text(text = stringResource(id = android.R.string.cancel))
                         }
@@ -109,7 +109,7 @@ fun <T> SingleSelectDialogComponent(
                                 onDismissRequest.invoke()
                             },
                             shape = MaterialTheme.shapes.medium,
-                            colors = ButtonDefaults.buttonColors(backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.primary, contentColor = Color.White),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = androidx.compose.material3.MaterialTheme.colorScheme.secondary, contentColor = Color.White),
                         ) {
                             Text(text = submitButtonText)
                         }

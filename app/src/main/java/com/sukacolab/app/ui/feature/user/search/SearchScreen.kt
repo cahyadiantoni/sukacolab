@@ -114,7 +114,7 @@ fun SearchScreen(
                         colors = TextFieldDefaults.textFieldColors(
                             focusedIndicatorColor = Color.Transparent,
                             unfocusedIndicatorColor = Color.Transparent,
-                            cursorColor = MaterialTheme.colorScheme.primary,
+                            cursorColor = MaterialTheme.colorScheme.secondary,
                         ),
                         textStyle = TextStyle(fontSize = 18.sp)
                     )

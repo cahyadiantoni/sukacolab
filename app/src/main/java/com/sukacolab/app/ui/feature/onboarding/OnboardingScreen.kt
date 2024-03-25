@@ -101,7 +101,7 @@ fun OnboardingScreen(
             if (pagerState.currentPage != 3) {
                 HorizontalPagerIndicator(
                     pagerState = pagerState,
-                    activeColor = MaterialTheme.colorScheme.primary
+                    activeColor = MaterialTheme.colorScheme.secondary
                 )
             }
         }
@@ -127,7 +127,7 @@ fun Pager(
                 .padding(horizontal = 10.dp),
             text = title,
             fontSize = 28.sp,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center,
             fontWeight = FontWeight.SemiBold,
             lineHeight = 40.sp
@@ -139,7 +139,7 @@ fun Pager(
                 .padding(horizontal = 10.dp),
             text = desc,
             fontSize = 16.sp,
-            color = MaterialTheme.colorScheme.primary,
+            color = MaterialTheme.colorScheme.secondary,
             textAlign = TextAlign.Center
         )
     }

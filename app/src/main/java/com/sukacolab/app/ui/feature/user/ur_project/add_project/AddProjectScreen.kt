@@ -174,7 +174,7 @@ fun AddProjectScreen(
                             if(viewModel.form.tipe.state.value?.name == "Loker"){
                                 Text(
                                     text = "Project Paid (digaji) akan diverifikasi terlebih dahulu oleh admin",
-                                    color = MaterialTheme.colorScheme.primary
+                                    color = MaterialTheme.colorScheme.secondary
                                 )
                             }
 

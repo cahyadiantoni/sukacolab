@@ -120,13 +120,11 @@ fun ItemListProfile(
                 Text(
                     text = name,
                     fontSize = 16.sp,
-                    color = Color.Black,
                     fontWeight = FontWeight.Bold,
                 )
 
                 Text(
                     text = summary?: "",
-                    color = Color.Black,
                     fontWeight = FontWeight.Normal,
                 )
             }

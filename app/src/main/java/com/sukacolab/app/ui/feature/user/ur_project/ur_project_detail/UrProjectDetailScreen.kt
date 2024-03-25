@@ -316,7 +316,6 @@ fun UrProjectDetailScreen(
                             ) {
                                 Text(
                                     text = responseDetail.data.position,
-                                    color = Color.Black,
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold,
                                     textAlign = TextAlign.Center,
@@ -351,7 +350,7 @@ fun UrProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -373,7 +372,7 @@ fun UrProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.BuildCircle,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -395,7 +394,7 @@ fun UrProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.Paid,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -423,7 +422,7 @@ fun UrProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.Timer,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -443,8 +442,8 @@ fun UrProjectDetailScreen(
                                     .padding(start = 20.dp, end = 20.dp),
                                 horizontalArrangement = Arrangement.SpaceEvenly
                             ){
-                                val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.primary}
-                                val colorText1 = if(openPage.value){MaterialTheme.colorScheme.primary}else{Color.White}
+                                val colorButton1 = if(openPage.value){MaterialTheme.colorScheme.tertiary}else{MaterialTheme.colorScheme.secondary}
+                                val colorText1 = if(openPage.value){MaterialTheme.colorScheme.secondary}else{Color.White}
                                 Button(
                                     onClick = { openPage.value = false },
                                     modifier = Modifier
@@ -460,8 +459,8 @@ fun UrProjectDetailScreen(
 
                                 }
 
-                                val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.primary}else{MaterialTheme.colorScheme.tertiary}
-                                val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.primary}
+                                val colorButton2 = if(openPage.value){MaterialTheme.colorScheme.secondary}else{MaterialTheme.colorScheme.tertiary}
+                                val colorText2 = if(openPage.value){Color.White}else{MaterialTheme.colorScheme.secondary}
                                 Button(
                                     onClick = { openPage.value = true },
                                     modifier = Modifier
@@ -600,7 +599,7 @@ fun UrProjectDetailScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(color = tertiaryColor)
+                                .background(color = MaterialTheme.colorScheme.tertiary)
                                 .padding(vertical = 15.dp, horizontal = 30.dp)
                         ) {
                             when (responseDetail.data.isActive) {

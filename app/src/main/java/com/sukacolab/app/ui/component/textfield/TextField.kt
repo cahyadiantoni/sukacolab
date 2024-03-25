@@ -37,7 +37,7 @@ fun CustomTextField(
         onValueChange = onValueChange,
         leadingIcon = icon,
         colors = TextFieldDefaults.outlinedTextFieldColors(
-            focusedBorderColor = MaterialTheme.colorScheme.primary,
+            focusedBorderColor = MaterialTheme.colorScheme.secondary,
             unfocusedBorderColor = Color.LightGray
         ),
         placeholder = { Text(placeHolder) },

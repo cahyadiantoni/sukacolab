@@ -200,7 +200,7 @@ fun EducationScreen(
                                                                 Icon(
                                                                     imageVector = Icons.Default.Delete,
                                                                     contentDescription = null,
-                                                                    tint = MaterialTheme.colorScheme.primary,
+                                                                    tint = MaterialTheme.colorScheme.secondary,
                                                                     modifier = Modifier.clickable {
                                                                         openDialog.value = true
                                                                     }
@@ -218,7 +218,7 @@ fun EducationScreen(
                                                                 Icon(
                                                                     imageVector = Icons.Default.Edit,
                                                                     contentDescription = null,
-                                                                    tint = MaterialTheme.colorScheme.primary,
+                                                                    tint = MaterialTheme.colorScheme.secondary,
                                                                     modifier = Modifier.clickable {
                                                                         navController.navigate(
                                                                             Screen.EditEducation.createRoute(

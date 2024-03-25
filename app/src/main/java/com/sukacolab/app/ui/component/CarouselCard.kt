@@ -38,7 +38,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.SupervisorJob
 import kotlin.math.absoluteValue
 
-val primaryColor = Color(0xFF17AAC0)
+val secondaryColor = Color(0xFF17AAC0)
 
 @OptIn(ExperimentalPagerApi::class, ExperimentalMaterial3Api::class)
 @Composable
@@ -107,7 +107,7 @@ fun CarouselCard() {
         val scope = CoroutineScope(SupervisorJob())
         repeat(sliderList.size) { it ->
             val color = if (pageState.currentPage == it) {
-                MaterialTheme.colorScheme.primary
+                MaterialTheme.colorScheme.secondary
             } else {
                 Color.Gray
             }

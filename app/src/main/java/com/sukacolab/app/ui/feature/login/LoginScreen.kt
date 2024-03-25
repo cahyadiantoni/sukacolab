@@ -209,7 +209,7 @@ fun LoginCheck(
    ) {
        Text(
            text = "Forgot password?",
-           color = MaterialTheme.colorScheme.primary,
+           color = MaterialTheme.colorScheme.secondary,
            fontWeight = FontWeight.SemiBold,
            modifier = Modifier.clickable {  }
        )
@@ -222,7 +222,7 @@ fun LoginCheck(
            Text(text = "Don't have an account? ", color = Color.Gray)
            Text(
                text = "Register",
-               color = MaterialTheme.colorScheme.primary,
+               color = MaterialTheme.colorScheme.secondary,
                fontWeight = FontWeight.SemiBold,
                modifier = Modifier.clickable {
                    navController.navigate(Screen.Register.route)

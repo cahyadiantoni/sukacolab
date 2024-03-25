@@ -84,7 +84,7 @@ fun ProductImageSlider(imageData: List<String>) {
                 val scope = CoroutineScope(SupervisorJob())
                 repeat(imageData.size) { it ->
                     val color = if (pageState.currentPage == it) {
-                        MaterialTheme.colorScheme.primary
+                        MaterialTheme.colorScheme.secondary
                     } else {
                         Color.LightGray
                     }

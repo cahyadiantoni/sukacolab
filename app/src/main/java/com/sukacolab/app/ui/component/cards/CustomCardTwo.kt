@@ -32,7 +32,7 @@ fun CustomCardTwo(
             .fillMaxSize()
             .padding(horizontal = 10.dp),
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primary
+            containerColor = MaterialTheme.colorScheme.secondary
         )
     ) {
         Spacer(modifier = Modifier.height(18.dp))
@@ -52,7 +52,7 @@ fun CustomCardTwo(
             modifier = Modifier
                 .fillMaxWidth(),
             colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.secondaryContainer
+                containerColor = MaterialTheme.colorScheme.primaryContainer
             )
         ) {
             Column(

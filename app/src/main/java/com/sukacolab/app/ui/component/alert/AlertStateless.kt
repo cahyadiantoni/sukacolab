@@ -24,7 +24,7 @@ fun AlertStateless(
             Icon(
                 imageVector = Icons.Filled.Info,
                 contentDescription = "Info",
-                tint = MaterialTheme.colorScheme.primary
+                tint = MaterialTheme.colorScheme.secondary
             )
         }
     )

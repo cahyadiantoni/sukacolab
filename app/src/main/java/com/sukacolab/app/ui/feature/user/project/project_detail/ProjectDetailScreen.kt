@@ -391,7 +391,6 @@ fun ProjectDetailScreen(
                             ) {
                                 Text(
                                     text = responseDetail.data.position,
-                                    color = Color.Black,
                                     fontSize = 20.sp,
                                     fontWeight = FontWeight.Bold,
                                     textAlign = TextAlign.Center,
@@ -426,7 +425,7 @@ fun ProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.LocationOn,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -448,7 +447,7 @@ fun ProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.BuildCircle,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -470,7 +469,7 @@ fun ProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.Paid,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -498,7 +497,7 @@ fun ProjectDetailScreen(
                                     Icon(
                                         imageVector = Icons.Default.Timer,
                                         contentDescription = "",
-                                        tint = MaterialTheme.colorScheme.primary,
+                                        tint = MaterialTheme.colorScheme.secondary,
                                         modifier = Modifier.size(36.dp)
                                     )
 
@@ -521,10 +520,10 @@ fun ProjectDetailScreen(
                                 val colorButton1 = if (openPage.value) {
                                     MaterialTheme.colorScheme.tertiary
                                 } else {
-                                    MaterialTheme.colorScheme.primary
+                                    MaterialTheme.colorScheme.secondary
                                 }
                                 val colorText1 = if (openPage.value) {
-                                    MaterialTheme.colorScheme.primary
+                                    MaterialTheme.colorScheme.secondary
                                 } else {
                                     Color.White
                                 }
@@ -544,14 +543,14 @@ fun ProjectDetailScreen(
                                 }
 
                                 val colorButton2 = if (openPage.value) {
-                                    MaterialTheme.colorScheme.primary
+                                    MaterialTheme.colorScheme.secondary
                                 } else {
                                     MaterialTheme.colorScheme.tertiary
                                 }
                                 val colorText2 = if (openPage.value) {
                                     Color.White
                                 } else {
-                                    MaterialTheme.colorScheme.primary
+                                    MaterialTheme.colorScheme.secondary
                                 }
                                 Button(
                                     onClick = { openPage.value = true },
@@ -667,7 +666,7 @@ fun ProjectDetailScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(color = tertiaryColor)
+                                .background(color = MaterialTheme.colorScheme.tertiary)
                                 .padding(vertical = 15.dp, horizontal = 30.dp)
                         ) {
                             if (isLoading) {
@@ -725,7 +724,7 @@ fun ProjectDetailScreen(
                                                     .fillMaxWidth()
                                                     .height(50.dp),
                                                 colors = ButtonDefaults.buttonColors(
-                                                    containerColor = MaterialTheme.colorScheme.primary
+                                                    containerColor = MaterialTheme.colorScheme.secondary
                                                 ),
                                                 shape = RoundedCornerShape(8.dp)
                                             ) {
@@ -766,7 +765,7 @@ fun ProjectDetailScreen(
                                                     .fillMaxWidth()
                                                     .height(50.dp),
                                                 colors = ButtonDefaults.buttonColors(
-                                                    containerColor = MaterialTheme.colorScheme.primary
+                                                    containerColor = MaterialTheme.colorScheme.secondary
                                                 ),
                                                 shape = RoundedCornerShape(8.dp)
                                             ) {

@@ -1,6 +1,7 @@
 package com.sukacolab.app.ui.component.form
 
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -15,6 +16,8 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.FocusState
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.takeOrElse
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
@@ -44,6 +47,11 @@ fun TextFieldComponent(
     visualTransformation: VisualTransformation = VisualTransformation.None
 ) {
     Column(modifier = modifier) {
+        val darkTheme: Boolean = isSystemInDarkTheme()
+        val textColor = when {
+            darkTheme -> Color.White
+            else -> Color.Black
+        }
         OutlinedTextField(
             modifier = Modifier
                 .fillMaxWidth()
@@ -61,9 +69,12 @@ fun TextFieldComponent(
             keyboardActions = keyBoardActions,
             enabled = isEnabled,
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                focusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
-                focusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                focusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.secondary,
+                unfocusedBorderColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                cursorColor = androidx.compose.material3.MaterialTheme.colorScheme.secondary,
+                focusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.secondary,
+                unfocusedLabelColor = androidx.compose.material3.MaterialTheme.colorScheme.primary,
+                textColor = textColor,
             ),
             isError = hasError,
             label = {

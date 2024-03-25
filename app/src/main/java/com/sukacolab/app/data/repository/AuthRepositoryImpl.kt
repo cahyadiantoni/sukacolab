@@ -24,25 +24,3 @@ class DefaultAuthRepository : AuthRepository {
         }
     }
 }
-
-class AuthRepositoryImpl(
-    private val apiService: ApiService,
-    private val preferences: AuthPreferences
-)  {
-
-
-//    override suspend fun login(loginRequest: LoginRequest): Resource<Unit> {
-//        return try {
-//            val response = apiService.login(loginRequest)
-//            preferences.saveAuthToken(response.data.token)
-//            Log.e("TAG", "login: ${response.data.token}")
-//            Resource.Success(Unit)
-//        } catch (e: IOException) {
-//            Resource.Error(e.message.toString())
-//        } catch (e: HttpException) {
-//            Resource.Error(e.message.toString())
-//        }
-//    }
-
-
-}

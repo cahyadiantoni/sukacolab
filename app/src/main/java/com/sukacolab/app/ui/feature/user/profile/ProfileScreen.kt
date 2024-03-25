@@ -234,7 +234,7 @@ fun ProfileScreen(
                                         Icon(
                                             imageVector = Icons.Default.ChangeCircle, // Ganti dengan icon edit yang diinginkan
                                             contentDescription = "Edit",
-                                            tint = MaterialTheme.colorScheme.primary, // Warna icon
+                                            tint = MaterialTheme.colorScheme.secondary, // Warna icon
                                             modifier = Modifier.size(28.dp) // Ukuran ikon yang lebih besar
                                         )
                                     }
@@ -425,7 +425,7 @@ fun SkillsCompose(
 
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -492,13 +492,13 @@ fun SkillsCompose(
                             ) {
                                 Text(
                                     text = "Show All Skills",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -562,7 +562,7 @@ fun LicenseCompose(
 
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
 
                 }
@@ -660,13 +660,13 @@ fun LicenseCompose(
                             ) {
                                 Text(
                                     text = "Show All Certifications",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -730,7 +730,7 @@ fun EducationCompose(
 
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
 
                 }
@@ -813,13 +813,13 @@ fun EducationCompose(
                             ) {
                                 Text(
                                     text = "Show All Educations",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -881,7 +881,7 @@ fun ExperienceCompose(
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.secondary
                     )
 
                 }
@@ -959,13 +959,13 @@ fun ExperienceCompose(
                             ) {
                                 Text(
                                     text = "Show All Experiences",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -1034,7 +1034,7 @@ fun AboutCompose(
 
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -1151,7 +1151,7 @@ fun ResumeCompose(
 
                     Icon(
                         imageVector = Icons.Default.Edit, contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
+                        tint = MaterialTheme.colorScheme.secondary,
                     )
                 }
             }
@@ -1170,20 +1170,20 @@ fun ResumeCompose(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(57.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10)),
+                            .border(2.dp, MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(10)),
                         colors = ButtonDefaults.buttonColors(Color.Transparent)
                     ) {
                         Icon(
                             imageVector = Icons.Default.FileUpload, // Menggunakan ikon file bawaan
                             contentDescription = "File Icon",
-                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            tint = MaterialTheme.colorScheme.secondary, // Warna ikon disesuaikan dengan warna primer
                             modifier = Modifier.size(24.dp) // Ukuran ikon
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "Upload Resume",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.primary,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
@@ -1202,20 +1202,20 @@ fun ResumeCompose(
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(57.dp)
-                            .border(2.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(10)),
+                            .border(2.dp, MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(10)),
                         colors = ButtonDefaults.buttonColors(Color.Transparent)
                     ) {
                         Icon(
                             imageVector = Icons.Default.FileOpen, // Menggunakan ikon file bawaan
                             contentDescription = "File Icon",
-                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            tint = MaterialTheme.colorScheme.secondary, // Warna ikon disesuaikan dengan warna primer
                             modifier = Modifier.size(24.dp) // Ukuran ikon
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "Show Resume",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.primary,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
@@ -1247,7 +1247,7 @@ fun MenuCompose(
             ) {
                 Text(
                     text = "Privacy Policy",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.weight(1f)
                 )
@@ -1255,7 +1255,7 @@ fun MenuCompose(
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(24.dp)
                 )
 
@@ -1274,7 +1274,7 @@ fun MenuCompose(
             ) {
                 Text(
                     text = "About App",
-                    color = MaterialTheme.colorScheme.primary,
+                    color = MaterialTheme.colorScheme.secondary,
                     fontWeight = FontWeight.ExtraBold,
                     modifier = Modifier.weight(1f)
                 )
@@ -1282,7 +1282,7 @@ fun MenuCompose(
                 Icon(
                     imageVector = Icons.Default.ArrowForward,
                     contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
+                    tint = MaterialTheme.colorScheme.secondary,
                     modifier = Modifier.size(24.dp)
                 )
 
@@ -1312,7 +1312,7 @@ fun MenuCompose(
                     ),
                 ) {
 
-                    Text(text = "Logout")
+                    Text(text = "Logout", color = Color.White)
 
                 }
                 if (openDialog.value) {

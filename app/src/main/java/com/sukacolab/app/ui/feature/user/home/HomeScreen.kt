@@ -73,7 +73,7 @@ import com.sukacolab.app.ui.component.cards.ItemListUrProject
 import com.sukacolab.app.ui.feature.user.home.ui_state.HomeUiState
 import com.sukacolab.app.ui.feature.user.profile.ProfileViewModel
 import com.sukacolab.app.ui.navigation.Screen
-import com.sukacolab.app.ui.theme.primaryColor
+import com.sukacolab.app.ui.theme.secondaryColor
 import kotlinx.coroutines.delay
 import org.koin.androidx.compose.getViewModel
 
@@ -201,7 +201,7 @@ fun HomeContent(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .height(40.dp),
-                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.primary)
+                            colors = ButtonDefaults.buttonColors(MaterialTheme.colorScheme.secondary)
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Warning, // Menggunakan ikon file bawaan
@@ -283,7 +283,7 @@ fun HomeContent(
                             .padding(top = 5.dp, end = 8.dp),
                         horizontalArrangement = Arrangement.spacedBy(20.dp),
                     ) {
-                        Text(text = "See All", color = MaterialTheme.colorScheme.primary, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
+                        Text(text = "See All", color = MaterialTheme.colorScheme.secondary, fontSize = 14.sp, fontWeight = FontWeight.ExtraBold)
                     }
                 }
                 Spacer(modifier = Modifier.padding(bottom = 8.dp))
@@ -355,7 +355,7 @@ fun HomeContent(
 
                                 Text(
                                     text = "Show All Projects",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontSize = 14.sp,
                                     fontWeight = FontWeight.ExtraBold
                                 )
@@ -363,7 +363,7 @@ fun HomeContent(
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -401,7 +401,7 @@ fun MainMenu(title: String, icon: Int, onClick: () -> Unit) {
                     modifier = Modifier
                         .size(40.dp)
                         .background(
-                            MaterialTheme.colorScheme.primary,
+                            MaterialTheme.colorScheme.secondary,
                             shape = RoundedCornerShape(15.dp)
                         ),
                     contentAlignment = Alignment.Center

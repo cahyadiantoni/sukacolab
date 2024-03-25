@@ -96,7 +96,7 @@ fun SettingScreen(
                             ) {
                                 Text(
                                     text = "Change Email",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Normal,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -104,7 +104,7 @@ fun SettingScreen(
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
+                                    tint = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.size(24.dp)
                                 )
 
@@ -126,7 +126,7 @@ fun SettingScreen(
                             ) {
                                 Text(
                                     text = "Change Password",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Normal,
                                     modifier = Modifier.weight(1f)
                                 )
@@ -134,7 +134,7 @@ fun SettingScreen(
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary,
+                                    tint = MaterialTheme.colorScheme.secondary,
                                     modifier = Modifier.size(24.dp)
                                 )
 

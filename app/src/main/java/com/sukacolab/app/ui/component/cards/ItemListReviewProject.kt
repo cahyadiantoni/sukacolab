@@ -118,14 +118,14 @@ fun ItemListReviewProject(
                     modifier = Modifier
                         .wrapContentSize()
                         .padding(top = 5.dp)
-                        .border(1.dp, MaterialTheme.colorScheme.primary, shape = RoundedCornerShape(20.dp))
+                        .border(1.dp, MaterialTheme.colorScheme.secondary, shape = RoundedCornerShape(20.dp))
                 ) {
                     Row(){
                         Text(
                             text = textContent, modifier = Modifier
                                 .padding(horizontal = 5.dp),
                             fontSize = 12.sp,
-                            color = MaterialTheme.colorScheme.primary
+                            color = MaterialTheme.colorScheme.secondary
                         )
                     }
 

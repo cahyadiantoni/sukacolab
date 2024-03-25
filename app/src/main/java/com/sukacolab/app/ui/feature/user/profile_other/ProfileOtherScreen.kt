@@ -444,7 +444,7 @@ fun ProfileOtherScreen(
                         Box(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .background(color = tertiaryColor)
+                                .background(color = MaterialTheme.colorScheme.tertiary)
                                 .padding(vertical = 15.dp, horizontal = 30.dp)
                         ) {
                             if (isLoading) {
@@ -464,7 +464,7 @@ fun ProfileOtherScreen(
                                                 .fillMaxWidth()
                                                 .height(50.dp),
                                             colors = ButtonDefaults.buttonColors(
-                                                containerColor = MaterialTheme.colorScheme.primary
+                                                containerColor = MaterialTheme.colorScheme.secondary
                                             ),
                                             shape = RoundedCornerShape(8.dp)
                                         ) {
@@ -521,7 +521,7 @@ fun ProfileOtherScreen(
                                                         .fillMaxWidth()
                                                         .height(50.dp),
                                                     colors = ButtonDefaults.buttonColors(
-                                                        containerColor = MaterialTheme.colorScheme.primary
+                                                        containerColor = MaterialTheme.colorScheme.secondary
                                                     ),
                                                     shape = RoundedCornerShape(8.dp)
                                                 ) {
@@ -543,7 +543,7 @@ fun ProfileOtherScreen(
                                                             .weight(1f)
                                                             .height(50.dp),
                                                         colors = ButtonDefaults.buttonColors(
-                                                            containerColor = MaterialTheme.colorScheme.primary
+                                                            containerColor = MaterialTheme.colorScheme.secondary
                                                         ),
                                                         shape = RoundedCornerShape(8.dp)
                                                     ) {
@@ -578,7 +578,7 @@ fun ProfileOtherScreen(
                                                         .fillMaxWidth()
                                                         .height(50.dp),
                                                     colors = ButtonDefaults.buttonColors(
-                                                        containerColor = MaterialTheme.colorScheme.primary
+                                                        containerColor = MaterialTheme.colorScheme.secondary
                                                     ),
                                                     shape = RoundedCornerShape(8.dp)
                                                 ) {
@@ -619,7 +619,7 @@ fun ProfileOtherScreen(
                                             .fillMaxWidth()
                                             .height(50.dp),
                                         colors = ButtonDefaults.buttonColors(
-                                            containerColor = MaterialTheme.colorScheme.primary
+                                            containerColor = MaterialTheme.colorScheme.secondary
                                         ),
                                         shape = RoundedCornerShape(8.dp)
                                     ) {
@@ -755,13 +755,13 @@ fun SkillsCompose(
                             ) {
                                 Text(
                                     text = "Show All Skills",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -924,13 +924,13 @@ fun LicenseCompose(
                             ) {
                                 Text(
                                     text = "Show All Certifications",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -1077,13 +1077,13 @@ fun EducationCompose(
                             ) {
                                 Text(
                                     text = "Show All Educations",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -1227,13 +1227,13 @@ fun ExperienceCompose(
                             ) {
                                 Text(
                                     text = "Show All Experiences",
-                                    color = MaterialTheme.colorScheme.primary,
+                                    color = MaterialTheme.colorScheme.secondary,
                                     fontWeight = FontWeight.Bold
                                 )
                                 Icon(
                                     imageVector = Icons.Default.ArrowForward,
                                     contentDescription = null,
-                                    tint = MaterialTheme.colorScheme.primary
+                                    tint = MaterialTheme.colorScheme.secondary
                                 )
                             }
                         }
@@ -1345,7 +1345,7 @@ fun ResumeCompose(
                             .height(57.dp)
                             .border(
                                 2.dp,
-                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary,
                                 shape = RoundedCornerShape(10)
                             ),
                         colors = ButtonDefaults.buttonColors(Color.Transparent)
@@ -1353,14 +1353,14 @@ fun ResumeCompose(
                         Icon(
                             imageVector = Icons.Default.FilePresent,
                             contentDescription = "File Icon",
-                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            tint = MaterialTheme.colorScheme.secondary, // Warna ikon disesuaikan dengan warna primer
                             modifier = Modifier.size(24.dp) // Ukuran ikon
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "Resume has not been added",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.primary,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
@@ -1381,7 +1381,7 @@ fun ResumeCompose(
                             .height(57.dp)
                             .border(
                                 2.dp,
-                                MaterialTheme.colorScheme.primary,
+                                MaterialTheme.colorScheme.secondary,
                                 shape = RoundedCornerShape(10)
                             ),
                         colors = ButtonDefaults.buttonColors(Color.Transparent)
@@ -1389,14 +1389,14 @@ fun ResumeCompose(
                         Icon(
                             imageVector = Icons.Default.FileOpen, // Menggunakan ikon file bawaan
                             contentDescription = "File Icon",
-                            tint = MaterialTheme.colorScheme.primary, // Warna ikon disesuaikan dengan warna primer
+                            tint = MaterialTheme.colorScheme.secondary, // Warna ikon disesuaikan dengan warna primer
                             modifier = Modifier.size(24.dp) // Ukuran ikon
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
                             text = "Show Resume",
                             style = MaterialTheme.typography.titleMedium.copy(
-                                color = MaterialTheme.colorScheme.primary,
+                                color = MaterialTheme.colorScheme.secondary,
                                 fontWeight = FontWeight.SemiBold
                             )
                         )
